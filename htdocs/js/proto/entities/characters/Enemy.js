@@ -1,12 +1,17 @@
 define([
+	"engine/path",
 	"helper/math",
 	"proto/AnimationSprite",
 	"proto/entities/Character",
 	"proto/Framecounter",
 	"proto/V2"
-], function(math, AnimationSprite, Character, Framecounter, V2) {
+], function(path, math, AnimationSprite, Character, Framecounter, V2) {
 	var Enemy = function Enemy(x, y) {
 		this.position = new V2(x, y);
+
+		// current coordinates
+		this.x = null;
+		this.y = null;
 
 		// collision-box
 		this.width = 40;
@@ -27,7 +32,7 @@ define([
 		this.SPEEDS = {
 			normal: 0.15 * Math.random() + 0.1,
 			panic: 0.38,
-			aggro: 0.5
+			aggro: 5
 		};
 
 		this.mode = this.MODES.normal;
@@ -67,7 +72,7 @@ define([
 
 		switch (this.mode) {
 			case this.MODES.normal:
-				if(rnd < 1 + (this.turn > 0) *3 ) {
+				if (rnd < 1 + (this.turn > 0) *3 ) {
 					this.turn = 1;
 					this.angle += delta * 0.005;
 				} else if (rnd < 2 + (this.turn > 0) * 3 + (this.turn < 0) * 3 ) {
@@ -75,6 +80,7 @@ define([
 					this.angle -= delta * 0.005;
 				}
 				break;
+
 			case this.MODES.panic:
 				this.modeTime -= delta;
 
@@ -93,15 +99,36 @@ define([
 						this.angle += delta * 0.005;
 					}
 				}
+
+				/*if (this.screamCooldown-- < 0 && ((Math.random() * 100 | 0) + 1) <= 1) {
+					//sound.play('sound/fx/scream/ogg/scream0'+((Math.random()*5|0)+1)+'.ogg');
+					this.screamCooldown = 150;
+				}*/
+				break;
+
+			case this.MODES.aggro:
+				var movement = new V2(this.source.x, this.source.y).sub(this.position),
+					hyp = movement.normFac();
+
+				movement = movement.div(hyp);
+				this.movement = movement.mul(this.speed);
+
+				if (!this.checkCollision(this.movement.prd(delta - this.speed), map)) {
+					this.position.add(this.movement);
+				}
 				break;
 		}
 
-		do {
-			angle = this.angle + correction;
-			this.movement = math.rad_to_vector(angle, this.speed);
-			correction = correction > 0 ? -correction - 0.3 : -correction + 0.3;
-		} while (this.checkCollision(this.movement.prd(delta), map ) && i++ < 10);
+		if (this.mode === this.MODES.normal || this.mode === this.MODES.panic) {
+			do {
+				angle = this.angle + correction;
+				this.movement = math.rad_to_vector(angle, this.speed);
+				correction = correction > 0 ? -correction - 0.3 : -correction + 0.3;
+			} while (this.checkCollision(this.movement.prd(delta), map) && i++ < 10);
 
+			this.angle = angle;
+			this.position.add(this.movement.prd(delta));
+		}
 
 		if (Math.abs(this.movement.x) > Math.abs(this.movement.y)) {
 			if (this.movement.x > 0 ) {
@@ -116,29 +143,45 @@ define([
 				this.direction = 1;
 			}
 		}
-
-		this.angle = angle;
-		this.position.add(this.movement.prd( delta ));
-
-		if (this.mode === this.MODES.panic && this.screamCooldown-- < 0 && ((Math.random() * 100 | 0) + 1) <= 1) {
-			//sound.play('sound/fx/scream/ogg/scream0'+((Math.random()*5|0)+1)+'.ogg');
-			this.screamCooldown = 150;
-		}
 	};
 
 	Enemy.prototype.setMode = function setMode(mode, opt_posRef) {
-		if (mode === this.mode) {
+		/*if (mode === this.mode) {
 			return;
-		}
+		}*/
 
 		this.speed = this.SPEEDS[mode];
 		this.mode = this.MODES[mode];
-		this.source = opt_posRef;
 
-		if (mode === this.MODES.panic) {
-			this.loadImage('victim' + this.spriteId + '_panic.png');
+		if (opt_posRef) {
+			this.source = opt_posRef;
+		}
+
+		switch (mode) {
+			case this.MODES.panic:
+				this.loadImage('victim' + this.spriteId + '_panic.png');
+				break;
+			case this.MODES.aggro:
+				//this.calcPath();
+				break;
 		}
 	};
+
+	/*Enemy.prototype.calcPath = function calcPath() {
+		var that = this;
+
+		if (!this.x || ! this.y) {
+			return;
+		}
+
+		path.easystar.findPath(this.x, this.y, window.game.scene.player.x, window.game.scene.player.y, function(path) {
+			if (path) {
+				if (path[2]) {
+					that.nextTile = new V2(path[2].x * window.game.scene.map.tileWidth, path[0].y * window.game.scene.map.tileHeight);
+				}
+			}
+		});
+	};*/
 
 	Enemy.prototype.checkCollision = function checkCollision(move, map) {
 		var pos = this.position.sum(move),
@@ -148,6 +191,9 @@ define([
 			lastTileY = Math.ceil((pos.y + this.height) / map.tileHeight),
 			x,
 			y;
+
+		this.x = firstTileX;
+		this.y = firstTileY;
 
 		for (x = firstTileX; x < lastTileX; x++) {
 			for(y = firstTileY; y < lastTileY; y++) {

@@ -43,7 +43,7 @@ define([
 				map.removeObject(tileId, 2, true);
 
 				// update pf-grid
-				path.setWalkable(tileId, false);
+				//path.setWalkable(tileId, false);
 			}
 		} else {
 				entities = this.scene.entities;

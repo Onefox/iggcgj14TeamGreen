@@ -42,11 +42,12 @@ define([
 
 		oneToTwoDim: function oneToTwoDim(index, optWidth, optHeight) {
 			var width = optWidth ? optWidth : window.game.scene.map.data.width,
-				height = optHeight ? optHeight : window.game.scene.map.data.height;
+				height = optHeight ? optHeight : window.game.scene.map.data.height,
+				x = index % width;
 
 			return {
-				x: index % width,
-				y: (index - this.x) / height
+				x: x,
+				y: (index - x) / height
 			};
 		},
 

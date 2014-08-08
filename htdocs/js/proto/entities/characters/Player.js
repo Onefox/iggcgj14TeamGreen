@@ -12,6 +12,10 @@ define([
 		this.height = 60;
 		this.color = 'black';
 
+		// current coordinates
+		this.x = 0;
+		this.y = 0;
+
 		this.weapons = [
 			new Rifle(this)
 		];
@@ -60,7 +64,7 @@ define([
 			if (this.scene.entities[i] instanceof Enemy) {
 				dist = this.getCenter().dif(this.scene.entities[i].getCenter()).length();
 
-				if (dist < 300) {
+				if (dist < 400) {
 					window.game.scene.entities[i].setMode('aggro', this.position);
 				} else {
 					window.game.scene.entities[i].setMode('normal', this.position);
@@ -202,6 +206,14 @@ define([
 					break;
 				}
 			}
+		}
+
+		if (firstTileX) {
+			this.x = firstTileX;
+		}
+
+		if (firstTileY) {
+			this.y = firstTileY;
 		}
 	};
 

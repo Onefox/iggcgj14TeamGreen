@@ -8,7 +8,7 @@ define([
 		width: null,
 		height: null,
 
-		init: function init(width, height, tiles) {
+		init: function init(width, height, objects) {
 			var x,
 				y,
 				i;
@@ -18,26 +18,28 @@ define([
 			this.easystar = new EasyStar.js();
 			this.grid = util.array2d(width, height);
 
-			for (x = 0; x < this.width; x++) {
+			for (x = 0; x < this.height; x++) {
 				for (y = 0; y < this.width; y++) {
-					this.grid[x][y] = tiles[util.twoToOneDim(x, y, width)] > 0 ? 1 : 0;
+					// warning: easystar uses this order: [y][x]
+					this.grid[y][x] = objects[util.twoToOneDim(x, y, width)] > 0 ? 1 : 0;
 				}
 			}
 
 			this.easystar.setGrid(this.grid);
+			this.easystar.setAcceptableTiles([0]);
+			this.easystar.setIterationsPerCalculation(1000);
+			this.easystar.enableDiagonals();
 
-			console.log(this.grid);
-			/*for (i = 0; i < tiles.length; i++) {
-				if (tiles[i] !== 0) {
-					this.setWalkable(i, false);
-				}
-			}*/
+			// debugging
+			window.path = this;
 		},
 
 		setWalkable: function setWalkable(index, walkable) {
 			var pos = util.oneToTwoDim(index, this.width, this.height);
 
-			//this.grid.setWalkableAt(pos.x, pos.y, walkable);
+			this.grid[pos.y][pos.x] = walkable ? 0 : 1;
+
+			this.easystar.setGrid(this.grid);
 		}
 	};
 });

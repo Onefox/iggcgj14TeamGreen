@@ -1,10 +1,11 @@
 define([
 	"engine/config",
+	"engine/path",
 	"engine/Scene",
 	"helper/dom",
 	"helper/util",
 	"modules/mouse"
-], function(config, Scene, dom, util, mouse) {
+], function(config, path, Scene, dom, util, mouse) {
 	var game = {
 		frames: 0,
 		fps: 0,
@@ -85,6 +86,11 @@ define([
 
 		update: function update(delta) {
 			this.scene.update(delta);
+
+			// ticker for path-finding
+			if (path.easystar) {
+				path.easystar.calculate();
+			}
 		},
 
 		draw: function draw() {

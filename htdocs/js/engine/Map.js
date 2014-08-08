@@ -1,9 +1,10 @@
 define([
+	"engine/config",
 	"engine/path",
 	"modules/image",
 	"proto/entities/characters/Enemy",
 	"helper/util"
-], function(path, image, Enemy, util) {
+], function(config, path, image, Enemy, util) {
 	return function Map(data, scene){
 		this.data = data;
 
@@ -39,17 +40,6 @@ define([
 			this.copyMap(ctx, view, this.above);
 		};
 
-		this.drawTile = function drawTile(index, layer) {
-			var ctx = layer < 3 ? this.below.getContext('2d') : this.above.getContext('2d'),
-				tileset = data.tilesets[0],
-				tile = this.data.layers[layer].data[index],
-				coord = util.oneToTwoDim(index);
-
-			if (tile > -1) {
-				ctx.drawImage(image.getImage(tileset.image), (tile % tileset.width) * this.tileWidth, Math.floor(tile / tileset.width) * this.data.height, this.tileWidth, this.data.height, coord.x * this.tileWidth, coord.y * this.data.height, this.tileWidth, this.data.height);
-			}
-		};
-
 		this.checkCollision = function checkCollision(x, y) {
 			var id;
 
@@ -76,6 +66,20 @@ define([
 
 			if (tile > -1) {
 				ctx.drawImage(image.getImage(tileset.image), (tile % tileset.width) * this.tileWidth, Math.floor(tile / tileset.width) * this.tileHeight, this.tileWidth, this.tileHeight, x * this.tileWidth, y * this.tileHeight, this.tileWidth, this.tileHeight);
+
+				// tile coordinates
+				if (config.debug) {
+					ctx.font = "8px Arial";
+					ctx.fillStyle = "black";
+
+					if (layer === 2) {
+						ctx.fillStyle = "red";
+					}
+
+					ctx.textAlign = "center";
+					ctx.fillText(x + " | " + y, x * this.tileWidth + 16, y * this.tileHeight + 18);
+				}
+
 			}
 		};
 
@@ -149,7 +153,7 @@ define([
 			}
 
 			// init pathfinding-grid with layer 2 (objects)
-			path.init(this.data.width, this.data.height, data.layers[2].data);
+			//path.init(this.data.width, this.data.height, data.layers[2].data);
 		};
 
 		// init
