@@ -37,7 +37,7 @@ define([
 		setWalkable: function setWalkable(index, walkable) {
 			var pos = util.oneToTwoDim(index, this.width, this.height);
 
-			this.grid.setWalkableAt(pos.x, pos.y, walkable);
+			//this.grid.setWalkableAt(pos.x, pos.y, walkable);
 		}
 	};
 });
