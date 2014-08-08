@@ -1,0 +1,18 @@
+vendor(prop, args...)
+	for prefix in $vendor-prefixes
+		unless prefix == official
+			property = '-' + prefix + '-' + prop
+			add-property(property, args)
+	add-property(prop, args)
+
+mix-animation()
+	vendor('animation', arguments);
+
+mix-transition()
+	vendor('transition', arguments)
+
+mix-transform()
+	vendor('transform', arguments)
+
+mix-user-select()
+	vendor('user-select', arguments)
