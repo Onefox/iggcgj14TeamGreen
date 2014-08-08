@@ -26,7 +26,7 @@ require([
 		'tileSpriteSheet.png', 'tileset.png', 'time.png', 'victim1.png', 'victim1_panic.png', 'victim2.png',
 		'victim2_panic.png', 'victim3.png', 'victim3_panic.png', 'victim4.png', 'victim4_panic.png',
 		'victim5.png', 'victim5_panic.png', 'victims.png', 'weapon_menu.png', 'enterNameScreen.png', 'bloodStainsSmall.png',
-		'story01.png', 'story02.png', 'story03.png', 'story04.png', 'player.png', 'elorzms.png'];
+		'story01.png', 'story02.png', 'story03.png', 'story04.png', 'player.png', 'elorzms.png', 'enemy.png'];
 
 	// request-animation-frame-polyfill
 	window.requestAnimFrame = (function() {

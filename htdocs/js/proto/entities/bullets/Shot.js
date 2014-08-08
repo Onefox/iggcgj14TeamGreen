@@ -39,8 +39,12 @@ define([
 
 			// hit a wall -> destroy
 			if (typeof tileId === 'number') {
-				map.data.layers[2].data[tileId] = 0;
-				map.removeObject(tileId, 2, true);
+				map.damage[tileId] = map.damage[tileId] ? map.damage[tileId] + 1 : 1;
+
+				if (map.damage[tileId] > 2) {
+					map.data.layers[2].data[tileId] = 0;
+					map.removeObject(tileId, 2, true);
+				}
 
 				// update pf-grid
 				//path.setWalkable(tileId, false);

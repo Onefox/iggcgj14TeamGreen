@@ -18,8 +18,8 @@ define([
 		this.height = 60;
 
 		// sprite-size
-		this.characterWidth = 80;
-		this.characterHeight = 80;
+		//this.characterWidth = 80;
+		//this.characterHeight = 80;
 
 		this.angle = Math.random() * Math.PI * 2;
 
@@ -48,7 +48,6 @@ define([
 
 		this.spriteId = (1 + Math.random() * 5 | 0);
 
-
 		this.screamCooldown = 0;
 
 		this.bloodSprites = new AnimationSprite('bloodStains.png', 4);
@@ -56,7 +55,7 @@ define([
 		this.c = new Framecounter(100);
 
 		this.loadImage('victim' + this.spriteId + '_panic.png');
-		this.loadImage('victim' + this.spriteId + '.png');
+		this.loadImage('enemy.png');
 	};
 
 	Enemy.prototype = new Character();
@@ -110,11 +109,14 @@ define([
 				var movement = new V2(this.source.x, this.source.y).sub(this.position),
 					hyp = movement.normFac();
 
-				movement = movement.div(hyp);
-				this.movement = movement.mul(this.speed);
+				// dont walk into character-sprite
+				if (hyp > 20) {
+					movement = movement.div(hyp);
+					this.movement = movement.mul(this.speed);
 
-				if (!this.checkCollision(this.movement.prd(delta - this.speed), map)) {
-					this.position.add(this.movement);
+					if (!this.checkCollision(this.movement.prd(delta - this.speed), map)) {
+						this.position.add(this.movement);
+					}
 				}
 				break;
 		}
@@ -132,15 +134,15 @@ define([
 
 		if (Math.abs(this.movement.x) > Math.abs(this.movement.y)) {
 			if (this.movement.x > 0 ) {
-				this.direction = 3;
+				this.direction = 1;
 			} else {
-				this.direction = 2;
+				this.direction = 0;
 			}
 		} else {
 			if (this.movement.y > 0) {
-				this.direction = 0;
+				this.direction = 3;
 			} else {
-				this.direction = 1;
+				this.direction = 2;
 			}
 		}
 	};
@@ -215,7 +217,7 @@ define([
 		//this.scene.ui.EnemyRemoved();
 		//this.scene.add( new death( pos.x, pos.y  ));
 
-		this.bloodSprites.center(belowctx, center.x, center.y, (Math.random() * 3) | 0);
+		//this.bloodSprites.center(belowctx, center.x, center.y, (Math.random() * 3) | 0);
 	};
 
 	return Enemy;

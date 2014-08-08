@@ -14,6 +14,9 @@ define([
 		this.tileWidth = 0;
 		this.tileHeight = 0;
 
+		// holds current damage for all object-tiles
+		this.damage = null;
+
 		this.below = null;
 		this.above = null;
 
@@ -115,6 +118,8 @@ define([
 
 			this.width = this.data.width * tw;
 			this.height = this.data.height * th;
+
+			this.damage = new Array(this.data.width);
 
 			this.below = document.createElement('canvas');
 			this.above = document.createElement('canvas');
