@@ -9,6 +9,9 @@ define([
 	var Player = function Player() {
 		this.position = new V2(0, 0);
 		this.movement = new V2(0, 0);
+		this.characterWidth = 60;
+		this.characterHeight = 78;
+
 		this.width = 40;
 		this.height = 60;
 		this.color = 'black';
@@ -35,9 +38,15 @@ define([
 
 		if (this.movement.x || this.movement.y) {
 			this.updateSprite(delta);
+
+			//console.log(this.position)
 		} else {
 			this.c.frame = 0;
 		}
+
+
+
+
 
 		this.checkCollision(this.movement.prd(delta), map);
 
@@ -49,15 +58,15 @@ define([
 
 		if (Math.abs(pos.x) > Math.abs(pos.y)) {
 			if (pos.x > 0) {
-				this.direction = 0;
-			} else {
 				this.direction = 1;
+			} else {
+				this.direction = 2;
 			}
 		} else {
 			if (pos.y > 0) {
-				this.direction = 2;
-			} else {
 				this.direction = 3;
+			} else {
+				this.direction = 0;
 			}
 		}
 
@@ -139,7 +148,7 @@ define([
 		this.weapon = this.weapons[i];
 
 		this.loadImage( [
-			'player.png',
+			'jerome.png',
 			'heroThrower.png',
 			'hero.png',
 			'hero.png',
@@ -242,7 +251,7 @@ define([
 				// set scene
 				game.scene = game.scenes[map.teleport[i].scene];
 
-				// set player pos
+				// set player pos TODO
 			}
 		}
 
