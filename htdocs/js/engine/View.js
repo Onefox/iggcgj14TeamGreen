@@ -12,6 +12,7 @@ define([
 		this.map = map;
 		this.ctx = null;
 		//this.lastP1 = new V2(0, 0);
+		this.flicker = 1;
 
 		this.init();
 	};
@@ -81,15 +82,21 @@ define([
 		var pos = game.scene.player.position,
 			width = 800,
 			height = 600,
-			x = ~~(pos.x - (width / 2) - this.getX()),
-			y = ~~(pos.y - (height / 2) - this.getY());
+			x = ~~(pos.x - (width / 2) - this.getX()) + 10,
+			y = ~~(pos.y - (height / 2) - this.getY()) + 6;
 
+
+		if (game.frames % 2 === 0) {
+			if (Math.random() > 0.7) {
+				this.flicker = Math.abs(Math.sin(game.frames)) / 100 + 1;
+			}
+		}
 
 		this.ctx.rect(0, 0, config.screenWidth, config.screenHeight);
 		this.ctx.fill();
-		this.ctx.clearRect(x, y, width, height);
+		this.ctx.clearRect(x + this.flicker, y + this.flicker, width, height);
 
-		this.ctx.drawImage(image.getImage("light.png"), x, y);
+		this.ctx.drawImage(image.getImage("light.png"), x + this.flicker , y + this.flicker, this.flicker * width, this.flicker * height);
 	};
 
 	return View;
