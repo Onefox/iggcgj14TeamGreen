@@ -1,15 +1,32 @@
 define([
+	"engine/config",
+	"modules/image",
+	"helper/dom",
 	"proto/Rect",
 	"proto/V2"
-], function(Rect, V2) {
+], function(config, image, dom, Rect, V2) {
 	var View = function View(subject, width, height, map) {
 		this.subject = subject;
 		this.width = width;
 		this.height = height;
 		this.map = map;
+		this.ctx = null;
+		//this.lastP1 = new V2(0, 0);
+
+		this.init();
 	};
 
 	View.prototype = new Rect(new V2(0, 0), new V2(0, 0));
+
+	View.prototype.init = function init() {
+		var canvas = dom.get("#shadow");
+
+		canvas.width = config.screenWidth;
+		canvas.height = config.screenHeight;
+
+		this.ctx = canvas.getContext('2d');
+		this.ctx.fillStyle = 'black';
+	};
 
 	View.prototype.getX = function getX() {
 		return this.p1.x;
@@ -49,6 +66,30 @@ define([
 		if (this.p2.y > this.map.getHeight()) {
 			this.p1.y = (this.p2.y = this.map.getHeight()) - this.height;
 		}
+
+
+		// camera changed (only when min max change?)
+		//if (this.p1.x !== this.lastP1.x && this.p1.y !== this.lastP1.y) {
+			this.drawLight();
+
+			//this.lastP1.x = this.p1.x;
+			//this.lastP1.y = this.p1.y;
+		//}
+	};
+
+	View.prototype.drawLight = function drawLight() {
+		var pos = game.scene.player.position,
+			width = 800,
+			height = 600,
+			x = ~~(pos.x - (width / 2) - this.getX()),
+			y = ~~(pos.y - (height / 2) - this.getY());
+
+
+		this.ctx.rect(0, 0, config.screenWidth, config.screenHeight);
+		this.ctx.fill();
+		this.ctx.clearRect(x, y, width, height);
+
+		this.ctx.drawImage(image.getImage("light.png"), x, y);
 	};
 
 	return View;

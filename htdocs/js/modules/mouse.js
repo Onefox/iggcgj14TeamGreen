@@ -4,13 +4,13 @@ define([
 ], function(dom, V2) {
 	var mouse = new V2(0, 0);
 
-	window.oncontextmenu = function() {
+	/*window.oncontextmenu = function() {
 		return false;
-	};
+	};*/
 
 	mouse.init = function init(game) {
 		var that = this;
-			canvas = dom.get('#canvas');
+			canvas = dom.get('#shadow');
 
 		canvas.onmousemove = function( ev ) {
 			that.x = ev.clientX - canvas.offsetLeft;
