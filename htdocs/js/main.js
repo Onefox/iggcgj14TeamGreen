@@ -17,16 +17,7 @@ require([
 	'modules/image',
 	'modules/keyboard',
 ], function(config, game, dom, image, keyboard) {
-	var imgList = ['acid.png', 'active_weapo.png', 'blood.png', 'bloodSplash.png', 'bloodStains.png',
-		'bomb.png', 'bulletSplash.png', 'creditsScreen.png', 'death.png', 'explosion.png',
-		'explosionDecal.png', 'extremeExplosion.png', 'grenade.png', 'helpScreen.png',
-		'hero.png', 'heroRifle.png', 'heroThrower.png', 'laser.png', 'levelCompleted.png',
-		'loading.gif', 'pause.png', 'scoreScreen_background.png',
-		'shadow.png', 'startScreen_background.png', 'startScreen_menu.png', 'startScreen_menu_mousover.png',
-		'tileSpriteSheet.png', 'tileset.png', 'time.png', 'victim1.png', 'victim1_panic.png', 'victim2.png',
-		'victim2_panic.png', 'victim3.png', 'victim3_panic.png', 'victim4.png', 'victim4_panic.png',
-		'victim5.png', 'victim5_panic.png', 'victims.png', 'weapon_menu.png', 'enterNameScreen.png', 'bloodStainsSmall.png',
-		'story01.png', 'story02.png', 'story03.png', 'story04.png', 'player.png', 'elorzms.png', 'enemy.png'];
+	var imgList = ['player.png', 'elorzms.png', 'enemy.png'];
 
 	// request-animation-frame-polyfill
 	window.requestAnimFrame = (function() {

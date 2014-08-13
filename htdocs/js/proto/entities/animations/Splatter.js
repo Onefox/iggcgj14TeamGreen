@@ -3,7 +3,7 @@ function splatter( pos, move ) {
 	this.init('img/bloodSplash.png', 8, 70);
 	this.angle = move.angle2() + Math.PI / 2;
 
-	var blood = new AnimationSprite('img/bloodStainsSmall.png', 5);
+	//var blood =  new AnimationSprite('img/bloodStainsSmall.png', 5);
 	var ctx = map.map.below.getContext('2d');
 
 	for (var i = 0; i < (Math.random()*4)+2; i++) {
@@ -15,7 +15,7 @@ function splatter( pos, move ) {
 	}
 }
 
-splatter.prototype = new Animation();
+splatter.prototype =  new Animation();
 
 splatter.prototype.draw = function(ctx, view) {
 	ctx.save();

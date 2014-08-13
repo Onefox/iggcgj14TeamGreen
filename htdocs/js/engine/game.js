@@ -21,14 +21,7 @@ define([
 		level: 0,
 		levels: [
 			'data/test.json',
-			'data/GameJam2.json',
-			'data/bridge.json',
-			'data/roof.json',
-			'data/city2.json',
-			'data/Todesarena2.json',
-			'data/MazeOfDeath.json',
-			'data/park.json',
-			'data/Trololo.json'
+			'data/test2.json'
 		],
 
 		scores: [],

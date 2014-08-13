@@ -12,7 +12,7 @@ define([
 	Animation.prototype.init = function init(sprite, frames, duration) {
 		this.framecount = frames;
 		this.f = new Framecounter(50);
-		this.sprite = new AnimationSprite(sprite, frames);
+		//this.sprite =  new AnimationSprite(sprite, frames);
 	};
 
 	Animation.prototype.update = function update(delta, map) {

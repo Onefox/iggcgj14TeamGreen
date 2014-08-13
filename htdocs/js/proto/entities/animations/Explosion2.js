@@ -10,7 +10,7 @@ function explosion2(x, y) {
 	this.op = new V2( x, y );
 }
 
-explosion2.prototype = new Animation();
+explosion2.prototype =  new Animation();
 
 explosion2.prototype.update = function(delta, map) {
 	this.f.update(delta);

@@ -14,4 +14,4 @@ function death(x ,y) {
 	sound.play(sfx);
 }
 
-death.prototype = new Animation();
+death.prototype =  new Animation();

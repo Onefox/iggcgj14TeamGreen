@@ -50,7 +50,7 @@ define([
 
 		this.screamCooldown = 0;
 
-		this.bloodSprites = new AnimationSprite('bloodStains.png', 4);
+		//this.bloodSprites = new AnimationSprite('bloodStains.png', 4);
 
 		this.c = new Framecounter(100);
 
