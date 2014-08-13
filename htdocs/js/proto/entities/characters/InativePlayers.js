@@ -51,21 +51,18 @@ define([
 
 	InactivePlayer.prototype.update = function update(delta, map) {
 
-		this.updateSprite(delta);
+		if (this.movement.x || this.movement.y) {
+			this.updateSprite(delta);
+		} else {
+			this.c.frame = 0;
+		}
+		
 		var movement = new V2(this.target.x, this.target.y).sub(this.position),
 			hyp = movement.normFac();
 
-		// dont walk into character-sprite
-		if (hyp > 50) {
-			movement = movement.div(hyp);
-			this.movement = movement.mul(this.speed);
 
-			if (!this.checkCollision(this.movement.prd(delta - this.speed), map)) {
-				this.position.add(this.movement);
-			}
-		}
-
-
+		movement = movement.div(hyp);
+		this.movement = movement.mul(this.speed);
 		if (Math.abs(this.movement.x) > Math.abs(this.movement.y)) {
 			if (this.movement.x > 0 ) {
 				this.direction = 1;
@@ -79,6 +76,20 @@ define([
 				this.direction = 2;
 			}
 		}
+
+		// dont walk into character-sprite
+		if (hyp > 50) {
+			if (!this.checkCollision(this.movement.prd(delta - this.speed), map)) {
+				this.position.add(this.movement);
+			}
+		} else {
+			// stop animation
+			this.movement.x = 0;
+			this.movement.y = 0;
+		}
+
+
+
 	};
 
 	InactivePlayer.prototype.checkCollision = function checkCollision(move, map) {
@@ -109,13 +120,6 @@ define([
 	 */
 	InactivePlayer.prototype.setMasterPosition = function setMasterPosition(pos) {
 		this.target = pos;
-	};
-
-	/**
-	 * Set the Master speed
-	 */
-	InactivePlayer.prototype.setMasterSpeed = function setMasterSpeed(speed) {
-		this.speed = speed;
 	};
 
 	return InactivePlayer;
