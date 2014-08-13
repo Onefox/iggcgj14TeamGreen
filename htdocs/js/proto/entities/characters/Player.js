@@ -1,10 +1,11 @@
 define([
+	"engine/config",
 	"modules/mouse",
 	"proto/entities/Character",
 	"proto/entities/characters/Enemy",
 	"proto/weapons/Rifle",
 	"proto/V2"
-], function(mouse, Character, Enemy, Rifle, V2) {
+], function(config, mouse, Character, Enemy, Rifle, V2) {
 	var Player = function Player() {
 		this.position = new V2(0, 0);
 		this.movement = new V2(0, 0);
@@ -70,10 +71,13 @@ define([
 			if (this.scene.entities[i] instanceof Enemy) {
 				dist = this.getCenter().dif(this.scene.entities[i].getCenter()).length();
 
-				if (dist < 400) {
-					window.game.scene.entities[i].setMode('aggro', this.position);
-				} else {
-					window.game.scene.entities[i].setMode('normal', this.position);
+				// may be non-existent when scene changes
+				if (window.game.scene.entities[i].setMode) {
+					if (dist < 400) {
+						window.game.scene.entities[i].setMode('aggro', this.position);
+					} else {
+						window.game.scene.entities[i].setMode('normal', this.position);
+					}
 				}
 			}
 		}
@@ -190,7 +194,9 @@ define([
 			tileX = Math.floor((pos.x + move.x + pxOffsetX) / map.tileWidth);
 
 			for (tileY = firstTileY; tileY < lastTileY; tileY++) {
-				if(map.checkCollision(tileX, tileY)) {
+				this.checkTeleport(map, tileX, tileY);
+
+				if (map.checkCollision(tileX, tileY)) {
 					collision.x = true;
 					this.position.x = tileX * map.tileWidth - pxOffsetX + tileOffsetX;
 					break;
@@ -207,6 +213,8 @@ define([
 			tileY = Math.floor((pos.y + move.y + pxOffsetY) / map.tileHeight);
 
 			for (tileX = firstTileX; tileX < lastTileX; tileX++) {
+				this.checkTeleport(map, tileX, tileY);
+
 				if (map.checkCollision(tileX, tileY)) {
 					collision.y = true;
 					this.position.y = tileY * map.tileHeight - pxOffsetY + tileOffsetY;
@@ -222,6 +230,23 @@ define([
 		if (firstTileY) {
 			this.y = firstTileY;
 		}
+	};
+
+	Player.prototype.checkTeleport = function checkTeleport(map, tileX, tileY) {
+		var i;
+
+		// check whether used teleports
+		for (i = 0; i < map.teleport.length; i++) {
+			// found teleport
+			if (map.teleport[i].x === tileX && map.teleport[i].y === tileY) {
+				// set scene
+				game.scene = game.scenes[map.teleport[i].scene];
+
+				// set player pos
+			}
+		}
+
+		//console.log(move.x, move.y);
 	};
 
 	Player.prototype.mousedown = function mousedown(pos) {

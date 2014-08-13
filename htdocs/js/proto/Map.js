@@ -107,7 +107,7 @@ define([
 
 		// redraw stuff that was cleared with clearRect
 		for (i = 0; i < this.data.layers.length; i++) {
-			if (data.layers[i].type === 'tilelayer') {
+			if (this.data.layers[i].type === 'tilelayer') {
 				this.drawTile(index, i);
 			}
 		}
@@ -146,10 +146,11 @@ define([
 			if (data.layers[i].data) {
 				layer = data.layers[i].data;
 
-				for (x = 0; x < data.width; x++)
+				for (x = 0; x < data.width; x++) {
 					for (y = 0; y < data.height; y++) {
 						this.drawTile(x + (y * data.width), i);
 					}
+				}
 			} else {
 				layer = data.layers[i].objects;
 
@@ -163,9 +164,13 @@ define([
 							break;
 
 						case 'teleport':
+							x = Math.floor(layer[j].x / this.tileWidth);
+							y = Math.floor(layer[j].y / this.tileHeight);
+
 							this.teleport.push({
-								level: layer[j].type,
-								pos: new V2(layer[j].x, layer[j].y)
+								scene: layer[j].type,
+								x: x,
+								y: y
 							});
 							break;
 

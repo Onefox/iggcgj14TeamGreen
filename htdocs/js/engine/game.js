@@ -75,7 +75,7 @@ define([
 				that = this,
 				delta = now - this.lastUpdate;
 
-			if (delta < 250 && this.scene) {
+			if (config.running && delta < 250 && this.scene) {
 				this.update(delta);
 				this.draw();
 			}
