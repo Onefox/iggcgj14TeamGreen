@@ -1,7 +1,7 @@
 define([
 	"engine/config",
 	"engine/path",
-	"engine/Scene",
+	"proto/Scene",
 	"helper/dom",
 	"helper/util",
 	"modules/mouse"
@@ -11,6 +11,8 @@ define([
 		fps: 0,
 
 		scene: null,
+		scenes: [],
+
 		lastUpdate: 0,
 
 		display: null,
@@ -20,17 +22,26 @@ define([
 
 		level: 0,
 		levels: [
-			'data/test.json',
-			'data/test2.json'
+			{
+				name: 'test',
+				scenes: 2
+			}
 		],
 
 		scores: [],
 
 		init: function init() {
-			var that = this;
+			var that = this,
+				scene,
+				curLevel,
+				i;
 
-			this.scene = new Scene();
-			this.scene.init(this.levels[this.level]);
+			curLevel = this.levels[this.level];
+
+			for (i = 0; i < curLevel.scenes; i++) {
+				scene = new Scene();
+				scene = scene.init(curLevel.name, i);
+			}
 
 			this.display = dom.get('#canvas');
 			this.displayCtx = this.display.getContext('2d');
