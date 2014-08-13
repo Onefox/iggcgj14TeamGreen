@@ -4,8 +4,9 @@ define([
 	"modules/image",
 	"proto/entities/characters/Enemy",
 	"proto/V2",
-	"helper/util"
-], function(config, path, image, Enemy, V2, util) {
+	"helper/util",
+	"proto/entities/characters/InativePlayers"
+], function(config, path, image, Enemy, V2, util, InactivePlayer) {
 	var Map = function Map(data, scene) {
 		this.data = data;
 
@@ -158,6 +159,7 @@ define([
 						case 'player':
 							scene.player.position.x = layer[j].x;
 							scene.player.position.y = layer[j].y;
+							scene.add(scene.inactivePlayer = new InactivePlayer(layer[j].x + 20, layer[j].y + 20));
 							break;
 
 						case 'teleport':

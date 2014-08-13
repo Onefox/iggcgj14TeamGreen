@@ -11,6 +11,7 @@ define([
 		this.width = 40;
 		this.height = 60;
 		this.color = 'black';
+		this.speed = 0.3;
 
 		// current coordinates
 		this.x = 0;
@@ -59,6 +60,11 @@ define([
 			}
 		}
 
+
+
+		window.game.scene.inactivePlayer.setMasterPosition(this.position);
+		//window.game.scene.inactivePlayer.setMasterSpeed(this.speed);
+
 		// player aggro when near
 		for (i = 0; i < this.scene.entities.length; i++ ) {
 			if (this.scene.entities[i] instanceof Enemy) {
@@ -71,28 +77,29 @@ define([
 				}
 			}
 		}
+
 	};
 
 	Player.prototype.down = function down(key) {
-		var speed = 0.3;
+
 
 		if (key == 'left') {
-			this.movement.x = -speed;
+			this.movement.x = -this.speed;
 			//this.direction = 2;
 		}
 
 		if (key == 'right') {
-			this.movement.x = speed;
+			this.movement.x = this.speed;
 			//this.direction = 3;
 		}
 
 		if (key == 'up') {
-			this.movement.y = -speed;
+			this.movement.y = -this.speed;
 			//this.direction = 1;
 		}
 
 		if (key == 'down') {
-			this.movement.y = speed;
+			this.movement.y = this.speed;
 			//this.direction = 0;
 		}
 

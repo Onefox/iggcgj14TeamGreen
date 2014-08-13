@@ -67,9 +67,14 @@ define([
 			angle = 0;
 			i = 0;
 
+		//console.log("TEST+ " +this.mode);
+
 		this.updateSprite(delta);
 
+
 		switch (this.mode) {
+
+
 			case this.MODES.normal:
 				if (rnd < 1 + (this.turn > 0) *3 ) {
 					this.turn = 1;

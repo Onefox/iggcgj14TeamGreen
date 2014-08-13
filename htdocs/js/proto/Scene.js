@@ -1,18 +1,20 @@
 define([
 	"proto/entities/Animation",
 	"proto/entities/characters/Player",
+	"proto/entities/characters/InativePlayers",
 	"engine/config",
 	"proto/Map",
 	"engine/View",
 	"helper/util",
 	"modules/ajax"
-], function(Animation, Player, config, Map, View, util, ajax) {
+], function(Animation, Player, InativePlayer, config, Map, View, util, ajax) {
 	var Scene = function Scene() {
 		this.entities = [];
 		this.animations = [];
 		this.player = null;
 		this.view = null;
 		this.map = null;
+		this.inactivePlayer = null;
 	};
 
 	Scene.prototype.click = function click(pos) {
