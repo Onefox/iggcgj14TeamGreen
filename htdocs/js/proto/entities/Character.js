@@ -12,6 +12,7 @@ define([
 		this.offset = null;
 		this.c = new Framecounter(60);
 		this.drawFlag = true;
+		this.frames = 4;
 	};
 
 	Character.prototype = new Entity();
@@ -44,7 +45,7 @@ define([
 				xOffset = +3;
 			}
 
-			ctx.drawImage(this.img, (this.c.frame % 4) * this.characterWidth, this.direction * this.characterHeight, this.characterWidth, this.characterHeight, pos.x - view.getX(), pos.y - view.getY(), this.characterWidth, this.characterHeight);
+			ctx.drawImage(this.img, (this.c.frame % this.frames) * this.characterWidth, this.direction * this.characterHeight, this.characterWidth, this.characterHeight, pos.x - view.getX(), pos.y - view.getY(), this.characterWidth, this.characterHeight);
 		}
 	};
 

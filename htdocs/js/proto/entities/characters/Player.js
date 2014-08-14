@@ -101,7 +101,7 @@ define([
 
 				// may be non-existent when scene changes
 				if (window.game.scene.entities[i].setMode) {
-					if (dist < 400) {
+					if (dist < 500) {
 						window.game.scene.entities[i].setMode('aggro', this.position);
 					} else {
 						window.game.scene.entities[i].setMode('normal', this.position);
