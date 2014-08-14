@@ -55,6 +55,21 @@ define([
 			var width = optWidth ? optWidth : window.game.scene.map.data.width;
 
 			return y * width + x;
+		},
+
+		tileCanBeThrown: function tileCanBeThrown(id) {
+			var throwable = [106];
+
+			return throwable.indexOf(id) !== -1;
+		},
+
+
+		tileHasNeighbour: function tileHasNeighbour(id) {
+			var obj = {
+				'106': 1
+			};
+
+			return obj[id];
 		}
 	};
 

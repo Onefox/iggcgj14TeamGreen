@@ -42,7 +42,6 @@ define([
 				map.damage[tileId] = map.damage[tileId] ? map.damage[tileId] + 1 : 1;
 
 				if (map.damage[tileId] > 2) {
-					map.data.layers[2].data[tileId] = 0;
 					map.removeObject(tileId, 2, true);
 				}
 

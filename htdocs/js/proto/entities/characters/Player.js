@@ -5,8 +5,9 @@ define([
 	"proto/entities/characters/Enemy",
 	"proto/entities/characters/InativePlayers",
 	"proto/weapons/Rifle",
-	"proto/V2"
-], function(config, mouse, Character, Enemy, InativePlayer, Rifle, V2) {
+	"proto/V2",
+	"helper/util"
+], function(config, mouse, Character, Enemy, InativePlayer, Rifle, V2, util) {
 	var Player = function Player() {
 		this.position = new V2(0, 0);
 		this.movement = new V2(0, 0);
@@ -166,7 +167,7 @@ define([
 			this.setWeapon(key - 1);
 		}
 		if (key == 'switch') {
-			console.log("changePlayer");
+			//console.log("changePlayer");
 			//player2 to player1 and player to player2  and player1 to player
 
 			// remove old shadows
@@ -180,8 +181,8 @@ define([
 			window.game.scene.inactivePlayer.setName(inactivePlayerBuffer2.name);
 
 			window.game.scene.inactivePlayer2 = new InativePlayer(this.position.x, this.position.y);
-			console.log(this.name);
-			console.log("inactivePlayer");
+			//console.log(this.name);
+			//console.log("inactivePlayer");
 			window.game.scene.inactivePlayer2.setName(this.name);
 
 			this.removeAction1();
@@ -199,10 +200,43 @@ define([
 		}
 	};
 
+	Player.prototype.action1Olaf = function action1Olaf() {
+		var pos = this.position,
+			index,
+			tile,
+			firstTileX = Math.floor(pos.x / window.game.scene.map.tileWidth),
+			firstTileY = Math.floor(pos.y / window.game.scene.map.tileHeight);
+
+			switch (this.direction) {
+				case 0:
+					firstTileY++;
+					break;
+				case 1:
+					firstTileX--;
+					break;
+				case 2:
+					firstTileX++;
+					break;
+				case 3:
+					firstTileY--;
+					break;
+			}
+
+			console.log("x: " + firstTileX + " y: " + firstTileY);
+
+			index = util.twoToOneDim(firstTileX, firstTileY);
+
+			if (util.tileCanBeThrown(window.game.scene.map.data.layers[2].data[index])) {
+				//tile = window.game.scene.map.data.layers[2].data[index];
+				window.game.scene.map.removeObject(index, 2);
+			}
+	};
+
 	Player.prototype.action1 = function action1() {
 		this.actionTimer = this.ACTIONTIME;
 		switch(this.name) {
 			case 'olaf':
+				this.action1Olaf();
 				break;
 			case 'jerome':
 				this.light = 200;

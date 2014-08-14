@@ -115,7 +115,7 @@ define([
 	 * Set the name
 	 */
 	InactivePlayer.prototype.setName = function setName(name) {
-		console.log(name);
+		//console.log(name);
 		this.name = name;
 		this.loadImage(name+'.png');
 	};

@@ -6,10 +6,12 @@ define([
 	"proto/entities/characters/Ghost",
 	"proto/entities/characters/Wraith",
 	"proto/entities/characters/Haunter",
+	"proto/entities/characters/Dog",
 	"proto/V2",
 	"helper/util",
-	"proto/entities/characters/InativePlayers"
-], function(config, path, image, Enemy, Ghost, Wraith, Haunter, V2, util, InactivePlayer) {
+	"proto/entities/characters/InativePlayers",
+	"helper/util"
+], function(config, path, image, Enemy, Ghost, Wraith, Haunter, Dog, V2, util, InactivePlayer, util) {
 	var Map = function Map(data, scene) {
 		this.data = data;
 
@@ -83,7 +85,7 @@ define([
 			ctx.drawImage(image.getImage(tileset.image), (tile % tileset.width) * this.tileWidth, Math.floor(tile / tileset.width) * this.tileHeight, this.tileWidth, this.tileHeight, x * this.tileWidth, y * this.tileHeight, this.tileWidth, this.tileHeight);
 
 			// tile coordinates
-			/*if (config.debug) {
+			if (config.debug) {
 				ctx.font = "8px Arial";
 				ctx.fillStyle = "black";
 
@@ -93,7 +95,21 @@ define([
 
 				ctx.textAlign = "center";
 				ctx.fillText(x + " | " + y, x * this.tileWidth + 16, y * this.tileHeight + 18);
-			}*/
+			}
+		}
+	};
+
+	Map.prototype.redrawAt = function redrawAt(ctx, index, x, y, neighbour) {
+		var i;
+
+		// redraw stuff that was cleared with clearRect
+		for (i = 0; i < this.data.layers.length; i++) {
+			if (neighbour) {
+				ctx = this.above.getContext('2d');
+				ctx.clearRect(x * this.tileWidth, y * this.tileHeight, this.tileWidth, this.tileHeight);
+			} else if (this.data.layers[i].type === 'tilelayer') {
+				this.drawTile(index, i);
+			}
 		}
 	};
 
@@ -103,15 +119,25 @@ define([
 			tile = this.data.layers[layer].data[index] - 1,
 			x = index % this.data.width,
 			y = (index - x) / this.data.width,
-			i;
+			coord,
+			neighbour;
 
-		//ctx.clearRect(x * this.tileWidth, y * this.tileHeight, this.tileWidth, this.tileHeight);
+		// tile has neighbour
+		neighbour = util.tileHasNeighbour(this.data.layers[layer].data[index]);
 
-		// redraw stuff that was cleared with clearRect
-		for (i = 0; i < this.data.layers.length; i++) {
-			if (this.data.layers[i].type === 'tilelayer') {
-				this.drawTile(index, i);
-			}
+		// set id 0
+		this.data.layers[layer].data[index] = 0;
+
+
+		this.redrawAt(index);
+		this.redrawAt(ctx, util.twoToOneDim(x, y), x, y, false);
+
+		if (typeof neighbour === 'number') {
+			coord = util.oneToTwoDim(index);
+			coord.y -= neighbour;
+
+
+			this.redrawAt(ctx, util.twoToOneDim(coord.x, coord.y), coord.x, coord.y, true);
 		}
 	};
 
@@ -180,7 +206,7 @@ define([
 							break;
 
 						default:
-							scene.add(new Haunter(layer[j].x, layer[j].y, enemyId));
+							scene.add(new Dog(layer[j].x, layer[j].y, enemyId));
 							enemyId++;
 							break;
 					}
