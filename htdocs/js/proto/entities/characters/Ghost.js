@@ -47,16 +47,22 @@ define([
 
 	Ghost.prototype = new Enemy();
 
+
+	Ghost.prototype.getGoal = function getGoal(source, dist, angle) {
+		return new V2(source.x + Math.sin(angle) * dist, source.y - Math.cos(angle) * dist);
+	};
+
 	Ghost.prototype.throwEntity = function throwEntity() {
 		var center = this.getCenter(),
 			dist = 0.8,
 			len = game.scene.player.position.dist(center);
-			v = new V2(0, 0);
+			v = new V2(game.scene.player.position.x - center.x, game.scene.player.position.y - center.y);
 
-		v.x = center.x + (game.scene.player.position.x - center.x) * dist;
-		v.y = center.y + (game.scene.player.position.y - center.y) * dist;
+		len = len < 300 ? len : 300;
 
-		//console.log(len);
+		v = v.norm();
+		v = v.prd(len);
+		v = v.add(center);
 
 		if (game.lastUpdate - this.coolDown > (math.rand(2, 4) * 1000)) {
 			this.coolDown = game.lastUpdate;
