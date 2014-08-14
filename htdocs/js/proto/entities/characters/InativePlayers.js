@@ -79,9 +79,7 @@ define([
 
 		// dont walk into character-sprite
 		if (hyp > 50) {
-			if (!this.checkCollision(this.movement.prd(delta - this.speed), map)) {
-				this.position.add(this.movement);
-			}
+			this.position.add(this.movement);
 		} else {
 			// stop animation
 			this.movement.x = 0;

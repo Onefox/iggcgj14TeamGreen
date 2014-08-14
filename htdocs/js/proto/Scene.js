@@ -15,6 +15,7 @@ define([
 		this.view = null;
 		this.map = null;
 		this.inactivePlayer = null;
+		this.inactivePlayer2 = null;
 	};
 
 	Scene.prototype.click = function click(pos) {
