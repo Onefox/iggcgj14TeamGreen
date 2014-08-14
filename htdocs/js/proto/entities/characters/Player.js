@@ -6,8 +6,10 @@ define([
 	"proto/entities/characters/InativePlayers",
 	"proto/weapons/Rifle",
 	"proto/V2",
-	"helper/util"
-], function(config, mouse, Character, Enemy, InativePlayer, Rifle, V2, util) {
+	"helper/util",
+	"helper/dom",
+	"proto/entities/objects/Carry"
+], function(config, mouse, Character, Enemy, InativePlayer, Rifle, V2, util, dom, Carry) {
 	var Player = function Player() {
 		this.position = new V2(0, 0);
 		this.movement = new V2(0, 0);
@@ -42,6 +44,9 @@ define([
 		];
 
 		this.stunTimeout = 999;
+
+		// item currently in handy of character
+		this.carry = null;
 
 		this.setWeapon(0);
 		this.loadImage(this.name+'.png');
@@ -176,6 +181,10 @@ define([
 
 			var inactivePlayerBuffer = window.game.scene.inactivePlayer;
 			var inactivePlayerBuffer2 = window.game.scene.inactivePlayer2;
+			var elem = dom.get('indicator');
+
+			dom.removeClass(elem,this.name);
+			dom.removeClass(elem, "choosen");
 
 			window.game.scene.inactivePlayer = new InativePlayer(inactivePlayerBuffer2.position.x, inactivePlayerBuffer2.position.y);
 			window.game.scene.inactivePlayer.setName(inactivePlayerBuffer2.name);
@@ -190,6 +199,13 @@ define([
 			this.setName(inactivePlayerBuffer.name);
 			this.position.x = inactivePlayerBuffer.position.x;
 			this.position.y = inactivePlayerBuffer.position.y;
+
+			dom.addClass(elem, inactivePlayerBuffer.name);
+			setTimeout(function() {
+				dom.addClass(elem, "choosen");
+			}, 40);
+
+
 
 			// add new shadows
 			window.game.scene.add(window.game.scene.inactivePlayer);
@@ -227,8 +243,14 @@ define([
 			index = util.twoToOneDim(firstTileX, firstTileY);
 
 			if (util.tileCanBeThrown(window.game.scene.map.data.layers[2].data[index])) {
-				//tile = window.game.scene.map.data.layers[2].data[index];
+				// remove from map
 				window.game.scene.map.removeObject(index, 2);
+
+				// add sprite over olafs head
+				tile = window.game.scene.map.data.layers[2].data[index];
+
+				this.carry = new Carry(tile);
+
 			}
 	};
 
