@@ -61,10 +61,10 @@ define([
 		}
 	};
 
-	Ghost.prototype.updateThis = function updateThis() {
-		//if (this.mode === this.MODES.aggro) {
+	Ghost.prototype.updateThis = function updateThis(delta, map) {
+		if (this.mode === this.MODES.aggro) {
 			this.throwEntity();
-		//}
+		}
 	};
 
 	return Ghost;

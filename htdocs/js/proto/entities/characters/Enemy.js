@@ -153,7 +153,7 @@ define([
 
 
 		if (this.updateThis) {
-			this.updateThis();
+			this.updateThis(delta, map);
 		}
 	};
 
