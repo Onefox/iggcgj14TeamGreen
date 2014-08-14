@@ -43,6 +43,10 @@ define([
 
 		rad_to_deg: function rad_to_deg(rad) {
 			return rad * (180 / Math.PI);
+		},
+
+		bound: function bound(num, min, max) {
+			return Math.min(Math.max(num, min), max);
 		}
 	};
 

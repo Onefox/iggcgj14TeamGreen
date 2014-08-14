@@ -5,10 +5,11 @@ define([
 	"proto/entities/characters/Enemy",
 	"proto/entities/characters/Ghost",
 	"proto/entities/characters/Wraith",
+	"proto/entities/characters/Haunter",
 	"proto/V2",
 	"helper/util",
 	"proto/entities/characters/InativePlayers"
-], function(config, path, image, Enemy, Ghost, Wraith, V2, util, InactivePlayer) {
+], function(config, path, image, Enemy, Ghost, Wraith, Haunter, V2, util, InactivePlayer) {
 	var Map = function Map(data, scene) {
 		this.data = data;
 

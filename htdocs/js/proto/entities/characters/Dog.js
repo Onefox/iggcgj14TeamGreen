@@ -7,15 +7,15 @@ define([
 	"proto/entities/characters/Enemy",
 	"proto/entities/bullets/Grenade",
 ], function(math, AnimationSprite, Character, Framecounter, V2, Enemy, Grenade) {
-	var Wraith = function Wraith(x, y) {
+	var Dog = function Dog(x, y) {
 		this.position = new V2(x, y);
 
 		// current coordinates
 		this.x = null;
 		this.y = null;
 
-		this.characterWidth = 63;
-		this.characterHeight = 102;
+		//this.characterWidth = 63;
+		//this.characterHeight = 102;
 
 		// collision-box
 		this.width = 40;
@@ -39,35 +39,20 @@ define([
 
 		this.c = new Framecounter(100);
 
-		this.loadImage('wraith.png');
+		this.loadImage('enemy.png');
 
-		this.coolDown = new Date();
-
-		this.frames = 3;
-
-		this.alpha = 0.5;
+		//this.frames = 3;
 	};
 
-	Wraith.prototype = new Enemy();
+	Dog.prototype = new Enemy();
 
-	Wraith.prototype.updateThis = function updateThis(delta, map) {
-		//this.drawFlag = true; //this.mode === this.MODES.aggro;
+	Dog.prototype.updateThis = function updateThis(delta, map) {
+		var collision = this.checkCollision(this.movement.prd(delta - this.speed), map);
 
-
-		if (this.mode !== this.MODES.normal) {
-			this.alpha += delta / 200;
-		} else {
-			this.alpha -= delta / 200;
-		}
-
-		this.alpha = math.bound(this.alpha, 0, 1);
-
-		if (this.alpha > 0) {
-			this.drawFlag = true;
-		} else {
-			this.drawFlag = false;
+		if (collision) {
+			// do damage, then dissapear
 		}
 	};
 
-	return Wraith;
+	return Dog;
 });

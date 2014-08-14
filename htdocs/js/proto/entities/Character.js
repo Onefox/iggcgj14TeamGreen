@@ -13,6 +13,7 @@ define([
 		this.c = new Framecounter(60);
 		this.drawFlag = true;
 		this.frames = 4;
+		this.alpha = 1;
 	};
 
 	Character.prototype = new Entity();
@@ -45,7 +46,11 @@ define([
 				xOffset = +3;
 			}
 
+			//ctx.save();
+			ctx.globalAlpha = this.alpha;
 			ctx.drawImage(this.img, (this.c.frame % this.frames) * this.characterWidth, this.direction * this.characterHeight, this.characterWidth, this.characterHeight, pos.x - view.getX(), pos.y - view.getY(), this.characterWidth, this.characterHeight);
+			//ctx.restore();
+			ctx.globalAlpha = 1;
 		}
 	};
 
