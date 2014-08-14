@@ -54,7 +54,7 @@ define([
 			this.weapon.update(delta);
 		}
 
-		pos = this.position.dif(new V2(view.getX(), view.getY())).dif(mouse);
+		/*pos = this.position.dif(new V2(view.getX(), view.getY())).dif(mouse);
 
 		if (Math.abs(pos.x) > Math.abs(pos.y)) {
 			if (pos.x > 0) {
@@ -68,11 +68,14 @@ define([
 			} else {
 				this.direction = 0;
 			}
-		}
+		}*/
 
 
 
 		window.game.scene.inactivePlayer.setMasterPosition(this.position);
+
+		window.game.scene.inactivePlayer2.setMasterPosition(window.game.scene.inactivePlayer.position);
+
 		//window.game.scene.inactivePlayer.setMasterSpeed(this.speed);
 
 		// player aggro when near
@@ -98,22 +101,26 @@ define([
 
 		if (key == 'left') {
 			this.movement.x = -this.speed;
-			//this.direction = 2;
+			this.movement.y = 0;
+			this.direction = 1;
 		}
 
 		if (key == 'right') {
 			this.movement.x = this.speed;
-			//this.direction = 3;
+			this.movement.y = 0;
+			this.direction = 2;
 		}
 
 		if (key == 'up') {
 			this.movement.y = -this.speed;
-			//this.direction = 1;
+			this.movement.x = 0;
+			this.direction = 3;
 		}
 
 		if (key == 'down') {
 			this.movement.y = this.speed;
-			//this.direction = 0;
+			this.movement.x = 0;
+			this.direction = 0;
 		}
 
 		if (key > 0 && key <= this.weapons.length) {
