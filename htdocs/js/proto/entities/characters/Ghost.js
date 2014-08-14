@@ -23,8 +23,8 @@ define([
 		this.height = 60;
 
 		// sprite-size
-		//this.characterWidth = 80;
-		//this.characterHeight = 80;
+		this.characterWidth = 63;
+		this.characterHeight = 102;
 
 		this.angle = Math.random() * Math.PI * 2;
 
@@ -40,7 +40,7 @@ define([
 
 		this.c = new Framecounter(100);
 
-		this.loadImage('enemy.png');
+		this.loadImage('ghost.png');
 
 		this.coolDown = new Date();
 	};
@@ -74,6 +74,9 @@ define([
 		if (this.mode === this.MODES.aggro) {
 			this.throwEntity();
 		}
+
+		// ghost only knows one direction -> overwrite here
+		this.direction = 0;
 	};
 
 	return Ghost;
