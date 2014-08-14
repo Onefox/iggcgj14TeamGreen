@@ -28,6 +28,16 @@ define([
 		}
 	};
 
+	Scene.prototype.getChar = function getChar(name) {
+		if (this.player.name === name) {
+			return this.player;
+		} else if (this.inactivePlayer.name === name) {
+			return this.inactivePlayer;
+		} else if (this.inactivePlayer2.name === name) {
+			return this.inactivePlayer2;
+		}
+	};
+
 	Scene.prototype.mousedown = function mousedown(pos) {
 		var i;
 

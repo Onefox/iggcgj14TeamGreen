@@ -13,6 +13,7 @@ define([
 		this.characterWidth = 60;
 		this.characterHeight = 78;
 		this.name = 'jerome';
+		this.light = 0;
 
 		this.width = 40;
 		this.height = 60;
@@ -22,7 +23,7 @@ define([
 			'normal': 0.3
 		};
 		this.actionTimer = 0;
-		this.ACTIONTIME = 10000;
+		this.ACTIONTIME = 3000;
 
 		this.MODES = {
 			normal: 'normal',
@@ -199,14 +200,15 @@ define([
 	};
 
 	Player.prototype.action1 = function action1() {
+		this.actionTimer = this.ACTIONTIME;
 		switch(this.name) {
 			case 'olaf':
 				break;
 			case 'jerome':
+				this.light = 200;
 				break;
 			case 'lina':
 				this.speed = this.SPEEDS.boost;
-				this.actionTimer = this.ACTIONTIME;
 				window.game.scene.inactivePlayer.speed = this.speed*33;
 				window.game.scene.inactivePlayer2.speed = this.speed*33;
 				break;
@@ -216,10 +218,13 @@ define([
 		}
 	};
 	Player.prototype.removeAction1 = function removeAction1() {
+		// TODO: Set cooldown!!
 		switch(this.name) {
 			case 'olaf':
 				break;
 			case 'jerome':
+				this.light = 0;
+				this.actionTimer = 0;
 				break;
 			case 'lina':
 				this.speed = this.SPEEDS.normal;

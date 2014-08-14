@@ -92,7 +92,7 @@ define([
 	};
 
 	View.prototype.drawLight = function drawLight() {
-		var pos = game.scene.player.position,
+		var pos = game.scene.getChar('jerome').position,
 			width = 800,
 			height = 600,
 			x = ~~(pos.x - (width / 2) - this.getX()) + 30,
@@ -107,9 +107,9 @@ define([
 
 		//this.ctx.rect(0, 0, config.screenWidth, config.screenHeight);
 		this.ctx.fillRect(0, 0, config.screenWidth, config.screenHeight);
-		this.ctx.clearRect(x + this.flicker, y + this.flicker, width, height);
+		this.ctx.clearRect(x + this.flicker , y + this.flicker, width, height);
 
-		this.ctx.drawImage(this.img, x + this.flicker , y + this.flicker, this.flicker * width, this.flicker * height);
+		this.ctx.drawImage(this.img, x + this.flicker - game.scene.player.light, y + this.flicker - game.scene.player.light, this.flicker * (width + game.scene.player.light*2), this.flicker * (height + game.scene.player.light*2));
 	};
 
 	return View;
