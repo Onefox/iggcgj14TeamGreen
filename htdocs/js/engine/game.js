@@ -65,9 +65,9 @@ define([
 			this.fps = this.frames;
 			this.frames = 0;
 
-			/*if (config.debug) {
+			if (config.debug) {
 				dom.get('fps').innerHTML = this.fps;
-			}*/
+			}
 		},
 
 		loop: function loop() {

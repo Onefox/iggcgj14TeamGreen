@@ -71,7 +71,7 @@ define([
 
 		// camera changed (only when min max change?)
 		//if (this.p1.x !== this.lastP1.x && this.p1.y !== this.lastP1.y) {
-			this.drawLight();
+			//this.drawLight();
 
 			//this.lastP1.x = this.p1.x;
 			//this.lastP1.y = this.p1.y;

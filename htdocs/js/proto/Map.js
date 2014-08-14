@@ -3,10 +3,11 @@ define([
 	"engine/path",
 	"modules/image",
 	"proto/entities/characters/Enemy",
+	"proto/entities/characters/Ghost",
 	"proto/V2",
 	"helper/util",
 	"proto/entities/characters/InativePlayers"
-], function(config, path, image, Enemy, V2, util, InactivePlayer) {
+], function(config, path, image, Enemy, Ghost, V2, util, InactivePlayer) {
 	var Map = function Map(data, scene) {
 		this.data = data;
 
@@ -177,7 +178,7 @@ define([
 							break;
 
 						default:
-							scene.add(new Enemy(layer[j].x, layer[j].y));
+							scene.add(new Ghost(layer[j].x, layer[j].y));
 							break;
 					}
 

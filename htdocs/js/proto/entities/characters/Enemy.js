@@ -115,7 +115,7 @@ define([
 					hyp = movement.normFac();
 
 				// dont walk into character-sprite
-				if (hyp > 20) {
+				if (hyp > 200) {
 					movement = movement.div(hyp);
 					this.movement = movement.mul(this.speed);
 
@@ -149,6 +149,11 @@ define([
 			} else {
 				this.direction = 2;
 			}
+		}
+
+
+		if (this.updateThis) {
+			this.updateThis();
 		}
 	};
 
