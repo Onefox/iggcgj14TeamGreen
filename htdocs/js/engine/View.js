@@ -11,8 +11,9 @@ define([
 		this.height = height;
 		this.map = map;
 		this.ctx = null;
-		//this.lastP1 = new V2(0, 0);
 		this.flicker = 1;
+
+		this.img = image.getImage("light.png");
 
 		this.init();
 	};
@@ -46,6 +47,8 @@ define([
 	};
 
 	View.prototype.update = function update() {
+		//var diff = game.scene.player.position.dif(game.scene.view.p1);
+
 		this.p1 = new V2(this.width / -2, this.height/ -2);
 
 		this.p1.add(this.subject.position);
@@ -68,14 +71,24 @@ define([
 			this.p1.y = (this.p2.y = this.map.getHeight()) - this.height;
 		}
 
-
 		// camera changed (only when min max change?)
-		//if (this.p1.x !== this.lastP1.x && this.p1.y !== this.lastP1.y) {
-			//this.drawLight();
+		//console.log(diff.x, config.screenWidth / 2, diff.y, config.screenHeight / 2)
+		/*if (diff.x !== (config.screenWidth / 2) || diff.y !== (config.screenHeight / 2)) {
+			if (game.scene.player.movement.x !== 0 || game.scene.player.movement.y !== 0) {
+				this.drawLight();
+				console.log('draw');
+			}
+		}*/
 
-			//this.lastP1.x = this.p1.x;
-			//this.lastP1.y = this.p1.y;
-		//}
+		// TODO if player not center redraw.
+		//if (this.p1.x !== this.lastP1.x || this.p1.y !== this.lastP1.y || this.p2.x !== this.lastP2.x || this.p2.y !== this.lastP2.y) {
+			this.drawLight();
+
+		/*	this.lastP1.x = this.p1.x;
+			this.lastP1.y = this.p1.y;
+			this.lastP2.x = this.p2.x;
+			this.lastP2.y = this.p2.y;
+		}*/
 	};
 
 	View.prototype.drawLight = function drawLight() {
@@ -92,11 +105,11 @@ define([
 			}
 		}
 
-		this.ctx.rect(0, 0, config.screenWidth, config.screenHeight);
-		this.ctx.fill();
+		//this.ctx.rect(0, 0, config.screenWidth, config.screenHeight);
+		this.ctx.fillRect(0, 0, config.screenWidth, config.screenHeight);
 		this.ctx.clearRect(x + this.flicker, y + this.flicker, width, height);
 
-		this.ctx.drawImage(image.getImage("light.png"), x + this.flicker , y + this.flicker, this.flicker * width, this.flicker * height);
+		this.ctx.drawImage(this.img, x + this.flicker , y + this.flicker, this.flicker * width, this.flicker * height);
 	};
 
 	return View;
