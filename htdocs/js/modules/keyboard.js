@@ -52,6 +52,9 @@ define([
 				case 70:
 					this.emit( type, 'switch' );
 					break;
+				case 69:
+					this.emit( type, 'e_use' );
+					break;
 
 
 				//Weapons

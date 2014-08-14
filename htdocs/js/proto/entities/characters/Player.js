@@ -17,8 +17,14 @@ define([
 		this.width = 40;
 		this.height = 60;
 		this.color = 'black';
-		this.speed = 0.3;
+		this.SPEEDS = {
+			'boost': 0.3*1.5,
+			'normal': 0.3
+		};
+		this.actionTimer = 0;
+		this.ACTIONTIME = 10000;
 
+		this.speed = this.SPEEDS.normal;
 		// current coordinates
 		this.x = 0;
 		this.y = 0;
@@ -38,6 +44,13 @@ define([
 			dist,
 			pos,
 			i;
+
+		if (this.actionTimer > 0) {
+			this.actionTimer -= delta;
+			if (this.actionTimer < 0) {
+				this.removeAction1();
+			}
+		}
 
 		if (this.movement.x || this.movement.y) {
 			this.updateSprite(delta);
@@ -148,6 +161,8 @@ define([
 			console.log("inactivePlayer");
 			window.game.scene.inactivePlayer2.setName(this.name);
 
+			this.removeAction1();
+
 			this.setName(inactivePlayerBuffer.name);
 			this.position.x = inactivePlayerBuffer.position.x;
 			this.position.y = inactivePlayerBuffer.position.y;
@@ -155,7 +170,44 @@ define([
 			// add new shadows
 			window.game.scene.add(window.game.scene.inactivePlayer);
 			window.game.scene.add(window.game.scene.inactivePlayer2);
+		}
+		if (key == 'e_use') {
+			this.action1();
+		}
+	};
 
+	Player.prototype.action1 = function action1() {
+		switch(this.name) {
+			case 'olaf':
+				break;
+			case 'jerome':
+				break;
+			case 'lina':
+				this.speed = this.SPEEDS.boost;
+				this.actionTimer = this.ACTIONTIME;
+				window.game.scene.inactivePlayer.speed = this.speed*33;
+				window.game.scene.inactivePlayer2.speed = this.speed*33;
+				break;
+			default:
+				console.log('wrong name?');
+				break;
+		}
+	};
+	Player.prototype.removeAction1 = function removeAction1() {
+		switch(this.name) {
+			case 'olaf':
+				break;
+			case 'jerome':
+				break;
+			case 'lina':
+				this.speed = this.SPEEDS.normal;
+				this.actionTimer = 0;
+				window.game.scene.inactivePlayer.speed = this.speed*33;
+				window.game.scene.inactivePlayer2.speed = this.speed*33;
+				break;
+			default:
+				console.log('wrong name?');
+				break;
 		}
 	};
 
