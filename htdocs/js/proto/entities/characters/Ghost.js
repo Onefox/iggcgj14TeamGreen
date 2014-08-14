@@ -47,22 +47,24 @@ define([
 	Ghost.prototype.throwEntity = function throwEntity() {
 		var center = this.getCenter(),
 			dist = 0.8,
+			len = game.scene.player.position.dist(center);
 			v = new V2(0, 0);
 
-		v.x = center.x + (game.scene.player.position.x + game.scene.view.getX() - center.x) * dist;
-		v.y = center.y + (game.scene.player.position.y + game.scene.view.getY() - center.y) * dist;
+		v.x = center.x + (game.scene.player.position.x - center.x) * dist;
+		v.y = center.y + (game.scene.player.position.y - center.y) * dist;
 
+		//console.log(len);
 
 		if (game.lastUpdate - this.coolDown > (math.rand(2, 4) * 1000)) {
 			this.coolDown = game.lastUpdate;
-			//this.scene.add(new Grenade(center.x - 18, center.y - 17, v.x, v.y));
+			this.scene.add(new Grenade(center.x - 18, center.y - 17, v.x, v.y));
 		}
 	};
 
 	Ghost.prototype.updateThis = function updateThis() {
-		if (this.mode === this.MODES.aggro) {
+		//if (this.mode === this.MODES.aggro) {
 			this.throwEntity();
-		}
+		//}
 	};
 
 	return Ghost;

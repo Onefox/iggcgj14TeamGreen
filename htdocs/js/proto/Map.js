@@ -71,7 +71,7 @@ define([
 	};
 
 	Map.prototype.drawTile = function drawTile(index, layer) {
-		var ctx = layer < 3 ? this.below.getContext('2d') : this.above.getContext('2d'),
+		var ctx = layer < 4 ? this.below.getContext('2d') : this.above.getContext('2d'),
 			tileset = this.data.tilesets[0],
 			tile = this.data.layers[layer].data[index] - 1,
 			x = index % this.data.width,
@@ -93,12 +93,11 @@ define([
 				ctx.textAlign = "center";
 				ctx.fillText(x + " | " + y, x * this.tileWidth + 16, y * this.tileHeight + 18);
 			}*/
-
 		}
 	};
 
 	Map.prototype.removeObject = function removeObject(index, layer) {
-		var ctx = layer < 3 ? this.below.getContext('2d') : this.above.getContext('2d'),
+		var ctx = layer < 4 ? this.below.getContext('2d') : this.above.getContext('2d'),
 			tileset = this.data.tilesets[0],
 			tile = this.data.layers[layer].data[index] - 1,
 			x = index % this.data.width,
@@ -179,7 +178,7 @@ define([
 							break;
 
 						default:
-							scene.add(new Ghost(layer[j].x, layer[j].y));
+							scene.add(new Wraith(layer[j].x, layer[j].y));
 							break;
 					}
 

@@ -14,6 +14,9 @@ define([
 		this.x = null;
 		this.y = null;
 
+		this.characterWidth = 63;
+		this.characterHeight = 102;
+
 		// collision-box
 		this.width = 40;
 		this.height = 60;
@@ -38,9 +41,11 @@ define([
 
 		this.c = new Framecounter(100);
 
-		this.loadImage('enemy.png');
+		this.loadImage('wraith.png');
 
 		this.coolDown = new Date();
+
+		this.frames = 3;
 	};
 
 	Wraith.prototype = new Enemy();

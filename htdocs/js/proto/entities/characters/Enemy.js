@@ -139,15 +139,15 @@ define([
 
 		if (Math.abs(this.movement.x) > Math.abs(this.movement.y)) {
 			if (this.movement.x > 0 ) {
-				this.direction = 1;
+				this.direction = 2;
 			} else {
-				this.direction = 0;
+				this.direction = 1;
 			}
 		} else {
 			if (this.movement.y > 0) {
-				this.direction = 3;
+				this.direction = 0;
 			} else {
-				this.direction = 2;
+				this.direction = 3;
 			}
 		}
 
