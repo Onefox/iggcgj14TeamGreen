@@ -118,6 +118,7 @@ define([
 	Map.prototype.init = function init(data, scene) {
 		var tw = this.tileWidth = this.data.tilewidth,
 			th = this.tileHeight = this.data.tileheight,
+			enemyId = 0,
 			that = this,
 			tileset,
 			layer,
@@ -179,7 +180,8 @@ define([
 							break;
 
 						default:
-							scene.add(new Wraith(layer[j].x, layer[j].y));
+							scene.add(new Haunter(layer[j].x, layer[j].y, enemyId));
+							enemyId++;
 							break;
 					}
 

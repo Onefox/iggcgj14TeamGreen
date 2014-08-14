@@ -6,12 +6,16 @@ define([
 	"proto/Framecounter",
 	"proto/V2"
 ], function(path, math, AnimationSprite, Character, Framecounter, V2) {
-	var Enemy = function Enemy(x, y) {
+	var Enemy = function Enemy(x, y, id) {
 		this.position = new V2(x, y);
+		this.spawn = new V2(x, y);
+
 
 		// current coordinates
 		this.x = null;
 		this.y = null;
+
+		this.id = id;
 
 		// collision-box
 		this.width = 40;
@@ -177,6 +181,11 @@ define([
 				//this.calcPath();
 				break;
 		}
+	};
+
+	Enemy.prototype.respawn = function respawn() {
+		this.position.x = this.spawn.x;
+		this.position.y = this.spawn.y;
 	};
 
 	/*Enemy.prototype.calcPath = function calcPath() {

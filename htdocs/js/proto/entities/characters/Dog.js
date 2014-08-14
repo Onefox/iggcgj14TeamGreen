@@ -7,12 +7,15 @@ define([
 	"proto/entities/characters/Enemy",
 	"proto/entities/bullets/Grenade",
 ], function(math, AnimationSprite, Character, Framecounter, V2, Enemy, Grenade) {
-	var Dog = function Dog(x, y) {
+	var Dog = function Dog(x, y, id) {
 		this.position = new V2(x, y);
+		this.spawn = new V2(x, y);
 
 		// current coordinates
 		this.x = null;
 		this.y = null;
+
+		this.id = id;
 
 		//this.characterWidth = 63;
 		//this.characterHeight = 102;

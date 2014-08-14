@@ -5,14 +5,18 @@ define([
 	"proto/Framecounter",
 	"proto/V2",
 	"proto/entities/characters/Enemy",
+	"proto/entities/characters/Player",
 	"proto/entities/bullets/Grenade",
-], function(math, AnimationSprite, Character, Framecounter, V2, Enemy, Grenade) {
-	var Haunter = function Haunter(x, y) {
+], function(math, AnimationSprite, Character, Framecounter, V2, Enemy, Player, Grenade) {
+	var Haunter = function Haunter(x, y, id) {
 		this.position = new V2(x, y);
+		this.spawn = new V2(x, y);
 
 		// current coordinates
 		this.x = null;
 		this.y = null;
+
+		this.id = id;
 
 		//this.characterWidth = 63;
 		//this.characterHeight = 102;
@@ -47,10 +51,25 @@ define([
 	Haunter.prototype = new Enemy();
 
 	Haunter.prototype.updateThis = function updateThis(delta, map) {
-		var collision = this.checkCollision(this.movement.prd(delta - this.speed), map);
+		var i,
+			entities = game.scene.entities;
+			hitbox = this.getHibox();
 
-		if (collision) {
-			// PLAYER STUNNED
+		// check whether player hit the hunter -> stunn player
+		for (i = 0; i < entities.length; i++){
+			if (entities[i] instanceof Player) {
+				if (entities[i].y > hitbox.p2.y) {
+					break;
+				}
+
+				if (entities[i].getHibox().collision(hitbox)) {
+					this.test = true;
+					game.scene.player.setMode("stunned");
+
+					// let enemy respawn
+					this.respawn();
+				}
+			}
 		}
 	};
 

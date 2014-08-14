@@ -18,12 +18,18 @@ define([
 		this.height = 60;
 		this.color = 'black';
 		this.SPEEDS = {
-			'boost': 0.3*1.5,
+			'boost': 0.3 * 1.5,
 			'normal': 0.3
 		};
 		this.actionTimer = 0;
 		this.ACTIONTIME = 10000;
 
+		this.MODES = {
+			normal: 'normal',
+			stunned: 'stunned'
+		};
+
+		this.mode = this.MODES.normal;
 		this.speed = this.SPEEDS.normal;
 		// current coordinates
 		this.x = 0;
@@ -33,17 +39,37 @@ define([
 			new Rifle(this)
 		];
 
+		this.stunTimeout = 999;
+
 		this.setWeapon(0);
 		this.loadImage(this.name+'.png');
 	};
 
 	Player.prototype = new Character();
 
+	Player.prototype.setMode = function setMode(mode) {
+		this.mode = this.MODES[mode];
+
+		if (this.mode === this.MODES.stunned) {
+			this.stunTimeout = 2000;
+		}
+	};
+
 	Player.prototype.update = function update(delta, map) {
 		var view = this.scene.view,
 			dist,
 			pos,
 			i;
+
+		// is stunned
+		if (this.mode === this.MODES.stunned) {
+			this.stunTimeout -= delta;
+
+			// set mode back to normal
+			if (this.stunTimeout <= 0) {
+				this.setMode("normal");
+			}
+		}
 
 		if (this.actionTimer > 0) {
 			this.actionTimer -= delta;
@@ -59,10 +85,6 @@ define([
 		} else {
 			this.c.frame = 0;
 		}
-
-
-
-
 
 		this.checkCollision(this.movement.prd(delta), map);
 
@@ -85,8 +107,6 @@ define([
 				this.direction = 0;
 			}
 		}*/
-
-
 
 		window.game.scene.inactivePlayer.setMasterPosition(this.position);
 
@@ -113,7 +133,9 @@ define([
 	};
 
 	Player.prototype.down = function down(key) {
-
+		if (this.mode === this.MODES.stunned) {
+			return;
+		}
 
 		if (key == 'left') {
 			this.movement.x = -this.speed;
