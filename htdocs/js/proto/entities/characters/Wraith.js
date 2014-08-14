@@ -1,5 +1,4 @@
 define([
-	"engine/path",
 	"helper/math",
 	"proto/AnimationSprite",
 	"proto/entities/Character",
@@ -7,8 +6,8 @@ define([
 	"proto/V2",
 	"proto/entities/characters/Enemy",
 	"proto/entities/bullets/Grenade",
-], function(path, math, AnimationSprite, Character, Framecounter, V2, Enemy, Grenade) {
-	var Ghost = function Ghost(x, y) {
+], function(math, AnimationSprite, Character, Framecounter, V2, Enemy, Grenade) {
+	var Wraith = function Wraith(x, y) {
 		this.position = new V2(x, y);
 
 		// current coordinates
@@ -33,6 +32,8 @@ define([
 		// source of mode (i.e. grenade destination/ explosion)
 		this.source = new V2(0,0);
 
+		this.spriteId = (1 + Math.random() * 5 | 0);
+
 		//this.bloodSprites = new AnimationSprite('bloodStains.png', 4);
 
 		this.c = new Framecounter(100);
@@ -42,28 +43,11 @@ define([
 		this.coolDown = new Date();
 	};
 
-	Ghost.prototype = new Enemy();
+	Wraith.prototype = new Enemy();
 
-	Ghost.prototype.throwEntity = function throwEntity() {
-		var center = this.getCenter(),
-			dist = 0.8,
-			v = new V2(0, 0);
-
-		v.x = center.x + (game.scene.player.position.x + game.scene.view.getX() - center.x) * dist;
-		v.y = center.y + (game.scene.player.position.y + game.scene.view.getY() - center.y) * dist;
-
-
-		if (game.lastUpdate - this.coolDown > (math.rand(2, 4) * 1000)) {
-			this.coolDown = game.lastUpdate;
-			//this.scene.add(new Grenade(center.x - 18, center.y - 17, v.x, v.y));
-		}
+	Wraith.prototype.updateThis = function updateThis() {
+		this.drawFlag = this.mode === this.MODES.aggro;
 	};
 
-	Ghost.prototype.updateThis = function updateThis() {
-		if (this.mode === this.MODES.aggro) {
-			this.throwEntity();
-		}
-	};
-
-	return Ghost;
+	return Wraith;
 });

@@ -17,7 +17,11 @@ require([
 	'modules/image',
 	'modules/keyboard',
 ], function(config, game, dom, image, keyboard) {
-	var imgList = ['player.png', 'elorzms.png', 'enemy.png', 'jerome.png', 'light.png', 'grenade.png', 'lina.png', 'olaf.png', 'sprite_sheet_props.png'];
+<<<<<<< Updated upstream
+	var imgList = ['player.png', 'elorzms.png', 'enemy.png', 'jerome.png', 'light.png', 'grenade.png', 'lina.png', 'olaf.png' , 'sprite_sheet_props.png'];
+=======
+	var imgList = ['player.png', 'elorzms.png', 'enemy.png', 'jerome.png', 'light.png', 'grenade.png', 'lina.png', 'sprite_sheet_props.png'];
+>>>>>>> Stashed changes
 
 	// request-animation-frame-polyfill
 	window.requestAnimFrame = (function() {

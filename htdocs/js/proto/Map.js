@@ -4,10 +4,11 @@ define([
 	"modules/image",
 	"proto/entities/characters/Enemy",
 	"proto/entities/characters/Ghost",
+	"proto/entities/characters/Wraith",
 	"proto/V2",
 	"helper/util",
 	"proto/entities/characters/InativePlayers"
-], function(config, path, image, Enemy, Ghost, V2, util, InactivePlayer) {
+], function(config, path, image, Enemy, Ghost, Wraith, V2, util, InactivePlayer) {
 	var Map = function Map(data, scene) {
 		this.data = data;
 
@@ -81,7 +82,7 @@ define([
 			ctx.drawImage(image.getImage(tileset.image), (tile % tileset.width) * this.tileWidth, Math.floor(tile / tileset.width) * this.tileHeight, this.tileWidth, this.tileHeight, x * this.tileWidth, y * this.tileHeight, this.tileWidth, this.tileHeight);
 
 			// tile coordinates
-			if (config.debug) {
+			/*if (config.debug) {
 				ctx.font = "8px Arial";
 				ctx.fillStyle = "black";
 
@@ -91,7 +92,7 @@ define([
 
 				ctx.textAlign = "center";
 				ctx.fillText(x + " | " + y, x * this.tileWidth + 16, y * this.tileHeight + 18);
-			}
+			}*/
 
 		}
 	};

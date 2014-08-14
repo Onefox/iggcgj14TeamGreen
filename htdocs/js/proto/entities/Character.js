@@ -11,6 +11,7 @@ define([
 		this.direction = 0;
 		this.offset = null;
 		this.c = new Framecounter(60);
+		this.drawFlag = true;
 	};
 
 	Character.prototype = new Entity();
@@ -29,7 +30,7 @@ define([
 			imgBox,
 			pos;
 
-		if (!this.img) {
+		if (!this.img || this.drawFlag === false) {
 			return;
 		}
 
