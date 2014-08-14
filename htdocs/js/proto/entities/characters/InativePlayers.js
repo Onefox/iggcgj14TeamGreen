@@ -16,21 +16,13 @@ define([
 		// collision-box
 		this.width = 40;
 		this.height = 60;
+		this.name = 'lina';
 
 		// sprite-size
-		//this.characterWidth = 80;
-		//this.characterHeight = 80;
+		this.characterWidth = 60;
+		this.characterHeight = 78;
 
-		this.angle = Math.random() * Math.PI * 2;
-
-		this.MODES = {
-			normal: 'normal',
-			panic: 'panic',
-			aggro: 'aggro'
-		};
-
-		this.mode = this.MODES.aggro;
-		this.speed = 10; // will be set from the master Player
+		this.speed = 10;
 
 		this.turn = 0;
 
@@ -43,8 +35,8 @@ define([
 
 		this.c = new Framecounter(100);
 
-		this.loadImage('victim' + this.spriteId + '_panic.png');
-		this.loadImage('enemy.png');
+
+		this.loadImage(this.name+'.png');
 	};
 
 	InactivePlayer.prototype = new Character();
@@ -65,15 +57,15 @@ define([
 		this.movement = movement.mul(this.speed);
 		if (Math.abs(this.movement.x) > Math.abs(this.movement.y)) {
 			if (this.movement.x > 0 ) {
-				this.direction = 1;
+				this.direction = 2;
 			} else {
-				this.direction = 0;
+				this.direction = 1;
 			}
 		} else {
 			if (this.movement.y > 0) {
-				this.direction = 3;
+				this.direction = 0;
 			} else {
-				this.direction = 2;
+				this.direction = 3;
 			}
 		}
 
@@ -118,6 +110,14 @@ define([
 	 */
 	InactivePlayer.prototype.setMasterPosition = function setMasterPosition(pos) {
 		this.target = pos;
+	};
+	/**
+	 * Set the name
+	 */
+	InactivePlayer.prototype.setName = function setName(name) {
+		console.log(name);
+		this.name = name;
+		this.loadImage(name+'.png');
 	};
 
 	return InactivePlayer;

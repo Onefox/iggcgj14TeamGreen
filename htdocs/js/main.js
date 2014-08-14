@@ -17,7 +17,7 @@ require([
 	'modules/image',
 	'modules/keyboard',
 ], function(config, game, dom, image, keyboard) {
-	var imgList = ['player.png', 'elorzms.png', 'enemy.png', 'jerome.png', 'light.png', 'grenade.png'];
+	var imgList = ['player.png', 'elorzms.png', 'enemy.png', 'jerome.png', 'light.png', 'grenade.png', 'lina.png'];
 
 	// request-animation-frame-polyfill
 	window.requestAnimFrame = (function() {

@@ -49,6 +49,10 @@ define([
 				case 68:
 					this.emit( type, 'right' );
 					break;
+				case 18:
+					this.emit( type, 'switch' );
+					break;
+
 
 				//Weapons
 				/*case 49: this.emit( type, 1 ); break;

@@ -3,14 +3,16 @@ define([
 	"modules/mouse",
 	"proto/entities/Character",
 	"proto/entities/characters/Enemy",
+	"proto/entities/characters/InativePlayers",
 	"proto/weapons/Rifle",
 	"proto/V2"
-], function(config, mouse, Character, Enemy, Rifle, V2) {
+], function(config, mouse, Character, Enemy, InativePlayer, Rifle, V2) {
 	var Player = function Player() {
 		this.position = new V2(0, 0);
 		this.movement = new V2(0, 0);
 		this.characterWidth = 60;
 		this.characterHeight = 78;
+		this.name = 'jerome';
 
 		this.width = 40;
 		this.height = 60;
@@ -26,6 +28,7 @@ define([
 		];
 
 		this.setWeapon(0);
+		this.loadImage(this.name+'.png');
 	};
 
 	Player.prototype = new Character();
@@ -126,6 +129,34 @@ define([
 		if (key > 0 && key <= this.weapons.length) {
 			this.setWeapon(key - 1);
 		}
+		if (key == 'switch') {
+			console.log("changePlayer");
+			//player2 to player1 and player to player2  and player1 to player
+
+			// remove old shadows
+			window.game.scene.remove(window.game.scene.inactivePlayer);
+			window.game.scene.remove(window.game.scene.inactivePlayer2);
+
+			var inactivePlayerBuffer = window.game.scene.inactivePlayer;
+			var inactivePlayerBuffer2 = window.game.scene.inactivePlayer2;
+
+			window.game.scene.inactivePlayer = new InativePlayer(inactivePlayerBuffer2.position.x, inactivePlayerBuffer2.position.y);
+			window.game.scene.inactivePlayer.setName(inactivePlayerBuffer2.name);
+
+			window.game.scene.inactivePlayer2 = new InativePlayer(this.position.x, this.position.y);
+			console.log(this.name);
+			console.log("inactivePlayer");
+			window.game.scene.inactivePlayer2.setName(this.name);
+
+			this.setName(inactivePlayerBuffer.name);
+			this.position.x = inactivePlayerBuffer.position.x;
+			this.position.y = inactivePlayerBuffer.position.y;
+
+			// add new shadows
+			window.game.scene.add(window.game.scene.inactivePlayer);
+			window.game.scene.add(window.game.scene.inactivePlayer2);
+
+		}
 	};
 
 	Player.prototype.up = function up ( key ) {
@@ -154,12 +185,12 @@ define([
 	Player.prototype.setWeapon = function setWeapon(i) {
 		this.weapon = this.weapons[i];
 
-		this.loadImage( [
+		/*this.loadImage( [
 			'jerome.png',
 			'heroThrower.png',
 			'hero.png',
 			'hero.png',
-		][i]);
+		][i]);*/
 	};
 
 	Player.prototype.checkCollision = function checkCollision(move, map) {
@@ -276,6 +307,14 @@ define([
 			this.weapon.stop();
 		}
 	};
+	/**
+	 * Set the name
+	 */
+	Player.prototype.setName = function setName(name) {
+		this.name = name;
+		this.loadImage(name+'.png');
+	};
+
 
 	return Player;
 });
