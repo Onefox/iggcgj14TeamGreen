@@ -49,7 +49,7 @@ define([
 				case 68:
 					this.emit( type, 'right' );
 					break;
-				case 18:
+				case 70:
 					this.emit( type, 'switch' );
 					break;
 

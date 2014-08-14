@@ -163,7 +163,7 @@ define([
 							scene.player.position.y = layer[j].y;
 							scene.add(scene.inactivePlayer = new InactivePlayer(layer[j].x + 20, layer[j].y + 20));
 							scene.add(scene.inactivePlayer2 = new InactivePlayer(scene.inactivePlayer.position.x + 20, scene.inactivePlayer.position.y + 20));
-
+							scene.inactivePlayer2.setName('olaf');
 							break;
 
 						case 'teleport':
