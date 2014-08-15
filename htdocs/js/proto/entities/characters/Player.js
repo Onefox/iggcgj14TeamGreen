@@ -430,12 +430,12 @@ define([
 				return;
 			}
 
-			if (util.tileCanBeThrown(window.game.scene.map.data.layers[2].data[index])) {
+			if (util.tileCanBeThrown(window.game.scene.map.data.layers[3].data[index])) {
 				// sprite over olafs head
-				tile = window.game.scene.map.data.layers[2].data[index];
+				tile = window.game.scene.map.data.layers[3].data[index];
 
 				// remove from map
-				window.game.scene.map.removeObject(index, 2);
+				window.game.scene.map.removeObject(index, 3);
 
 				//console.log()
 				this.carry = new Throw(center.x, center.y, util.getThrowName(tile), this);
