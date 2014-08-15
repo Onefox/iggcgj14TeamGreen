@@ -2,12 +2,13 @@ define([
 	"proto/entities/Animation",
 	"proto/entities/characters/Player",
 	"proto/entities/characters/InativePlayers",
+	"proto/entities/bullets/Throw",
 	"engine/config",
 	"proto/Map",
 	"engine/View",
 	"helper/util",
 	"modules/ajax"
-], function(Animation, Player, InativePlayer, config, Map, View, util, ajax) {
+], function(Animation, Player, InativePlayer, Throw, config, Map, View, util, ajax) {
 	var Scene = function Scene() {
 		this.entities = [];
 		this.animations = [];
@@ -129,7 +130,8 @@ define([
 	};
 
 	Scene.prototype.update = function update(delta) {
-		var i;
+		var i,
+			item;
 
 		this.sceneTimer += delta;
 
@@ -140,6 +142,15 @@ define([
 				return 1;
 			}
 		});
+
+		/*for (i = 0; i < this.entities.length; i++ ) {
+			if (this.entities[i] instanceof Throw) {
+				break;
+			}
+		}
+
+		item = this.entities.splice(i, 0);
+		this.entities.push(item);*/
 
 		for (i = 0; i < this.entities.length; i++ ) {
 			if (this.entities[i].update) {

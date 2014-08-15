@@ -56,6 +56,9 @@ define([
 			if (Math.round(this.position.x) === Math.round(this.destination.x) && Math.round(this.position.y) === Math.round(this.destination.y)) {
 				this.scene.remove(this);
 			}
+		} else {
+			this.position.x = this.actor.position.x;
+			this.position.y = this.actor.position.y;
 		}
 	};
 
