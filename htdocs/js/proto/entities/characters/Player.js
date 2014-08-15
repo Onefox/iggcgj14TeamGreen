@@ -18,6 +18,9 @@ define([
 		this.name = 'jerome';
 		this.light = 0;
 
+		this.aggroDistance = 500;
+		this.aggroDistanceWraith = 100;
+
 		this.width = 30;
 		this.height = 40;
 		this.color = 'black';
@@ -130,7 +133,7 @@ define([
 
 				// may be non-existent when scene changes
 				if (window.game.scene.entities[i].setMode) {
-					if (dist < 500) {
+					if (dist < this.aggroDistance) {
 						window.game.scene.entities[i].setMode('aggro', this.position);
 					} else {
 						window.game.scene.entities[i].setMode('normal', this.position);
@@ -442,6 +445,13 @@ define([
 				game.scene.add(game.scene.inactivePlayer2 = game.inactivePlayer2);
 
 				game.scene.player.setName(name);
+
+				game.scene.player.direction = 0;
+				game.scene.inactivePlayer.direction = 0;
+				game.scene.inactivePlayer2.direction = 0;
+
+				//game.scene.inactivePlayer.position.y = game.scene.player.position.y - 40;
+				//game.scene.inactivePlayer.position.y = game.scene.player.position.y - 80;
 			}
 		}
 
