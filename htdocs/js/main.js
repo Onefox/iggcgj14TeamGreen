@@ -17,7 +17,7 @@ require([
 	'modules/image',
 	'modules/keyboard',
 ], function(config, game, dom, image, keyboard) {
-	var imgList = ['player.png', 'elorzms.png', 'haunter.png', 'jerome.png', 'light.png', 'bottle.png', 'effects/bottle_break.png', 'lina.png', 'olaf.png', 'sprite_sheet_props.png', 'wraith.png', 'dog.png', 'ghost.png', 'effects/fear_0.png', 'effects/fear_1.png', 'effects/fear_2.png', 'effects/fear_3.png'];
+	var imgList = ['player.png', 'elorzms.png', 'haunter.png', 'jerome.png', 'light.png', 'bottle.png', 'effects/bottle_break.png', 'lina.png', 'olaf.png', 'sprite_sheet_props.png', 'wraith.png', 'dog.png', 'ghost.png', 'effects/fear_0.png', 'effects/fear_1.png', 'effects/fear_2.png', 'effects/fear_3.png', 'keg.png', 'pot.png'];
 
 	// request-animation-frame-polyfill
 	window.requestAnimFrame = (function() {

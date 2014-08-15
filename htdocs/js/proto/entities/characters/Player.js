@@ -8,10 +8,10 @@ define([
 	"proto/V2",
 	"helper/util",
 	"helper/dom",
-	"proto/entities/objects/Carry",
 	"proto/entities/animations/Cry",
-	"helper/math"
-], function(config, mouse, Character, Enemy, InativePlayer, Rifle, V2, util, dom, Carry, Cry, math) {
+	"helper/math",
+	"proto/entities/bullets/Throw"
+], function(config, mouse, Character, Enemy, InativePlayer, Rifle, V2, util, dom, Cry, math, Throw) {
 	var Player = function Player() {
 		this.position = new V2(0, 0);
 		this.movement = new V2(0, 0);
@@ -41,6 +41,7 @@ define([
 
 		this.mode = this.MODES.normal;
 		this.speed = this.SPEEDS.normal;
+
 		// current coordinates
 		this.x = 0;
 		this.y = 0;
@@ -51,7 +52,7 @@ define([
 
 		this.stunTimeout = 999;
 
-		// item currently in handy of character
+		// item currently in hand of character
 		this.carry = null;
 
 		this.setWeapon(0);
@@ -251,6 +252,7 @@ define([
 
 	Player.prototype.action1Olaf = function action1Olaf() {
 		var pos = this.position,
+			center = this.getCenter(),
 			index,
 			tile,
 			firstTileX = Math.floor(pos.x / window.game.scene.map.tileWidth),
@@ -276,14 +278,15 @@ define([
 			index = util.twoToOneDim(firstTileX, firstTileY);
 
 			if (util.tileCanBeThrown(window.game.scene.map.data.layers[2].data[index])) {
+				// sprite over olafs head
+				tile = window.game.scene.map.data.layers[2].data[index];
+
 				// remove from map
 				window.game.scene.map.removeObject(index, 2);
 
-				// add sprite over olafs head
-				tile = window.game.scene.map.data.layers[2].data[index];
-
-				this.carry = new Carry(tile);
-
+				//console.log()
+				this.carry = new Throw(center.x, center.y, util.getThrowName(tile), this);
+				this.scene.add(this.carry);
 			}
 	};
 

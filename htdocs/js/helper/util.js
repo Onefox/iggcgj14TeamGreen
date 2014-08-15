@@ -58,9 +58,18 @@ define([
 		},
 
 		tileCanBeThrown: function tileCanBeThrown(id) {
-			var throwable = [106];
+			var throwable = [106, 107];
 
 			return throwable.indexOf(id) !== -1;
+		},
+
+		getThrowName: function getThrowName(id) {
+			var items = {
+				'106': 'keg.png',
+				'107': 'pot.png'
+			};
+
+			return items[id];
 		}
 	};
 
