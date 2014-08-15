@@ -107,7 +107,7 @@ define([
 
 		//this.ctx.rect(0, 0, config.screenWidth, config.screenHeight);
 		this.ctx.fillRect(0, 0, config.screenWidth, config.screenHeight);
-		this.ctx.clearRect(x + this.flicker , y + this.flicker, width, height);
+		this.ctx.clearRect(x + this.flicker + 1, y + this.flicker + 1, width - 1, height - 1);
 
 		this.ctx.drawImage(this.img, x + this.flicker - game.scene.player.light, y + this.flicker - game.scene.player.light, this.flicker * (width + game.scene.player.light*2), this.flicker * (height + game.scene.player.light*2));
 	};
