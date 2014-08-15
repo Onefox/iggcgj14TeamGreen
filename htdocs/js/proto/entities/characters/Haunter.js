@@ -70,6 +70,9 @@ define([
 
 					// let enemy respawn
 					this.respawn();
+
+					// ste fear
+					game.scene.player.setFear();
 				}
 			}
 		}

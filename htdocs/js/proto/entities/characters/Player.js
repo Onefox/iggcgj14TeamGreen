@@ -64,7 +64,7 @@ define([
 		this.mode = this.MODES[mode];
 
 		if (this.mode === this.MODES.stunned) {
-			this.stunTimeout = 2000;
+			this.stunTimeout = 1500;
 		}
 	};
 
