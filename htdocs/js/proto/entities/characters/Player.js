@@ -18,8 +18,8 @@ define([
 		this.name = 'jerome';
 		this.light = 0;
 
-		this.width = 40;
-		this.height = 60;
+		this.width = 30;
+		this.height = 40;
 		this.color = 'black';
 		this.SPEEDS = {
 			'boost': 0.3 * 1.5,
@@ -115,9 +115,11 @@ define([
 			}
 		}*/
 
-		window.game.scene.inactivePlayer.setMasterPosition(this.position);
+		if (window.game.scene.inactivePlayer && window.game.scene.inactivePlayer2) {
+			window.game.scene.inactivePlayer.setMasterPosition(this.position);
 
-		window.game.scene.inactivePlayer2.setMasterPosition(window.game.scene.inactivePlayer.position);
+			window.game.scene.inactivePlayer2.setMasterPosition(window.game.scene.inactivePlayer.position);
+		}
 
 		//window.game.scene.inactivePlayer.setMasterSpeed(this.speed);
 
@@ -136,7 +138,6 @@ define([
 				}
 			}
 		}
-
 	};
 
 	Player.prototype.down = function down(key) {
@@ -205,11 +206,13 @@ define([
 				dom.addClass(elem, "choosen");
 			}, 40);
 
-
-
 			// add new shadows
 			window.game.scene.add(window.game.scene.inactivePlayer);
 			window.game.scene.add(window.game.scene.inactivePlayer2);
+
+			game.player = game.scene.player;
+			game.inactivePlayer = game.scene.inactivePlayer;
+			game.inactivePlayer2 = game.scene.inactivePlayer2;
 		}
 		if (key == 'e_use') {
 			this.action1();
@@ -415,16 +418,30 @@ define([
 	};
 
 	Player.prototype.checkTeleport = function checkTeleport(map, tileX, tileY) {
-		var i;
+		var i,
+			name;
 
 		// check whether used teleports
 		for (i = 0; i < map.teleport.length; i++) {
 			// found teleport
 			if (map.teleport[i].x === tileX && map.teleport[i].y === tileY) {
+				name = game.player.name;
+				game.scene.remove(game.inactivePlayer);
+				game.scene.remove(game.inactivePlayer2);
 				// set scene
 				game.scene = game.scenes[map.teleport[i].scene];
 
-				// set player pos TODO
+				this.position.x = map.teleport[i].x * game.scene.map.tileWidth;
+				this.position.y = (map.teleport[i].y + 2) * game.scene.map.tileHeight;
+
+				game.scene.player.position.x = this.position.x;
+				game.scene.player.position.y = this.position.y;
+
+				game.player = game.scene.player;
+				game.scene.add(game.scene.inactivePlayer = game.inactivePlayer);
+				game.scene.add(game.scene.inactivePlayer2 = game.inactivePlayer2);
+
+				game.scene.player.setName(name);
 			}
 		}
 

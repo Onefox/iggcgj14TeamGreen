@@ -13,6 +13,10 @@ define([
 		scene: null,
 		scenes: [],
 
+		player: null,
+		inactivePlayer: null,
+		inactivePlayer2: null,
+
 		lastUpdate: 0,
 
 		display: null,
@@ -23,8 +27,8 @@ define([
 		level: 0,
 		levels: [
 			{
-				name: 'testlevel',
-				scenes: 1
+				name: 'testlevel1',
+				scenes: 2
 			}
 		],
 

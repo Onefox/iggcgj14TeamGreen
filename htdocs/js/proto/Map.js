@@ -9,9 +9,8 @@ define([
 	"proto/entities/characters/Dog",
 	"proto/V2",
 	"helper/util",
-	"proto/entities/characters/InativePlayers",
-	"helper/util"
-], function(config, path, image, Enemy, Ghost, Wraith, Haunter, Dog, V2, util, InactivePlayer, util) {
+	"proto/entities/characters/InativePlayers"
+], function(config, path, image, Enemy, Ghost, Wraith, Haunter, Dog, V2, util, InactivePlayer) {
 	var Map = function Map(data, scene) {
 		this.data = data;
 
@@ -85,7 +84,7 @@ define([
 			ctx.drawImage(image.getImage(tileset.image), (tile % tileset.width) * this.tileWidth, Math.floor(tile / tileset.width) * this.tileHeight, this.tileWidth, this.tileHeight, x * this.tileWidth, y * this.tileHeight, this.tileWidth, this.tileHeight);
 
 			// tile coordinates
-			if (config.debug) {
+			/*if (config.debug) {
 				ctx.font = "8px Arial";
 				ctx.fillStyle = "black";
 
@@ -95,7 +94,7 @@ define([
 
 				ctx.textAlign = "center";
 				ctx.fillText(x + " | " + y, x * this.tileWidth + 16, y * this.tileHeight + 18);
-			}
+			}*/
 		}
 	};
 
@@ -187,22 +186,27 @@ define([
 
 					switch (layer[j].name) {
 						case 'player':
+							if (!game.player) {
 							scene.player.position.x = layer[j].x;
 							scene.player.position.y = layer[j].y;
-							scene.add(scene.inactivePlayer = new InactivePlayer(layer[j].x + 20, layer[j].y + 20));
-							scene.add(scene.inactivePlayer2 = new InactivePlayer(scene.inactivePlayer.position.x + 20, scene.inactivePlayer.position.y + 20));
+							scene.add(game.inactivePlayer = scene.inactivePlayer = new InactivePlayer(layer[j].x + 20, layer[j].y + 20));
+							scene.add(game.inactivePlayer2 = scene.inactivePlayer2 = new InactivePlayer(scene.inactivePlayer.position.x + 20, scene.inactivePlayer.position.y + 20));
 							scene.inactivePlayer2.setName('olaf');
+							game.player = scene.player;
+						}
 							break;
 
-						case 'teleport':
+						case 'tele':
 							x = Math.floor(layer[j].x / this.tileWidth);
 							y = Math.floor(layer[j].y / this.tileHeight);
 
 							this.teleport.push({
-								scene: layer[j].type,
+								scene: layer[j].type.substring(0, layer[j].type.indexOf("_")),
+								id: layer[j].type.substring(layer[j].type.indexOf("_") + 1, layer[j].type.length),
 								x: x,
 								y: y
 							});
+
 							break;
 
 						default:
