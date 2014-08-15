@@ -635,6 +635,7 @@ define([
 	Player.prototype.checkTeleport = function checkTeleport(map, tileX, tileY) {
 		var i,
 			name,
+			carry,
 			animations;
 
 		// check whether used teleports
@@ -644,6 +645,13 @@ define([
 				this.stop = true;
 				name = game.player.name;
 				animations = game.scene.animations;
+				carry = game.scene.player.carry;
+
+				if (carry) {
+					game.scene.remove(game.scene.player.carry);
+					game.scene.player.carry = null;
+					console.log('remove');
+				}
 
 				game.scene.remove(game.inactivePlayer);
 				game.scene.remove(game.inactivePlayer2);
@@ -666,6 +674,11 @@ define([
 				game.scene.player.direction = 0;
 				game.scene.inactivePlayer.direction = 0;
 				game.scene.inactivePlayer2.direction = 0;
+
+				if (carry) {
+					game.scene.player.carry = carry;
+					game.scene.add(game.scene.player.carry);
+				}
 
 				//game.scene.inactivePlayer.position.y = game.scene.player.position.y - 40;
 				//game.scene.inactivePlayer.position.y = game.scene.player.position.y - 80;
