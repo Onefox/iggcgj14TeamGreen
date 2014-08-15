@@ -76,7 +76,6 @@ define([
 			this.drawFlag = false;
 		}
 
-
 		// set fear if player hit
 		for (i = 0; i < this.scene.entities.length; i++ ) {
 			if (this.scene.entities[i] instanceof Player) {
@@ -85,8 +84,9 @@ define([
 				if (dist <= 30) {
 					game.scene.player.setFear();
 
-					
-					this.scene.remove(this);
+					// move back to origin
+					this.position.x = this.spawn.x;
+					this.position.y = this.spawn.y;
 				}
 			}
 		}

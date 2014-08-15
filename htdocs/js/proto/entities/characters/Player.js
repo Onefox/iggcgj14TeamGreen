@@ -517,6 +517,12 @@ define([
 
 		obj.fear = true;
 
+		if (game.player.fear && game.inactivePlayer.fear && game.inactivePlayer2.fear) {
+			config.running = false;
+
+			// GAMEOVER
+		}
+
 		name = obj.name;
 
 		elem = dom.get("fear " + name);
