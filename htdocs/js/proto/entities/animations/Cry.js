@@ -18,7 +18,7 @@ define([
 		}
 		var offsetY = 0;
 		if (this.player.name === 'olaf') {
-			offsetY = -5
+			offsetY = +16;
 		}
 
 

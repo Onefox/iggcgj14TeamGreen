@@ -65,11 +65,33 @@ canvas
 		opacity 1
 		mix-transition(.4s opacity)
 
-	.jerome
-		left 6px
+		&.jerome
+			left 6px
 
-	.lina
-		left 75px
+		&.lina
+			left 75px
 
-	.olaf
-		left 144px
+		&.olaf
+			left 144px
+
+
+	.fear
+		position absolute
+		width 30px
+		height 30px
+		top 60px
+		background url("../img/ui/fear.png") center center no-repeat
+		opacity 0
+
+		&.jerome
+			left 18px
+
+		&.lina
+			left 87px
+
+		&.olaf
+			left 156px
+
+
+.visible
+	opacity 1 !important

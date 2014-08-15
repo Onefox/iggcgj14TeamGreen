@@ -5,8 +5,9 @@ define([
 	"proto/Framecounter",
 	"proto/V2",
 	"proto/entities/characters/Enemy",
+	"proto/entities/characters/Player",
 	"proto/entities/bullets/Grenade",
-], function(math, AnimationSprite, Character, Framecounter, V2, Enemy, Grenade) {
+], function(math, AnimationSprite, Character, Framecounter, V2, Enemy, Player, Grenade) {
 	var Wraith = function Wraith(x, y, id) {
 		this.position = new V2(x, y);
 		this.spawn = new V2(x, y);
@@ -17,12 +18,16 @@ define([
 
 		this.id = id;
 
+		this.name = "wraith";
+
 		this.characterWidth = 63;
 		this.characterHeight = 102;
 
 		// collision-box
 		this.width = 40;
 		this.height = 60;
+
+		this.SPEEDS.aggro = 4;
 
 		// sprite-size
 		//this.characterWidth = 80;
@@ -54,9 +59,9 @@ define([
 	Wraith.prototype = new Enemy();
 
 	Wraith.prototype.updateThis = function updateThis(delta, map) {
-		//this.drawFlag = true; //this.mode === this.MODES.aggro;
+		var i;
 
-
+		// set alpha
 		if (this.mode !== this.MODES.normal) {
 			this.alpha += delta / 200;
 		} else {
@@ -69,6 +74,19 @@ define([
 			this.drawFlag = true;
 		} else {
 			this.drawFlag = false;
+		}
+
+
+		// set fear if player hit
+		for (i = 0; i < this.scene.entities.length; i++ ) {
+			if (this.scene.entities[i] instanceof Player) {
+				dist = this.getCenter().dif(this.scene.entities[i].getCenter()).length();
+
+				if (dist <= 30) {
+					game.scene.player.setFear();
+					//this.scene.remove(this);
+				}
+			}
 		}
 	};
 

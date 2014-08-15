@@ -16,6 +16,8 @@ define([
 		this.x = null;
 		this.y = null;
 
+		this.name = "haunter";
+
 		this.id = id;
 
 		//this.characterWidth = 63;

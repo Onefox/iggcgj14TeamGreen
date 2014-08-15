@@ -12,6 +12,8 @@ define([
 		this.position = new V2(x, y);
 		this.spawn = new V2(x, y);
 
+		this.name = "ghost";
+
 		// current coordinates
 		this.x = null;
 		this.y = null;

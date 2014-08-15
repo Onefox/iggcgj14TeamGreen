@@ -119,7 +119,7 @@ define([
 					hyp = movement.normFac();
 
 				// dont walk into character-sprite
-				if (hyp > 200) {
+				if (hyp > 10) {
 					movement = movement.div(hyp);
 					this.movement = movement.mul(this.speed);
 

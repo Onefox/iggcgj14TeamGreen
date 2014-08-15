@@ -9,8 +9,9 @@ define([
 	"helper/util",
 	"helper/dom",
 	"proto/entities/objects/Carry",
-	"proto/entities/animations/Cry"
-], function(config, mouse, Character, Enemy, InativePlayer, Rifle, V2, util, dom, Carry, Cry) {
+	"proto/entities/animations/Cry",
+	"helper/math"
+], function(config, mouse, Character, Enemy, InativePlayer, Rifle, V2, util, dom, Carry, Cry, math) {
 	var Player = function Player() {
 		this.position = new V2(0, 0);
 		this.movement = new V2(0, 0);
@@ -18,9 +19,6 @@ define([
 		this.characterHeight = 78;
 		this.name = 'jerome';
 		this.light = 0;
-
-		this.aggroDistance = 500;
-		this.aggroDistanceWraith = 100;
 
 		this.width = 30;
 		this.height = 40;
@@ -68,6 +66,8 @@ define([
 
 	Player.prototype.update = function update(delta, map) {
 		var view = this.scene.view,
+			aggroDist,
+			entity,
 			dist,
 			pos,
 			i;
@@ -129,15 +129,27 @@ define([
 
 		// player aggro when near
 		for (i = 0; i < this.scene.entities.length; i++ ) {
-			if (this.scene.entities[i] instanceof Enemy) {
-				dist = this.getCenter().dif(this.scene.entities[i].getCenter()).length();
+			entity = window.game.scene.entities[i];
+
+			switch (entity.name) {
+				case "wraith":
+					aggroDist = 200;
+					break;
+				default:
+					aggroDist = 500;
+					break;
+			}
+
+
+			if (entity instanceof Enemy) {
+				dist = this.getCenter().dif(entity.getCenter()).length();
 
 				// may be non-existent when scene changes
-				if (window.game.scene.entities[i].setMode) {
-					if (dist < this.aggroDistance) {
-						window.game.scene.entities[i].setMode('aggro', this.position);
+				if (entity.setMode) {
+					if (dist < aggroDist) {
+						entity.setMode('aggro', this.position);
 					} else {
-						window.game.scene.entities[i].setMode('normal', this.position);
+						entity.setMode('normal', this.position);
 					}
 				}
 			}
@@ -217,8 +229,6 @@ define([
 			game.player = game.scene.player;
 			game.inactivePlayer = game.scene.inactivePlayer;
 			game.inactivePlayer2 = game.scene.inactivePlayer2;
-
-			window.game.scene.add(new Cry(game.player));
 		}
 		if (key == 'e_use') {
 			this.action1();
@@ -480,6 +490,41 @@ define([
 		this.loadImage(name+'.png');
 	};
 
+	// set fear
+	Player.prototype.setFear = function setFear() {
+		var player = math.rand(0, 2),
+			elem,
+			obj,
+			name;
+
+		switch (player) {
+		case 0:
+			obj = game.player;
+			break;
+		case 1:
+			obj = game.inactivePlayer;
+			break;
+		case 2:
+			obj = game.inactivePlayer2;
+			break;
+		}
+
+		// already stunned -> try again
+		if (obj.fear) {
+			this.setFear();
+			return;
+		}
+
+		obj.fear = true;
+
+		name = obj.name;
+
+		elem = dom.get("fear " + name);
+
+		dom.addClass(elem, "visible");
+
+		window.game.scene.add(new Cry(obj));
+	};
 
 	return Player;
 });
