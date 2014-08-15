@@ -20,8 +20,8 @@ define([
 		this.name = 'jerome';
 		this.light = 0;
 
-		this.width = 30;
-		this.height = 40;
+		this.width = 40;
+		this.height = 60;
 		this.color = 'black';
 		this.SPEEDS = {
 			'boost': 0.3 * 1.5,
@@ -439,17 +439,21 @@ define([
 
 	Player.prototype.checkTeleport = function checkTeleport(map, tileX, tileY) {
 		var i,
-			name;
+			name,
+			animations;
 
 		// check whether used teleports
 		for (i = 0; i < map.teleport.length; i++) {
 			// found teleport
 			if (map.teleport[i].x === tileX && map.teleport[i].y === tileY) {
 				name = game.player.name;
+				animations = game.scene.animations;
+
 				game.scene.remove(game.inactivePlayer);
 				game.scene.remove(game.inactivePlayer2);
 				// set scene
 				game.scene = game.scenes[map.teleport[i].scene];
+				game.scene.animations = animations;
 
 				this.position.x = map.teleport[i].x * game.scene.map.tileWidth;
 				this.position.y = (map.teleport[i].y + 2) * game.scene.map.tileHeight;
@@ -536,7 +540,7 @@ define([
 
 		dom.addClass(elem, "visible");
 
-		window.game.scene.add(new Cry(obj));
+		window.game.scene.add(new Cry(name));
 	};
 
 	return Player;
