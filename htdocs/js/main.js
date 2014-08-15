@@ -52,7 +52,20 @@ require([
 
 	// preload images
 	image.add(imgList, function() {
+		var listener;
+
 		dom.get('loading').style.display = 'none';
+
+		config.running = false;
+
+		listener = window.addEventListener("keydown", function(e) {
+			if (e.keyCode === 32) {
+				config.running = true;
+				dom.addClass(dom.get("info"), "display-none");
+
+				window.removeEventListener("keydown", listener, false);
+			}
+		}, false);
 
 		keyboard.init();
 		game.init();

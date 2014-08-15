@@ -2,7 +2,7 @@
 body{float:left;margin:0;color:#000;background-color:#000;overflow:hidden;font:12px "Arial";text-align:center;-$vendor-prefixes-user-select:none;user-select:none}
 canvas{cursor:crosshair;position:absolute;top:0;left:0;width:100%;height:100%}
 .fps{position:absolute;right:4px;top:3px;font-size:14px;color:#fff}
-.loading{background:url("../img/loading.gif") center center no-repeat;z-index:5;position:absolute;width:100%;height:100%}
+.loading{background:url("../img/loading.gif") center center no-repeat;z-index:5;position:absolute;background-color:#000;width:100%;height:100%}
 .controls{position:absolute;margin-left:0;margin-right:0;bottom:0;width:1030px;height:200px;background:url("../img/controls.png") center center no-repeat}
 .player-select{position:absolute;top:20px;left:20px;width:204px;height:105px;background:url("../img/ui/ui1.png") center center no-repeat;}
 .player-select .indicator{position:relative;top:8px;width:54px;height:54px;background:url("../img/ui/selector.png") center center no-repeat;opacity:0}
@@ -16,5 +16,7 @@ canvas{cursor:crosshair;position:absolute;top:0;left:0;width:100%;height:100%}
 .player-select .fear.olaf{left:156px}
 .gameover{width:100%;height:100%;position:absolute;top:0;left:0;background:url("../img/ui/gameover.png") center center no-repeat;display:none}
 .victory{width:100%;height:100%;position:absolute;top:0;left:0;background:url("../img/ui/victory.png") center center no-repeat;display:none}
+.info{width:100%;height:100%;position:absolute;background-color:#000;top:0;left:0;background:url("../img/ui/info.png") center center no-repeat;display:block}
 .visible{opacity:1 !important}
 .display{display:block !important}
+.display-none{display:none !important}

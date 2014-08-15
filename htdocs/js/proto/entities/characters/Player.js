@@ -20,8 +20,8 @@ define([
 		this.name = 'jerome';
 		this.light = 0;
 
-		this.width = 40;
-		this.height = 60;
+		this.width = 30;
+		this.height = 40;
 		this.color = 'black';
 		this.SPEEDS = {
 			'boost': 0.3 * 1.5,
