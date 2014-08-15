@@ -13,7 +13,6 @@ define([
 	Cry.prototype.draw = function(ctx, view) {
 		var player = window.game.scene.getChar(this.name);
 		var pos = player.position;
-		console.log(player.name);
 		if (this.direction != player.direction) {
 			this.direction = player.direction;
 			this.sprite.updateSprite('effects/fear_'+this.direction+'.png');
