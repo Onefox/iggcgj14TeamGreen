@@ -59,6 +59,11 @@ define([
 				}
 			}
 		}
+
+		if (map.checkCollision(this.position.x, this.position.y)) {
+			this.scene.add(new Bottle(this.getCenter().x -90, this.getCenter().y - 100));
+			this.scene.remove(this);
+		}
 	};
 
 	Grenade.prototype.draw = function draw(ctx, view) {

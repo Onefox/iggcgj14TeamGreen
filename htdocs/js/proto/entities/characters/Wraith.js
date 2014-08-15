@@ -27,7 +27,7 @@ define([
 		this.width = 40;
 		this.height = 60;
 
-		this.SPEEDS.aggro = 4;
+		this.SPEEDS.aggro = 2;
 
 		// sprite-size
 		//this.characterWidth = 80;

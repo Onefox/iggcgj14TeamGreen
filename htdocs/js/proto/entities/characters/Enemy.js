@@ -36,7 +36,7 @@ define([
 		this.SPEEDS = {
 			normal: 0.15 * Math.random() + 0.1,
 			panic: 0.38,
-			aggro: 5
+			aggro: 2
 		};
 
 		this.mode = this.MODES.normal;
