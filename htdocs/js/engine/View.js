@@ -13,7 +13,11 @@ define([
 		this.ctx = null;
 		this.flicker = 1;
 
+		this.timeout = null;
+
 		this.img = image.getImage("light.png");
+
+		this.boltCount = 0;
 
 		this.init();
 	};
@@ -93,6 +97,7 @@ define([
 
 	View.prototype.drawLight = function drawLight() {
 		var pos = game.scene.getChar('jerome').position,
+			that = this,
 			width = 1200,
 			height = 900,
 			x = ~~(pos.x - (width / 2) - this.getX()) + 30,
@@ -102,6 +107,24 @@ define([
 		if (game.frames % 2 === 0) {
 			if (Math.random() > 0.5) {
 				this.flicker = Math.abs(Math.sin(game.frames)) / 100 + 1;
+			}
+		}
+
+		if (this.timeout === null) {
+			if (game.frames % 40 === 0) {
+				if (Math.random() > 0.8) {
+					this.boltCount++;
+					this.ctx.clearRect(0, 0, config.screenWidth, config.screenHeight);
+				}
+
+				if (this.boltCount > 2) {
+					this.timeout = setTimeout(function() {
+						clearTimeout(that.timeout);
+						that.timeout = null;
+						that.boltCount = 0;
+					}, 12000);
+				}
+				return;
 			}
 		}
 
