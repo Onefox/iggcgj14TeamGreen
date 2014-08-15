@@ -209,9 +209,27 @@ define([
 
 							break;
 
-						default:
+						case 'wraith':
+							scene.add(new Wraith(layer[j].x, layer[j].y, enemyId));
+							enemyId++;
+							break;
+
+						case 'dog':
 							scene.add(new Dog(layer[j].x, layer[j].y, enemyId));
 							enemyId++;
+							break;
+
+						case 'haunter':
+							scene.add(new Haunter(layer[j].x, layer[j].y, enemyId));
+							enemyId++;
+							break;
+
+						case 'ghost':
+							scene.add(new Ghost(layer[j].x, layer[j].y, enemyId));
+							enemyId++;
+							break;
+
+						default:
 							break;
 					}
 
