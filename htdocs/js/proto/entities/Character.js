@@ -24,7 +24,7 @@ define([
 
 	Character.prototype.loadImage = function loadImage(img) {
 		this.img = image.getImage(img);
-		this.offset = new V2((this.characterWidth - this.width) / 2, this.characterHeight - this.height);
+		this.offset = new V2((this.characterWidth - this.width) / 2, this.characterHeight - this.height + 20);
 	};
 
 	Character.prototype.draw = function draw(ctx, view) {

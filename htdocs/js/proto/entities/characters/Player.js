@@ -20,8 +20,12 @@ define([
 		this.name = 'jerome';
 		this.light = 0;
 
-		this.width = 30;
-		this.height = 40;
+		this.width = 40;
+		this.height = 60;
+
+		this.widthCol = 30;
+		this.heightCol = 40;
+
 		this.color = 'black';
 		this.SPEEDS = {
 			'boost': 0.3 * 1.5,
@@ -391,11 +395,11 @@ define([
 		this.position.add(move);
 
 		if (move.x) {
-			pxOffsetX = (move.x > 0 ? this.width : 0);
+			pxOffsetX = (move.x > 0 ? this.widthCol : 0);
 			tileOffsetX = (move.x < 0 ? map.tileWidth : 0);
 
 			firstTileY = Math.floor(pos.y / map.tileHeight);
-			lastTileY = Math.ceil((pos.y + this.height) / map.tileHeight);
+			lastTileY = Math.ceil((pos.y + this.heightCol) / map.tileHeight);
 			tileX = Math.floor((pos.x + move.x + pxOffsetX) / map.tileWidth);
 
 			for (tileY = firstTileY; tileY < lastTileY; tileY++) {
@@ -410,11 +414,11 @@ define([
 		}
 
 		if (move.y) {
-			pxOffsetY = (move.y > 0 ? this.height : 0);
+			pxOffsetY = (move.y > 0 ? this.heightCol : 0);
 			tileOffsetY = (move.y < 0 ? map.tileHeight : 0);
 
 			firstTileX = Math.floor(this.position.x / map.tileWidth);
-			lastTileX = Math.ceil((this.position.x + this.width) / map.tileWidth);
+			lastTileX = Math.ceil((this.position.x + this.widthCol) / map.tileWidth);
 			tileY = Math.floor((pos.y + move.y + pxOffsetY) / map.tileHeight);
 
 			for (tileX = firstTileX; tileX < lastTileX; tileX++) {
