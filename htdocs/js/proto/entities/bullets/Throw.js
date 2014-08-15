@@ -120,10 +120,10 @@ define([
 
 		this.destination.x *= game.scene.map.tileWidth;
 		this.destination.y *= game.scene.map.tileHeight;
-		this.destination.x = this.destination.x + 20;
-		this.destination.y = this.destination.y + 12;
-		this.position.x = this.actor.position.x;
-		this.position.y = this.actor.position.y;
+		this.destination.x = this.destination.x + 40;
+		this.destination.y = this.destination.y + 8;
+		this.position.x = this.actor.position.x + 20;
+		this.position.y = this.actor.position.y - 20;
 
 		this.movement = this.destination.dif(this.position);
 	};
