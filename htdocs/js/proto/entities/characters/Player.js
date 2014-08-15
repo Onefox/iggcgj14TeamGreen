@@ -19,12 +19,13 @@ define([
 		this.characterHeight = 78;
 		this.name = 'jerome';
 		this.light = 0;
+		this.stop = false;
 
 		this.width = 40;
 		this.height = 60;
 
-		this.widthCol = 30;
-		this.heightCol = 40;
+		this.widthCol = 20;
+		this.heightCol = 20;
 
 		this.color = 'black';
 		this.SPEEDS = {
@@ -33,6 +34,8 @@ define([
 		};
 		this.actionTimer = 0;
 		this.ACTIONTIME = 3000;
+		this.cooldown;
+
 
 		this.MODES = {
 			normal: 'normal',
@@ -96,8 +99,6 @@ define([
 
 		if (this.movement.x || this.movement.y) {
 			this.updateSprite(delta);
-
-			//console.log(this.position)
 		} else {
 			this.c.frame = 0;
 		}
@@ -162,7 +163,7 @@ define([
 	};
 
 	Player.prototype.down = function down(key) {
-		if (this.mode === this.MODES.stunned) {
+		if (this.mode === this.MODES.stunned || this.stop) {
 			return;
 		}
 
@@ -248,6 +249,149 @@ define([
 		if (key == 'e_use') {
 			this.action1();
 		}
+		if (key == 'action2') {
+			this.action2();
+		}
+	};
+
+
+	Player.prototype.action2Jerome = function action2Jerome() {
+		var pos = this.position,
+			index,
+			index2,
+			tile,
+			i, z,
+			firstTileX = Math.floor(pos.x / window.game.scene.map.tileWidth),
+			firstTileY = Math.floor(pos.y / window.game.scene.map.tileHeight),
+			x = firstTileX,
+			y = firstTileY,
+			targetX,
+			direction,
+			targetY;
+
+		switch (this.direction) {
+			case 0:
+				firstTileY++;
+				break;
+			case 1:
+				firstTileX--;
+				break;
+			case 2:
+				firstTileX++;
+				break;
+			case 3:
+				firstTileY--;
+				break;
+		}
+
+		index = util.twoToOneDim(x, y);
+		index2 = util.twoToOneDim(firstTileX, firstTileY);
+
+		if (util.tileCanBeRoped(window.game.scene.map.data.layers[2].data[index]) || util.tileCanBeRoped(window.game.scene.map.data.layers[2].data[index2])) {
+			//
+			if (util.tileCanBeRoped(window.game.scene.map.data.layers[2].data[index2])) {
+				index = index2;
+				x = firstTileX;
+				y = firstTileY;
+			}
+			// search for the next rope
+			for (i = 1; i < 8;i++) {
+				index2 = util.twoToOneDim(x + i, y);
+				if (util.tileCanBeRoped(window.game.scene.map.data.layers[2].data[index2])) {
+					targetX = x + i;
+					targetY = y;
+					direction = "right";
+					for (z = 1; z < i; z++) {
+						index2 = util.twoToOneDim(x+z, y);
+						window.game.scene.map.data.layers[3].data[index2] = 0;
+						window.game.scene.map.data.layers[2].data[index2] = 758;
+						window.game.scene.map.drawTile(index2, 2);
+						window.game.scene.map.drawTile(index2, 3);
+					}
+					index2 = util.twoToOneDim(x, y);
+					window.game.scene.map.data.layers[2].data[index2] = 757;
+					window.game.scene.map.drawTile(index2, 2);
+					break;
+				}
+				index2 = util.twoToOneDim(x, y + i);
+				if (util.tileCanBeRoped(window.game.scene.map.data.layers[2].data[index2])) {
+					targetX = x;
+					targetY = y + i;
+					direction = "down";
+					for (z = 1; z < i; z++) {
+						index2 = util.twoToOneDim(x, y+z);
+						window.game.scene.map.data.layers[3].data[index2] = 0;
+						window.game.scene.map.data.layers[2].data[index2] = 759;
+						window.game.scene.map.drawTile(index2, 2);
+						window.game.scene.map.drawTile(index2, 3);
+					}
+					index2 = util.twoToOneDim(x, y);
+					window.game.scene.map.data.layers[2].data[index2] = 709;
+					window.game.scene.map.drawTile(index2, 2);
+					break;
+				}
+				index2 = util.twoToOneDim(x, y - i);
+				if (util.tileCanBeRoped(window.game.scene.map.data.layers[2].data[index2])) {
+					targetX = x;
+					targetY = y - i;
+					direction = "up";
+					for (z = 1; z < i; z++) {
+						index2 = util.twoToOneDim(x, y-z);
+						window.game.scene.map.data.layers[3].data[index2] = 0;
+						window.game.scene.map.data.layers[2].data[index2] = 759;
+						window.game.scene.map.drawTile(index2, 2);
+						window.game.scene.map.drawTile(index2, 3);
+					}
+					index2 = util.twoToOneDim(x, y);
+					window.game.scene.map.data.layers[2].data[index2] = 708;
+					window.game.scene.map.drawTile(index2, 2);
+					break;
+				}
+				index2 = util.twoToOneDim(x - i, y);
+				if (util.tileCanBeRoped(window.game.scene.map.data.layers[2].data[index2])) {
+					targetX = x - i;
+					targetY = y;
+					direction = "left";
+					for (z = 1; z < i; z++) {
+						index2 = util.twoToOneDim(x-z, y);
+						window.game.scene.map.data.layers[3].data[index2] = 0;
+						window.game.scene.map.data.layers[2].data[index2] = 758;
+						window.game.scene.map.drawTile(index2, 2);
+						window.game.scene.map.drawTile(index2, 3);
+					}
+					index2 = util.twoToOneDim(x, y);
+					window.game.scene.map.data.layers[2].data[index2] = 710;
+					window.game.scene.map.drawTile(index2, 2);
+					break;
+				}
+
+			}
+			// make target ropeplace
+			index2 = util.twoToOneDim(targetX, targetY);
+			if (util.tileCanBeRoped(window.game.scene.map.data.layers[2].data[index2])) {
+				if (direction == "left") {
+					window.game.scene.map.data.layers[2].data[index2] = 757;
+				} else if (direction == "down") {
+					window.game.scene.map.data.layers[2].data[index2] = 708;
+				} else if (direction == "up") {
+					console.log("UP");
+					window.game.scene.map.data.layers[2].data[index2] = 709;
+				} else {
+					window.game.scene.map.data.layers[2].data[index2] = 710;
+				}
+				window.game.scene.map.drawTile(index2, 2);
+			}
+
+			// remove objects and add rope putt new tiles in there
+
+			//758 // rope right;
+
+			// remove from map
+			//window.game.scene.map.removeObject(index, 2);
+
+			// add sprite over olafs head
+
+		}
 	};
 
 	Player.prototype.action1Olaf = function action1Olaf() {
@@ -329,8 +473,37 @@ define([
 				break;
 		}
 	};
+	Player.prototype.action2 = function action2() {
+		this.actionTimer = this.ACTIONTIME;
+		switch(this.name) {
+			case 'olaf':
+				break;
+			case 'jerome':
+				this.action2Jerome();
+				break;
+			case 'lina':
+				break;
+			default:
+				console.log('wrong name?');
+				break;
+		}
+	};
+	Player.prototype.removeAction2 = function removeAction2() {
+		switch(this.name) {
+			case 'olaf':
+				break;
+			case 'jerome':
+				break;
+			case 'lina':
+				break;
+			default:
+				console.log('wrong name?');
+				break;
+		}
+	};
 
 	Player.prototype.up = function up ( key ) {
+		this.stop = false;
 		if (key == 'left' && this.movement.x < 0) {
 			this.movement.x = 0;
 		}
@@ -459,6 +632,7 @@ define([
 		for (i = 0; i < map.teleport.length; i++) {
 			// found teleport
 			if (map.teleport[i].x === tileX && map.teleport[i].y === tileY) {
+				this.stop = true;
 				name = game.player.name;
 				animations = game.scene.animations;
 
@@ -494,7 +668,7 @@ define([
 		//console.log(game.ball.x, tileX, game.ball.y, tileY);
 
 		// GOAL
-		if (game.ball.x === tileX && game.ball.y === tileY) {
+		/*if (game.ball.x === tileX && game.ball.y === tileY) {
 			config.running = false;
 
 			dom.addClass(dom.get("victory"), "display");
@@ -504,7 +678,7 @@ define([
 			window.setTimeout(function() {
 				window.location.reload();
 			}, 5000);
-		}
+		}*/
 
 		//console.log(move.x, move.y);
 	};

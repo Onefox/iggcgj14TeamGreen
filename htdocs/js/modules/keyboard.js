@@ -54,6 +54,8 @@ define([
 					break;
 				case 74:
 					this.emit( type, 'e_use' );
+				case 75:
+					this.emit( type, 'action2' );
 					break;
 
 

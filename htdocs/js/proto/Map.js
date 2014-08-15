@@ -58,8 +58,7 @@ define([
 
 	Map.prototype.checkCollision = function checkCollision(x, y) {
 		var id;
-
-		if (!this.data.layers[2]) {
+		if (!this.data.layers[3]) {
 			return false;
 		}
 
@@ -69,7 +68,7 @@ define([
 
 		id = (x | 0) + (y | 0) * this.data.width;
 
-		return this.data.layers[2].data[id] > 0 ? id : false;
+		return this.data.layers[3].data[id] > 0 ? id : false;
 	};
 
 	Map.prototype.drawTile = function drawTile(index, layer) {
@@ -80,11 +79,12 @@ define([
 			y = (index - x) / this.data.width;
 
 
+
 		if (tile > -1) {
 			ctx.drawImage(image.getImage(tileset.image), (tile % tileset.width) * this.tileWidth, Math.floor(tile / tileset.width) * this.tileHeight, this.tileWidth, this.tileHeight, x * this.tileWidth, y * this.tileHeight, this.tileWidth, this.tileHeight);
 
 			// tile coordinates
-			/*if (config.debug) {
+			if (config.debug) {
 				ctx.font = "8px Arial";
 				ctx.fillStyle = "black";
 
@@ -94,7 +94,7 @@ define([
 
 				ctx.textAlign = "center";
 				ctx.fillText(x + " | " + y, x * this.tileWidth + 16, y * this.tileHeight + 18);
-			}*/
+			}
 		}
 	};
 

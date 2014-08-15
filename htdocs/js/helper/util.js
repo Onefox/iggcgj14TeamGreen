@@ -62,7 +62,6 @@ define([
 
 			return throwable.indexOf(id) !== -1;
 		},
-
 		getThrowName: function getThrowName(id) {
 			var items = {
 				'106': 'keg.png',
@@ -70,7 +69,17 @@ define([
 			};
 
 			return items[id];
+		},
+		tileCanBeRoped: function tileCanBeRoped(id) {
+			var ropeable = [707];
+
+			return ropeable.indexOf(id) !== -1;
 		}
+
+		/*getLayerIndexbyName: function getLayerIndexbyName(name) {
+
+			return ropeable.indexOf(id) !== -1;
+		},*/
 	};
 
 	return util;
