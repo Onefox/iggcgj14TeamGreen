@@ -25,13 +25,15 @@ define([
 		this.height = 60;
 
 		// sprite-size
-		this.characterWidth = 63;
+		this.characterWidth = 75;
 		this.characterHeight = 102;
 
 		this.angle = Math.random() * Math.PI * 2;
 
 		this.mode = this.MODES.normal;
 		this.speed = this.SPEEDS.normal;
+
+		this.minAggroDistance = 200;
 
 		this.turn = 0;
 
@@ -48,7 +50,6 @@ define([
 	};
 
 	Ghost.prototype = new Enemy();
-
 
 	Ghost.prototype.getGoal = function getGoal(source, dist, angle) {
 		return new V2(source.x + Math.sin(angle) * dist, source.y - Math.cos(angle) * dist);
@@ -68,7 +69,7 @@ define([
 
 		if (game.lastUpdate - this.coolDown > (math.rand(2, 4) * 1000)) {
 			this.coolDown = game.lastUpdate;
-			this.scene.add(new Grenade(center.x - 18, center.y - 17, v.x, v.y));
+			this.scene.add(new Grenade(center.x - 18, center.y - 17, v.x, v.y, this));
 		}
 	};
 

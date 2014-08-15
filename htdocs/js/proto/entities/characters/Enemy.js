@@ -47,6 +47,8 @@ define([
 		// source of mode (i.e. grenade destination/ explosion)
 		this.source = new V2(0,0);
 
+		this.minAggroDistance = 10;
+
 		this.modeTime = 0;
 		this.modeTimeMax = 10000;
 
@@ -119,7 +121,7 @@ define([
 					hyp = movement.normFac();
 
 				// dont walk into character-sprite
-				if (hyp > 10) {
+				if (hyp > this.minAggroDistance) {
 					movement = movement.div(hyp);
 					this.movement = movement.mul(this.speed);
 

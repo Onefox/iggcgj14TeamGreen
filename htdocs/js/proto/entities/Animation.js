@@ -5,13 +5,15 @@ define([
 	"proto/Rect",
 	"proto/V2"
 ], function(AnimationSprite, Entity, Framecounter, Rect, V2) {
-	var Animation = function Animation() {};
+	var Animation = function Animation(speed) {
+		this.speed = speed;
+	};
 
 	Animation.prototype = new Entity();
 
 	Animation.prototype.init = function init(sprite, frames, endless) {
 		this.framecount = frames;
-		this.f = new Framecounter(180);
+		this.f = new Framecounter(this.speed ? this.speed : 180);
 		this.endless = endless;
 		this.sprite =  new AnimationSprite(sprite, frames);
 	};

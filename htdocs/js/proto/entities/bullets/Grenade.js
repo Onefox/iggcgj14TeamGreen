@@ -3,21 +3,23 @@ define([
 	"proto/V2",
 	"proto/Sprite",
 	"proto/entities/characters/Player",
+	"proto/entities/animations/Bottle",
 	"proto/Rect"
-], function(Entity, V2, Sprite, Player, Rect) {
-	var Grenade = function Grenade(x ,y, endX , endY) {
+], function(Entity, V2, Sprite, Player, Bottle, Rect) {
+	var Grenade = function Grenade(x ,y, endX , endY, actor) {
 		this.position = new V2 (x, y);
 		this.destination = new V2(endX, endY);
 		this.movement = this.destination.dif(this.position);
 		this.speed = 1;
 		this.fak = 1;
 		this.timer = 600;
+		this.actor = actor;
 
-		this.sprite = new Sprite('grenade.png');
+		this.sprite = new Sprite('bottle.png');
 		this.spriteAngle = 0;
 
-		this.width = 10;
-		this.height = 10;
+		this.width = 45;
+		this.height = 45;
 	};
 
 	Grenade.prototype = new Entity();
@@ -46,13 +48,14 @@ define([
 					dist = this.getCenter().dif(this.scene.entities[i].getCenter()).length();
 
 					if (dist < 140) {
-						//this.scene.entities[i].kill();
-						//console.log('getroffen');
-						//i--;
-						//GETROFFEN GOES HERE
-					}/* else if (dist < 500) {
-						this.scene.entities[i].setPanic(map.hero.position);
-					}*/
+						game.scene.player.setFear();
+
+						// move ghost back to origin
+						this.actor.position.x = this.actor.spawn.x;
+						this.actor.position.y = this.actor.spawn.y;
+					}
+
+					this.scene.add(new Bottle(this.getCenter().x -90, this.getCenter().y - 100));
 				}
 			}
 		}
