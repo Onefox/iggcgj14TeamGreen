@@ -449,9 +449,9 @@ define([
 	};
 
 	Player.prototype.mousedown = function mousedown(pos) {
-		if (this.weapon) {
+		/*if (this.weapon) {
 			this.weapon.fire();
-		}
+		}*/
 	};
 
 	Player.prototype.mouseup = function(pos) {
