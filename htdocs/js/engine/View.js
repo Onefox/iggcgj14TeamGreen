@@ -82,7 +82,7 @@ define([
 
 		// TODO if player not center redraw.
 		//if (this.p1.x !== this.lastP1.x || this.p1.y !== this.lastP1.y || this.p2.x !== this.lastP2.x || this.p2.y !== this.lastP2.y) {
-			this.drawLight();
+			//this.drawLight();
 
 		/*	this.lastP1.x = this.p1.x;
 			this.lastP1.y = this.p1.y;
