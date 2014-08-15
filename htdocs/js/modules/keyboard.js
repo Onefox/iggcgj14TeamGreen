@@ -52,7 +52,7 @@ define([
 				case 70:
 					this.emit( type, 'switch' );
 					break;
-				case 69:
+				case 74:
 					this.emit( type, 'e_use' );
 					break;
 
