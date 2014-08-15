@@ -9,17 +9,21 @@ define([
 
 	Animation.prototype = new Entity();
 
-	Animation.prototype.init = function init(sprite, frames, duration) {
+	Animation.prototype.init = function init(sprite, frames, endless) {
 		this.framecount = frames;
-		this.f = new Framecounter(50);
-		//this.sprite =  new AnimationSprite(sprite, frames);
+		this.f = new Framecounter(180);
+		this.endless = endless;
+		this.sprite =  new AnimationSprite(sprite, frames);
 	};
 
 	Animation.prototype.update = function update(delta, map) {
+
 		this.f.update(delta);
 
-		if (this.f.frame >= this.framecount) {
+		if (this.f.frame >= this.framecount && !this.endless) {
 			this.scene.remove(this);
+		} else if (this.f.frame >= this.framecount && this.endless){
+			this.f.reset();
 		}
 	};
 

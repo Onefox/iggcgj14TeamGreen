@@ -8,6 +8,10 @@ define([
 		this.f = frames;
 	};
 
+	AnimationSprite.prototype.updateSprite = function updateSprite(img) {
+		this.img = image.getImage(img);
+	};
+
 	AnimationSprite.prototype.draw = function draw(ctx, x, y, f) {
 		if (!this.img) {
 			return;

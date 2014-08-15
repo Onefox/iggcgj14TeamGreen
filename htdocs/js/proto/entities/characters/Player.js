@@ -8,8 +8,9 @@ define([
 	"proto/V2",
 	"helper/util",
 	"helper/dom",
-	"proto/entities/objects/Carry"
-], function(config, mouse, Character, Enemy, InativePlayer, Rifle, V2, util, dom, Carry) {
+	"proto/entities/objects/Carry",
+	"proto/entities/animations/Cry"
+], function(config, mouse, Character, Enemy, InativePlayer, Rifle, V2, util, dom, Carry, Cry) {
 	var Player = function Player() {
 		this.position = new V2(0, 0);
 		this.movement = new V2(0, 0);
@@ -216,6 +217,8 @@ define([
 			game.player = game.scene.player;
 			game.inactivePlayer = game.scene.inactivePlayer;
 			game.inactivePlayer2 = game.scene.inactivePlayer2;
+
+			window.game.scene.add(new Cry(game.player));
 		}
 		if (key == 'e_use') {
 			this.action1();
