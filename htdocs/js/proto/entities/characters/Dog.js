@@ -5,8 +5,9 @@ define([
 	"proto/Framecounter",
 	"proto/V2",
 	"proto/entities/characters/Enemy",
+	"proto/entities/characters/Player",
 	"proto/entities/bullets/Grenade",
-], function(math, AnimationSprite, Character, Framecounter, V2, Enemy, Grenade) {
+], function(math, AnimationSprite, Character, Framecounter, V2, Enemy, Player, Grenade) {
 	var Dog = function Dog(x, y, id) {
 		this.position = new V2(x, y);
 		this.spawn = new V2(x, y);
@@ -21,6 +22,9 @@ define([
 
 		this.characterWidth = 75;
 		this.characterHeight = 102;
+
+		this.speed = this.SPEEDS.normal;
+		this.SPEEDS.aggro = 6;
 
 		// collision-box
 		this.width = 40;
@@ -52,10 +56,20 @@ define([
 	Dog.prototype = new Enemy();
 
 	Dog.prototype.updateThis = function updateThis(delta, map) {
-		var collision = this.checkCollision(this.movement.prd(delta - this.speed), map);
+		var i;
 
-		if (collision) {
-			// do damage, then dissapear
+		// set fear if player hit
+		for (i = 0; i < this.scene.entities.length; i++ ) {
+			if (this.scene.entities[i] instanceof Player) {
+				dist = this.getCenter().dif(this.scene.entities[i].getCenter()).length();
+
+				if (dist <= 30) {
+					game.scene.player.setFear();
+
+					// move back to origin
+					this.scene.remove(this);
+				}
+			}
 		}
 	};
 
