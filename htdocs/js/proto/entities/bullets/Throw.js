@@ -44,10 +44,10 @@ define([
 					//console.log('getroffen');
 					dist = this.getCenter().dif(this.scene.entities[i].getCenter()).length();
 
-					if (dist < 40) {
+					if (dist < 80) {
 						this.scene.entities[i].kill();
 						this.scene.remove(this);
-						console.log('getroffen');
+						//console.log('getroffen');
 					}
 				}
 			}
@@ -108,6 +108,8 @@ define([
 
 		this.destination.x *= game.scene.map.tileWidth;
 		this.destination.y *= game.scene.map.tileHeight;
+		this.destination.x = this.destination.x + 20;
+		this.destination.y = this.destination.y + 12;
 		this.position.x = this.actor.position.x;
 		this.position.y = this.actor.position.y;
 
