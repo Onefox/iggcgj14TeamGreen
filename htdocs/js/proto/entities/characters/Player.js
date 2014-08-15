@@ -417,9 +417,16 @@ define([
 					break;
 			}
 
-			console.log("x: " + firstTileX + " y: " + firstTileY);
+			//console.log("x: " + firstTileX + " y: " + firstTileY);
 
 			index = util.twoToOneDim(firstTileX, firstTileY);
+
+			// already sth in the hand -> throw
+			if (this.carry) {
+				this.carry.throwItem();
+				this.carry = null;
+				return;
+			}
 
 			if (util.tileCanBeThrown(window.game.scene.map.data.layers[2].data[index])) {
 				// sprite over olafs head
