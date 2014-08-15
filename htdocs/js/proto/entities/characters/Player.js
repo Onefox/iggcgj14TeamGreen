@@ -161,6 +161,10 @@ define([
 			return;
 		}
 
+		if (key == 'space' && this.gameover) {
+			window.location.reload();
+		}
+
 		if (key == 'left') {
 			this.movement.x = -this.speed;
 			this.movement.y = 0;
@@ -521,6 +525,9 @@ define([
 			config.running = false;
 
 			// GAMEOVER
+			dom.addClass(dom.get("gameover"), "display");
+
+			this.gameover = true;
 		}
 
 		name = obj.name;
