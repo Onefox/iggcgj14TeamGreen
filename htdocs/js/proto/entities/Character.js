@@ -51,6 +51,8 @@ define([
 			ctx.drawImage(this.img, (this.c.frame % this.frames) * this.characterWidth, this.direction * this.characterHeight, this.characterWidth, this.characterHeight, pos.x - view.getX(), pos.y - view.getY(), this.characterWidth, this.characterHeight);
 			//ctx.restore();
 			ctx.globalAlpha = 1;
+
+			//ctx.fillRect(pos.x - view.getX() + (this.characterWidth / 2), pos.y - view.getY() + (this.characterHeight / 2), this.widthCol, this.heightCol);
 		}
 	};
 
