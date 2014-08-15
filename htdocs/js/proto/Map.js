@@ -98,15 +98,12 @@ define([
 		}
 	};
 
-	Map.prototype.redrawAt = function redrawAt(ctx, index, x, y, neighbour) {
+	Map.prototype.redrawAt = function redrawAt(ctx, index, x, y) {
 		var i;
 
 		// redraw stuff that was cleared with clearRect
 		for (i = 0; i < this.data.layers.length; i++) {
-			if (neighbour) {
-				ctx = this.above.getContext('2d');
-				ctx.clearRect(x * this.tileWidth, y * this.tileHeight, this.tileWidth, this.tileHeight);
-			} else if (this.data.layers[i].type === 'tilelayer') {
+			if (this.data.layers[i].type === 'tilelayer') {
 				this.drawTile(index, i);
 			}
 		}
@@ -118,11 +115,7 @@ define([
 			tile = this.data.layers[layer].data[index] - 1,
 			x = index % this.data.width,
 			y = (index - x) / this.data.width,
-			coord,
-			neighbour;
-
-		// tile has neighbour
-		neighbour = util.tileHasNeighbour(this.data.layers[layer].data[index]);
+			coord;
 
 		// set id 0
 		this.data.layers[layer].data[index] = 0;
@@ -130,14 +123,6 @@ define([
 
 		this.redrawAt(index);
 		this.redrawAt(ctx, util.twoToOneDim(x, y), x, y, false);
-
-		if (typeof neighbour === 'number') {
-			coord = util.oneToTwoDim(index);
-			coord.y -= neighbour;
-
-
-			this.redrawAt(ctx, util.twoToOneDim(coord.x, coord.y), coord.x, coord.y, true);
-		}
 	};
 
 	Map.prototype.init = function init(data, scene) {

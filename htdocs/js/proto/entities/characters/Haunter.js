@@ -20,8 +20,8 @@ define([
 
 		this.id = id;
 
-		//this.characterWidth = 63;
-		//this.characterHeight = 102;
+		this.characterWidth = 75;
+		this.characterHeight = 102;
 
 		// collision-box
 		this.width = 40;
@@ -45,9 +45,9 @@ define([
 
 		this.c = new Framecounter(100);
 
-		this.loadImage('enemy.png');
+		this.loadImage('haunter.png');
 
-		//this.frames = 3;
+		this.frames = 3;
 	};
 
 	Haunter.prototype = new Enemy();

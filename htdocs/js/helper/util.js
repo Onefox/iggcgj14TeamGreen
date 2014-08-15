@@ -61,15 +61,6 @@ define([
 			var throwable = [106];
 
 			return throwable.indexOf(id) !== -1;
-		},
-
-
-		tileHasNeighbour: function tileHasNeighbour(id) {
-			var obj = {
-				'106': 1
-			};
-
-			return obj[id];
 		}
 	};
 
