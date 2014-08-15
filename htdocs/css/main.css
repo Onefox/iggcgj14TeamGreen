@@ -16,7 +16,11 @@ canvas{cursor:crosshair;position:absolute;top:0;left:0;width:100%;height:100%}
 .player-select .fear.olaf{left:156px}
 .gameover{width:100%;height:100%;position:absolute;top:0;left:0;background:url("../img/ui/gameover.png") center center no-repeat;display:none}
 .victory{width:100%;height:100%;position:absolute;top:0;left:0;background:url("../img/ui/victory.png") center center no-repeat;display:none}
-.info{width:100%;height:100%;position:absolute;background-color:#000;top:0;left:0;background:url("../img/ui/info.png") center center no-repeat;display:block}
+.info{width:100%;height:100%;position:absolute;top:0;left:0;background:url("../img/ui/info.png") center center no-repeat #000;display:block}
+.skills{position:absolute;top:125px;left:20px;width:204px;height:170px;}
+.skills.jerome{background:url("../img/ui/skills_jerome.png") center center no-repeat}
+.skills.lina{background:url("../img/ui/skills_lina.png") center center no-repeat}
+.skills.olaf{background:url("../img/ui/skills_olaf.png") center center no-repeat}
 .visible{opacity:1 !important}
 .display{display:block !important}
 .display-none{display:none !important}
