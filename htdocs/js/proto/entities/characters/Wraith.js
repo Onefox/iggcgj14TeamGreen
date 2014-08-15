@@ -84,7 +84,9 @@ define([
 
 				if (dist <= 30) {
 					game.scene.player.setFear();
-					//this.scene.remove(this);
+
+					
+					this.scene.remove(this);
 				}
 			}
 		}
