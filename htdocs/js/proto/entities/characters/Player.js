@@ -162,6 +162,89 @@ define([
 				}
 			}
 		}
+
+		this.updateGamepad();
+	};
+
+	Player.prototype.updateGamepad = function updateGamepad() {
+		var that = this;
+
+		this.pad = navigator.getGamepads()[0];
+
+		//console.log(this.pad);
+
+		if (!this.pad) {
+			return;
+		}
+
+		if (this.pad.axes[6] == -1) {
+			this.down("left");
+		} else {
+			this.up("left");
+		}
+
+		if (this.pad.axes[6] == 1) {
+			this.down("right");
+		} else {
+			this.up("right");
+		}
+
+		if (this.pad.axes[7] == -1) {
+			this.down("up");
+		} else {
+			this.up("up");
+		}
+
+		if (this.pad.axes[7] == 1) {
+			this.down("down");
+		} else {
+			this.up("down");
+		}
+
+		if (this.pad.buttons[5].pressed || this.pad.buttons[4].pressed) {
+			if (this.timeout) {
+				return;
+			}
+
+			this.down("switch");
+
+			this.timeout = setTimeout(function() {
+				clearTimeout(that.timeout);
+				that.timeout = null;
+			}, 200);
+		} else {
+			this.up("witch");
+		}
+
+		if (this.pad.buttons[0].pressed || this.pad.buttons[0].pressed) {
+			if (this.timeout) {
+				return;
+			}
+
+			this.down("e_use");
+
+			this.timeout = setTimeout(function() {
+				clearTimeout(that.timeout);
+				that.timeout = null;
+			}, 200);
+		} else {
+			this.up("e_use");
+		}
+
+		if (this.pad.buttons[1].pressed || this.pad.buttons[1].pressed) {
+			if (this.timeout) {
+				return;
+			}
+
+			this.down("action2");
+
+			this.timeout = setTimeout(function() {
+				clearTimeout(that.timeout);
+				that.timeout = null;
+			}, 200);
+		} else {
+			this.up("action2");
+		}
 	};
 
 	Player.prototype.down = function down(key) {
