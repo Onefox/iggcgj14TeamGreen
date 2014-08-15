@@ -404,43 +404,81 @@ define([
 			firstTileX = Math.floor(pos.x / window.game.scene.map.tileWidth),
 			firstTileY = Math.floor(pos.y / window.game.scene.map.tileHeight);
 
-			switch (this.direction) {
-				case 0:
-					firstTileY++;
-					break;
-				case 1:
-					firstTileX--;
-					break;
-				case 2:
-					firstTileX++;
-					break;
-				case 3:
-					firstTileY--;
-					break;
-			}
+		switch (this.direction) {
+			case 0:
+				firstTileY++;
+				break;
+			case 1:
+				firstTileX--;
+				break;
+			case 2:
+				firstTileX++;
+				break;
+			case 3:
+				firstTileY--;
+				break;
+		}
 
-			//console.log("x: " + firstTileX + " y: " + firstTileY);
+		//console.log("x: " + firstTileX + " y: " + firstTileY);
 
-			index = util.twoToOneDim(firstTileX, firstTileY);
+		index = util.twoToOneDim(firstTileX, firstTileY);
 
-			// already sth in the hand -> throw
-			if (this.carry) {
-				this.carry.throwItem();
-				this.carry = null;
-				return;
-			}
+		// already sth in the hand -> throw
+		if (this.carry) {
+			this.carry.throwItem();
+			this.carry = null;
+			return;
+		}
 
-			if (util.tileCanBeThrown(window.game.scene.map.data.layers[3].data[index])) {
-				// sprite over olafs head
-				tile = window.game.scene.map.data.layers[3].data[index];
+		if (util.tileCanBeThrown(window.game.scene.map.data.layers[3].data[index])) {
+			// sprite over olafs head
+			tile = window.game.scene.map.data.layers[3].data[index];
 
-				// remove from map
-				window.game.scene.map.removeObject(index, 3);
+			// remove from map
+			window.game.scene.map.removeObject(index, 3);
 
-				//console.log()
-				this.carry = new Throw(center.x, center.y, util.getThrowName(tile), this);
-				this.scene.add(this.carry);
-			}
+			//console.log()
+			this.carry = new Throw(center.x, center.y, util.getThrowName(tile), this);
+			this.scene.add(this.carry);
+		}
+	};
+
+	Player.prototype.action2Olaf = function action2Olaf() {
+		var pos = this.position,
+			center = this.getCenter(),
+			index,
+			tile,
+			id,
+			firstTileX = Math.floor(pos.x / window.game.scene.map.tileWidth),
+			firstTileY = Math.floor(pos.y / window.game.scene.map.tileHeight);
+
+		switch (this.direction) {
+			case 0:
+				firstTileY++;
+				break;
+			case 1:
+				firstTileX--;
+				break;
+			case 2:
+				firstTileX++;
+				break;
+			case 3:
+				firstTileY--;
+				break;
+		}
+
+		//console.log("x: " + firstTileX + " y: " + firstTileY);
+
+		index = util.twoToOneDim(firstTileX, firstTileY);
+		id = game.scene.map.data.layers[3].data[index];
+
+
+		if (util.tileCanBeDestroyed(id)) {
+			game.scene.map.removeObject(index, 3);
+
+			index = util.twoToOneDim(firstTileX, firstTileY - 1);
+			game.scene.map.removeObject(index, 3);
+		}
 	};
 
 	Player.prototype.action1 = function action1() {
@@ -486,6 +524,7 @@ define([
 		this.actionTimer = this.ACTIONTIME;
 		switch(this.name) {
 			case 'olaf':
+				this.action2Olaf();
 				break;
 			case 'jerome':
 				this.action2Jerome();
@@ -650,7 +689,6 @@ define([
 				if (carry) {
 					game.scene.remove(game.scene.player.carry);
 					game.scene.player.carry = null;
-					console.log('remove');
 				}
 
 				game.scene.remove(game.inactivePlayer);
@@ -677,7 +715,7 @@ define([
 
 				if (carry) {
 					game.scene.player.carry = carry;
-					game.scene.add(game.scene.player.carry);
+					game.scene.add(game.scene.player.carry, true);
 				}
 
 				//game.scene.inactivePlayer.position.y = game.scene.player.position.y - 40;

@@ -74,6 +74,12 @@ define([
 			var ropeable = [707];
 
 			return ropeable.indexOf(id) !== -1;
+		},
+
+		tileCanBeDestroyed: function tileCanBeDestroyed(id) {
+			var arr = [859];
+
+			return arr.indexOf(id) !== -1;
 		}
 
 		/*getLayerIndexbyName: function getLayerIndexbyName(name) {
