@@ -136,7 +136,9 @@ define([
 		// player aggro when near
 		for (i = 0; i < this.scene.entities.length; i++ ) {
 			entity = window.game.scene.entities[i];
-
+			if (!entity) {
+				continue;
+			}
 			switch (entity.name) {
 				case "wraith":
 					aggroDist = 200;
