@@ -28,6 +28,7 @@ define([
 		var t1 = this.movement.length(),
 			t = this.destination.dif(this.position).length(),
 			dist,
+			coord = {},
 			i;
 
 		this.timer -= delta;
@@ -60,10 +61,13 @@ define([
 			}
 		}
 
-		if (map.checkCollision(this.position.x, this.position.y)) {
-			this.scene.add(new Bottle(this.getCenter().x -90, this.getCenter().y - 100));
-			this.scene.remove(this);
-		}
+			// hit wall / object
+			coord.x = Math.floor(this.position.x / game.scene.map.tileWidth);
+			coord.y = Math.floor(this.position.y / game.scene.map.tileHeight);
+			if (map.checkCollision(coord.x, coord.y)) {
+				this.scene.remove(this);
+				this.scene.add(new Bottle(this.getCenter().x -90, this.getCenter().y - 100));
+			}
 	};
 
 	Grenade.prototype.draw = function draw(ctx, view) {

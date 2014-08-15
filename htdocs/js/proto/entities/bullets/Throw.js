@@ -30,6 +30,7 @@ define([
 		if (this.doThrow) {
 			var t1 = this.movement.length(),
 				t = this.destination.dif(this.position).length(),
+				coord = {},
 				dist,
 				i;
 
@@ -52,8 +53,16 @@ define([
 				}
 			}
 
+			// destination reached
 			//console.log(Math.round(this.position.x), Math.round(this.destination.x), Math.round(this.position.y), Math.round(this.destination.y))
 			if (Math.round(this.position.x) === Math.round(this.destination.x) && Math.round(this.position.y) === Math.round(this.destination.y)) {
+				this.scene.remove(this);
+			}
+
+			// hit wall / object
+			coord.x = Math.floor(this.position.x / game.scene.map.tileWidth);
+			coord.y = Math.floor(this.position.y / game.scene.map.tileHeight);
+			if (map.checkCollision(coord.x, coord.y)) {
 				this.scene.remove(this);
 			}
 		} else {
