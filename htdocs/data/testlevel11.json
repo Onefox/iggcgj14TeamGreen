@@ -97,6 +97,32 @@
                  "width":32,
                  "x":1900,
                  "y":682
+                }, 
+                {
+                 "height":22,
+                 "name":"wraith",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":25,
+                 "x":1059,
+                 "y":645
+                }, 
+                {
+                 "height":33,
+                 "name":"ball",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":38,
+                 "x":2279,
+                 "y":718
                 }],
          "opacity":1,
          "type":"objectgroup",

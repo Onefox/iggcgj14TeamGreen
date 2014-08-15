@@ -476,6 +476,23 @@ define([
 			}
 		}
 
+
+		//console.log(tileX, tileY);
+		//console.log(game.ball.x, tileX, game.ball.y, tileY);
+
+		// GOAL
+		if (game.ball.x === tileX && game.ball.y === tileY) {
+			config.running = false;
+
+			dom.addClass(dom.get("victory"), "display");
+
+			this.gameover = true;
+
+			window.setTimeout(function() {
+				window.location.reload();
+			}, 5000);
+		}
+
 		//console.log(move.x, move.y);
 	};
 

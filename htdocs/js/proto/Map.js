@@ -229,6 +229,12 @@ define([
 							enemyId++;
 							break;
 
+						case 'ball':
+							x = Math.floor(layer[j].x / this.tileWidth);
+							y = Math.floor(layer[j].y / this.tileHeight);
+							game.ball = new V2(x, y);
+							break;
+
 						default:
 							break;
 					}
