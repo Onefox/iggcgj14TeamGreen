@@ -175,25 +175,25 @@ define([
 
 		if (key == 'left') {
 			this.movement.x = -this.speed;
-			this.movement.y = 0;
+			//this.movement.y = 0;
 			this.direction = 1;
 		}
 
 		if (key == 'right') {
 			this.movement.x = this.speed;
-			this.movement.y = 0;
+			//this.movement.y = 0;
 			this.direction = 2;
 		}
 
 		if (key == 'up') {
 			this.movement.y = -this.speed;
-			this.movement.x = 0;
+			//this.movement.x = 0;
 			this.direction = 3;
 		}
 
 		if (key == 'down') {
 			this.movement.y = this.speed;
-			this.movement.x = 0;
+			//this.movement.x = 0;
 			this.direction = 0;
 		}
 
