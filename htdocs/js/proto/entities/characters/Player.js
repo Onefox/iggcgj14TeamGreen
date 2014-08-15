@@ -169,6 +169,10 @@ define([
 	Player.prototype.updateGamepad = function updateGamepad() {
 		var that = this;
 
+		if (!navigator.getGamepads) {
+			return;
+		}
+
 		this.pad = navigator.getGamepads()[0];
 
 		//console.log(this.pad);
@@ -811,7 +815,7 @@ define([
 		//console.log(game.ball.x, tileX, game.ball.y, tileY);
 
 		// GOAL
-		/*if (game.ball.x === tileX && game.ball.y === tileY) {
+		if (game.ball.x === tileX && game.ball.y === tileY) {
 			config.running = false;
 
 			dom.addClass(dom.get("victory"), "display");
@@ -821,7 +825,7 @@ define([
 			window.setTimeout(function() {
 				window.location.reload();
 			}, 5000);
-		}*/
+		}
 
 		//console.log(move.x, move.y);
 	};
