@@ -207,6 +207,9 @@ define([
 			dom.removeClass(elem,this.name);
 			dom.removeClass(elem, "choosen");
 
+			// skill-div
+			dom.removeClass(dom.get("skills"), this.name);
+
 			window.game.scene.inactivePlayer = new InativePlayer(inactivePlayerBuffer2.position.x, inactivePlayerBuffer2.position.y);
 			window.game.scene.inactivePlayer.setName(inactivePlayerBuffer2.name);
 
@@ -225,6 +228,9 @@ define([
 			setTimeout(function() {
 				dom.addClass(elem, "choosen");
 			}, 40);
+
+			// skill-div
+			dom.addClass(dom.get("skills"), inactivePlayerBuffer.name);
 
 			// add new shadows
 			window.game.scene.add(window.game.scene.inactivePlayer);
