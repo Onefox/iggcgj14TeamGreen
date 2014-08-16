@@ -139,7 +139,7 @@ define([
 			if (typeof a.position != 'undefined' && typeof b.position != 'undefined') {
 				return a.position.y - b.position.y;
 			} else {
-				return 1;
+				return 0;
 			}
 		});
 
