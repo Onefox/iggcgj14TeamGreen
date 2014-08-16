@@ -27,6 +27,8 @@ define([
 
 		this.turn = 0;
 
+		this.fear = null;
+
 		// target of the Master
 		this.target = new V2(0,0);
 

@@ -869,7 +869,7 @@ define([
 				game.scene.animations = animations;
 
 				this.position.x = map.teleport[i].x * game.scene.map.tileWidth;
-				this.position.y = (map.teleport[i].y + 2) * game.scene.map.tileHeight;
+				this.position.y = map.teleport[i].y * game.scene.map.tileHeight;
 
 				game.scene.player.position.x = this.position.x;
 				game.scene.player.position.y = this.position.y;
@@ -928,46 +928,43 @@ define([
 			canBeUsed = util.tileCanBeUsed(layer[index]);
 
 		if (canBeUsed) {
+			game.scene.map.removeObject(index, 1);
+
 			// de-fear all
 			if (util.getUseName(layer[index]) === "candy") {
 				console.log('defear all');
-				this.defear(true);
+				this.defear("olaf");
+				this.defear("jerome");
+				this.defear("lina");
 			}
 			// de-fear one
 			else {
-				console.log('defear one');
-				this.defear();
-			}
+				if (game.scene.getChar("olaf").fear) {
+					this.defear("olaf");
+					return;
+				}
 
-			game.scene.map.removeObject(index, 1);
+				if (game.scene.getChar("jerome").fear) {
+					this.defear("jerome");
+					return;
+				}
+
+				if (game.scene.getChar("lina").fear) {
+					this.defear("lina");
+					return;
+				}
+			}
 		}
 	};
 
-	Player.prototype.defear = function defear(twoTimes) {
+	Player.prototype.defear = function defear(charName) {
 		var player = math.rand(0, 2),
+			obj,
 			elem,
 			elem2,
-			obj,
 			name;
 
-		switch (player) {
-		case 0:
-			obj = game.player;
-			break;
-		case 1:
-			obj = game.inactivePlayer;
-			break;
-		case 2:
-			obj = game.inactivePlayer2;
-			break;
-		}
-
-
-		// not feared -> try again
-		if (obj.fear === false) {
-			this.defear();
-			return;
-		}
+		obj = game.scene.getChar(charName);
 
 		elem2 = dom.get("green");
 
@@ -986,12 +983,7 @@ define([
 
 		dom.removeClass(elem, "visible");
 
-		window.game.scene.remove(this.cry);
-
-		if (twoTimes) {
-			console.log('again');
-			this.defear();
-		}
+		window.game.scene.remove(obj.cry);
 	};
 
 	Player.prototype.mousedown = function mousedown(pos) {
