@@ -944,6 +944,7 @@ define([
 	Player.prototype.defear = function defear(twoTimes) {
 		var player = math.rand(0, 2),
 			elem,
+			elem2,
 			obj,
 			name;
 
@@ -965,6 +966,15 @@ define([
 			this.defear();
 			return;
 		}
+
+		elem2 = dom.get("green");
+
+		dom.addClass(elem2, 'hit');
+
+
+		window.setTimeout(function() {
+			dom.removeClass(elem2, 'hit');
+		}, 180);
 
 		obj.fear = false;
 
@@ -1032,7 +1042,7 @@ define([
 
 		window.setTimeout(function() {
 			dom.removeClass(elem2, 'hit');
-		}, 120);
+		}, 180);
 
 		if (game.player.fear && game.inactivePlayer.fear && game.inactivePlayer2.fear) {
 			config.running = false;
