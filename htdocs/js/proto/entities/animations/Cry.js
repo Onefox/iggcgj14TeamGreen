@@ -27,7 +27,7 @@ define([
 		ctx.save();
 		ctx.translate(pos.x - view.getX(), pos.y - view.getY());
 		//ctx.rotate(this.angle);
-		this.sprite.draw(ctx, -10, -40 +offsetY, this.f.frame);
+		this.sprite.draw(ctx, -10, -60 +offsetY, this.f.frame);
 		ctx.restore();
 	};
 	return Cry;
