@@ -2,15 +2,16 @@ define([
 	"modules/mouse",
 	"proto/entities/animations/Acid",
 	"proto/V2",
-	"proto/entities/characters/Enemy"
-], function(mouse, Acid, V2, Enemy) {
+	"proto/entities/characters/Enemy",
+	"helper/dom"
+], function(mouse, Acid, V2, Enemy, dom) {
 	var Flamethrower = function Flamethrower(actor) {
 		this.shooting = false;
 		this.actor = actor;
 		this.cooldown = 0;
 		this.animation =
 
-		this.maxCooldown = 2000;
+		this.maxCooldown = 1000;
 
 		this.ammo = this.ammoMax = 1;
 		this.reloadTime = 2000;
@@ -26,6 +27,8 @@ define([
 
 		if (this.cooldown > 0) {
 			this.cooldown -= delta;
+
+			dom.get("inner").style.height = ~~(((this.maxCooldown - this.cooldown) / this.maxCooldown) * 100) + "%";
 		}
 
 		if (this.ammo < 1) {
