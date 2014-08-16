@@ -1049,7 +1049,7 @@ define([
 
 			window.setTimeout(function() {
 				window.location.reload();
-			}, 2000);
+			}, 4000);
 		}
 
 		name = obj.name;
