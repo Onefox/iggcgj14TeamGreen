@@ -590,7 +590,7 @@ define([
 				this.action1Olaf();
 				break;
 			case 'jerome':
-				this.light = 200;
+				this.light = 400;
 				break;
 			case 'lina':
 				this.speed = this.SPEEDS.boost;
@@ -913,6 +913,10 @@ define([
 			dom.addClass(dom.get("gameover"), "display");
 
 			this.gameover = true;
+
+			window.setTimeout(function() {
+				window.location.reload();
+			}, 2000);
 		}
 
 		name = obj.name;

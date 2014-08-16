@@ -111,10 +111,10 @@ define([
 		}
 
 		if (this.timeout === null) {
-			if (game.frames % 40 === 0) {
-				if (Math.random() > 0.8) {
+			if (game.frames % 30 === 0) {
+				if (Math.random() > 0.6) {
 					this.boltCount++;
-					this.ctx.clearRect(0, 0, config.screenWidth, config.screenHeight);
+					this.clearCount = 20;
 				}
 
 				if (this.boltCount > 2) {
@@ -122,10 +122,16 @@ define([
 						clearTimeout(that.timeout);
 						that.timeout = null;
 						that.boltCount = 0;
-					}, 12000);
+					}, 10000);
 				}
 				return;
 			}
+		}
+
+		this.clearCount--;
+		if (this.clearCount > 0) {
+			this.ctx.clearRect(0, 0, config.screenWidth, config.screenHeight);
+			return;
 		}
 
 		//this.ctx.rect(0, 0, config.screenWidth, config.screenHeight);
