@@ -237,7 +237,6 @@ define([
 
 		this.scene.remove(this);
 
-		console.log('test');
 		//this.scene.ui.EnemyRemoved();
 		//this.scene.add( new death( pos.x, pos.y  ));
 
