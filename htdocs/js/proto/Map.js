@@ -72,13 +72,11 @@ define([
 	};
 
 	Map.prototype.drawTile = function drawTile(index, layer) {
-		var ctx = layer < 4 ? this.below.getContext('2d') : this.above.getContext('2d'),
+		var ctx = layer < 5 ? this.below.getContext('2d') : this.above.getContext('2d'),
 			tileset = this.data.tilesets[0],
 			tile = this.data.layers[layer].data[index] - 1,
 			x = index % this.data.width,
 			y = (index - x) / this.data.width;
-
-
 
 		if (tile > -1) {
 			ctx.drawImage(image.getImage(tileset.image), (tile % tileset.width) * this.tileWidth, Math.floor(tile / tileset.width) * this.tileHeight, this.tileWidth, this.tileHeight, x * this.tileWidth, y * this.tileHeight, this.tileWidth, this.tileHeight);
