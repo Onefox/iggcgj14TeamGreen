@@ -180,14 +180,10 @@ define([
 							break;
 
 						case 'tele':
-							x = Math.floor(layer[j].x / this.tileWidth);
-							y = Math.floor(layer[j].y / this.tileHeight);
-
 							this.teleport.push({
 								scene: layer[j].type.substring(0, layer[j].type.indexOf("_")),
-								id: layer[j].type.substring(layer[j].type.indexOf("_") + 1, layer[j].type.length),
-								x: x,
-								y: y
+								x: layer[j].type.substring(layer[j].type.indexOf("_") + 1, layer[j].type.indexOf("|")),
+								y: layer[j].type.substring(layer[j].type.indexOf("|") + 1, layer[j].type.length)
 							});
 
 							break;
