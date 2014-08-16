@@ -29,7 +29,7 @@ define([
 
 	Throw.prototype.update = function(delta, map) {
 		if (this.doThrow) {
-			var t1 = this.movement.length(),
+			var t1 = 250,//this.movement.length(),
 				t = this.destination.dif(this.position).length(),
 				coord = {},
 				dist,
@@ -37,6 +37,8 @@ define([
 
 			this.timer -= delta;
 			this.fak = (t/(t1));
+
+			this.fak = 0.4;
 
 			this.position.add(this.movement.norm().prd(((delta + this.speed) * this.fak)));
 
