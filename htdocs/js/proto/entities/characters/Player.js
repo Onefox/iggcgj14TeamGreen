@@ -74,7 +74,9 @@ define([
 		this.mode = this.MODES[mode];
 
 		if (this.mode === this.MODES.stunned) {
-			this.stunTimeout = 1500;
+			this.stunTimeout = 5000;
+
+			this.up(this.key);
 		}
 	};
 

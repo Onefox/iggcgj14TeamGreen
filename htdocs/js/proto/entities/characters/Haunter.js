@@ -69,7 +69,7 @@ define([
 					game.scene.player.setMode("stunned");
 
 					// let enemy respawn
-					this.respawn();
+					this.kill();
 
 					// ste fear
 					game.scene.player.setFear();
