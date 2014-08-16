@@ -4,8 +4,9 @@ define([
 	"proto/AnimationSprite",
 	"proto/entities/Character",
 	"proto/Framecounter",
-	"proto/V2"
-], function(path, math, AnimationSprite, Character, Framecounter, V2) {
+	"proto/V2",
+	"proto/entities/animations/EnemyDeath"
+], function(path, math, AnimationSprite, Character, Framecounter, V2, EnemyDeath) {
 	var Enemy = function Enemy(x, y, id) {
 		this.position = new V2(x, y);
 		this.spawn = new V2(x, y);
@@ -235,10 +236,14 @@ define([
 			belowctx = this.scene.map.below.getContext('2d');
 
 		this.scene.remove(this);
+
+		console.log('test');
 		//this.scene.ui.EnemyRemoved();
 		//this.scene.add( new death( pos.x, pos.y  ));
 
 		//this.bloodSprites.center(belowctx, center.x, center.y, (Math.random() * 3) | 0);
+
+		this.scene.add(new EnemyDeath(this.getCenter().x - 40, this.getCenter().y - 110));
 	};
 
 	return Enemy;
