@@ -141,21 +141,21 @@ require([
 
 					if (i > 50) {
 						i = 0;
-						console.log("KILL");
+						//console.log("KILL");
 						if (x === 0) {
 							x++;
-							console.log("KILL1");
+							//console.log("KILL1");
 							dom.addClass(dom.get("intro1"), "display-none");
 							clearTimeout(timer1);
 							timer1 = null;
 						} else if (x === 1) {
 							x++;
-							console.log("KILL2");
+							//console.log("KILL2");
 							dom.addClass(dom.get("intro2"), "display-none");
 							clearTimeout(timer2);
 							timer2 = null;
 						} else {
-							console.log("KILL3");
+							//console.log("KILL3");
 							clearTimeout(timer3);
 							config.running = true;
 
