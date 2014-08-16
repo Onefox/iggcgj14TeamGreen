@@ -582,7 +582,7 @@ define([
 				this.action1Olaf();
 				break;
 			case 'jerome':
-				this.light = 200;
+				this.light = 400;
 				break;
 			case 'lina':
 				this.speed = this.SPEEDS.boost;
