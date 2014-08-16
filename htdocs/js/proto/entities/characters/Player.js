@@ -342,6 +342,7 @@ define([
 			// remove old shadows
 			window.game.scene.remove(window.game.scene.inactivePlayer);
 			window.game.scene.remove(window.game.scene.inactivePlayer2);
+			window.game.scene.remove(this);
 
 			var inactivePlayerBuffer = window.game.scene.inactivePlayer;
 			var inactivePlayerBuffer2 = window.game.scene.inactivePlayer2;
@@ -381,7 +382,7 @@ define([
 			// add new shadows
 			window.game.scene.add(window.game.scene.inactivePlayer);
 			window.game.scene.add(window.game.scene.inactivePlayer2);
-
+			window.game.scene.add(this);
 			game.player = game.scene.player;
 			game.inactivePlayer = game.scene.inactivePlayer;
 			game.inactivePlayer2 = game.scene.inactivePlayer2;
