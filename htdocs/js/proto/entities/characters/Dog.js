@@ -66,8 +66,7 @@ define([
 				if (dist <= 30) {
 					game.scene.player.setFear();
 
-					// move back to origin
-					this.scene.remove(this);
+					this.kill();
 				}
 			}
 		}
