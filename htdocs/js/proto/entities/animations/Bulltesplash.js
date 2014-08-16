@@ -1,6 +1,6 @@
 function bulletsplash(pos, move) {
 	this.position = pos;
-	this.init('img/bulletSplash.png', 5, 70);
+	this.init('bulletSplash.png', 5, 70);
 	this.angle = move.angle2()  + Math.PI / 2;
 }
 

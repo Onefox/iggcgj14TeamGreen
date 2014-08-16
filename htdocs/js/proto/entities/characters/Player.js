@@ -4,7 +4,7 @@ define([
 	"proto/entities/Character",
 	"proto/entities/characters/Enemy",
 	"proto/entities/characters/InativePlayers",
-	"proto/weapons/Rifle",
+	"proto/weapons/Flamethrower",
 	"proto/V2",
 	"helper/util",
 	"helper/dom",
@@ -12,10 +12,11 @@ define([
 	"helper/math",
 	"proto/entities/bullets/Throw",
 	"proto/entities/animations/WallBreak"
-], function(config, mouse, Character, Enemy, InativePlayer, Rifle, V2, util, dom, Cry, math, Throw, WallBreak) {
+], function(config, mouse, Character, Enemy, InativePlayer, Flamethrower, V2, util, dom, Cry, math, Throw, WallBreak) {
 	var Player = function Player() {
 		this.position = new V2(0, 0);
 		this.movement = new V2(0, 0);
+		this.directionVec = new V2(0,0);
 		this.characterWidth = 60;
 		this.characterHeight = 78;
 		this.name = 'jerome';
@@ -51,7 +52,7 @@ define([
 		this.y = 0;
 
 		this.weapons = [
-			new Rifle(this)
+			new Flamethrower(this)
 		];
 
 		this.stunTimeout = 999;
@@ -269,24 +270,32 @@ define([
 			this.movement.x = -this.speed;
 			//this.movement.y = 0;
 			this.direction = 1;
+			this.directionVec.x = this.movement.x;
+			this.directionVec.y = this.movement.y;
 		}
 
 		if (key == 'right') {
 			this.movement.x = this.speed;
 			//this.movement.y = 0;
 			this.direction = 2;
+			this.directionVec.x = this.movement.x;
+			this.directionVec.y = this.movement.y;
 		}
 
 		if (key == 'up') {
 			this.movement.y = -this.speed;
 			//this.movement.x = 0;
 			this.direction = 3;
+			this.directionVec.x = this.movement.x;
+			this.directionVec.y = this.movement.y;
 		}
 
 		if (key == 'down') {
 			this.movement.y = this.speed;
 			//this.movement.x = 0;
 			this.direction = 0;
+			this.directionVec.x = this.movement.x;
+			this.directionVec.y = this.movement.y;
 		}
 
 		if (key > 0 && key <= this.weapons.length) {
@@ -468,7 +477,6 @@ define([
 				} else if (direction == "down") {
 					window.game.scene.map.data.layers[2].data[index2] = 708;
 				} else if (direction == "up") {
-					console.log("UP");
 					window.game.scene.map.data.layers[2].data[index2] = 709;
 				} else {
 					window.game.scene.map.data.layers[2].data[index2] = 710;
@@ -624,6 +632,7 @@ define([
 				this.action2Jerome();
 				break;
 			case 'lina':
+					this.weapon.fire();
 				break;
 			default:
 				console.log('wrong name?');
@@ -637,6 +646,8 @@ define([
 			case 'jerome':
 				break;
 			case 'lina':
+				this.weapon.stop();
+
 				break;
 			default:
 				console.log('wrong name?');
@@ -661,6 +672,11 @@ define([
 		if (key == 'down' && this.movement.y > 0) {
 			this.movement.y = 0;
 		}
+
+		if (key == 'action2') {
+			this.removeAction2();
+		}
+
 
 		//	if( this.movement.x < 0 ) this.direction = 2;
 		//	if( this.movement.x > 0 ) this.direction = 3;
@@ -849,15 +865,11 @@ define([
 	};
 
 	Player.prototype.mousedown = function mousedown(pos) {
-		/*if (this.weapon) {
-			this.weapon.fire();
-		}*/
+
 	};
 
 	Player.prototype.mouseup = function(pos) {
-		if (this.weapon) {
-			this.weapon.stop();
-		}
+
 	};
 	/**
 	 * Set the name

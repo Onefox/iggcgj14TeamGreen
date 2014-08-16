@@ -23,7 +23,7 @@ define([
 		this.f.update(delta);
 
 		if (this.f.frame >= this.framecount && !this.endless) {
-			this.scene.remove(this);
+			game.scene.remove(this);
 		} else if (this.f.frame >= this.framecount && this.endless){
 			this.f.reset();
 		}
