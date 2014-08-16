@@ -119,7 +119,7 @@ require([
 		}, false);
 		var gamepad;
 
-		setInterval(function() {
+		interval = setInterval(function() {
 			if (navigator.getGamepads) {
 				gamepad = navigator.getGamepads()[0];
 			} else {
