@@ -561,6 +561,7 @@ define([
 
 		index = util.twoToOneDim(firstTileX, firstTileY);
 
+		console.log(this.carry);
 		// already sth in the hand -> throw
 		if (this.carry) {
 			this.carry.throwItem();
@@ -651,15 +652,16 @@ define([
 	Player.prototype.removeAction1 = function removeAction1() {
 		// start cooldown;
 
-		this.cooldown = this.COOLDOWNTIME;
 		switch(this.name) {
 			case 'olaf':
 				break;
 			case 'jerome':
+				this.cooldown = this.COOLDOWNTIME;
 				this.light = 0;
 				this.actionTimer = 0;
 				break;
 			case 'lina':
+				this.cooldown = this.COOLDOWNTIME;
 				this.speed = this.SPEEDS.normal;
 				this.actionTimer = 0;
 				window.game.scene.inactivePlayer.speed = this.speed*33;

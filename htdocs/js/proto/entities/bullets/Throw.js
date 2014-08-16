@@ -3,8 +3,9 @@ define([
 	"proto/V2",
 	"proto/Sprite",
 	"proto/entities/characters/Enemy",
-	"proto/Rect"
-], function(Entity, V2, Sprite, Enemy, Rect) {
+	"proto/Rect",
+	"proto/entities/animations/WallBreak"
+], function(Entity, V2, Sprite, Enemy, Rect, WallBreak) {
 	var Throw = function Throw(x ,y, imgName, actor) {
 		this.position = new V2 (x, y);
 		this.destination = new V2(0, 0);
@@ -57,6 +58,7 @@ define([
 			//console.log(Math.round(this.position.x), Math.round(this.destination.x), Math.round(this.position.y), Math.round(this.destination.y))
 			if (Math.round(this.position.x) === Math.round(this.destination.x) && Math.round(this.position.y) === Math.round(this.destination.y)) {
 				this.scene.remove(this);
+				this.scene.add(new WallBreak(this.position.x - 34, this.position.y - 80));
 			}
 
 			// hit wall / object
@@ -64,6 +66,7 @@ define([
 			coord.y = Math.floor(this.position.y / game.scene.map.tileHeight);
 			if (map.checkCollision(coord.x, coord.y)) {
 				this.scene.remove(this);
+				this.scene.add(new WallBreak(this.position.x - 34, this.position.y - 80));
 			}
 		} else {
 			this.position.x = this.actor.position.x;
@@ -77,9 +80,9 @@ define([
 		if (this.doThrow) {
 			ctx.translate((this.position.x - view.getX()), (this.position.y - view.getY()));
 		} else {
-			var player = window.game.scene.getChar("olaf");
-			var pos = player.position;
-			ctx.translate(pos.x - view.getX() + 19, pos.y - view.getY() - 30);
+			//var player = ;
+			//var pos = player.position;
+			ctx.translate(window.game.scene.getChar("olaf").position.x - view.getX() + 19, window.game.scene.getChar("olaf").position.y - view.getY() - 30);
 		}
 
 		this.sprite.center(ctx, 0, 0);
