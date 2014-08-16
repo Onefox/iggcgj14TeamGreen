@@ -227,7 +227,7 @@ define([
 				that.timeout = null;
 			}, 200);
 		} else {
-			this.up("witch");
+			this.up("switch");
 		}
 
 		if (this.pad.buttons[0].pressed || this.pad.buttons[0].pressed) {

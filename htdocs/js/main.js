@@ -54,7 +54,14 @@ require([
 	// preload images
 	image.add(imgList, function() {
 		var listener,
-			interval;
+			interval,
+			timer1,
+			timer2,
+			timer3,
+			x = 0,
+			i = 50,
+			key,
+			next;
 
 
 		window.teleTimeout = null;
@@ -63,20 +70,22 @@ require([
 
 		config.running = false;
 
-		window.setTimeout(function() {
-			dom.addClass(dom.get("intro1"), "display-none");
+
+
+		timer1 = window.setTimeout(function() {
+			 dom.addClass(dom.get("intro1"), "display-none");
 
 			window.setTimeout(function() {
 				dom.addClass(dom.get("intro2"), "display-none");
 
-				listener = window.addEventListener("keydown", function(e) {
+				/*listener = window.addEventListener("keydown", function(e) {
 					if (e.keyCode === 32) {
 						config.running = true;
 
 						dom.addClass(dom.get("info"), "display-none");
 						window.removeEventListener("keydown", listener, false);
 					}
-				}, false);
+				}, false);*/
 
 				/*if (navigator.getGamepads) {
 					interval = setInterval(function() {
@@ -93,14 +102,64 @@ require([
 					}, 10);
 				}*/
 
-				window.setTimeout(function() {
+				timer3 = window.setTimeout(function() {
 					config.running = true;
 
 					dom.addClass(dom.get("info"), "display-none");
-					window.removeEventListener("keydown", listener, false);
-				}, 3000);
-			}, 2400);
-		}, 1800);
+					//window.removeEventListener("keydown", listener, false);
+				}, 999999999);
+			}, 999999999);
+		}, 999999999);
+
+		listener = window.addEventListener("keydown", function(e) {
+			key = true;
+		}, false);
+		window.addEventListener("keyup", function(e) {
+			key = false;
+		}, false);
+
+		setInterval(function() {
+			if (navigator.getGamepads()[0]){
+				//console.log(navigator.getGamepads()[0].buttons[0]);
+				i++;
+				if (key || navigator.getGamepads()[0].buttons[0].pressed || navigator.getGamepads()[0].buttons[1].pressed
+					|| navigator.getGamepads()[0].buttons[2].pressed || navigator.getGamepads()[0].buttons[3].pressed
+					|| navigator.getGamepads()[0].buttons[4].pressed || navigator.getGamepads()[0].buttons[5].pressed
+					|| navigator.getGamepads()[0].buttons[6].pressed || navigator.getGamepads()[0].buttons[7].pressed
+					|| navigator.getGamepads()[0].buttons[8].pressed || navigator.getGamepads()[0].buttons[9].pressed
+					|| navigator.getGamepads()[0].buttons[10].pressed || navigator.getGamepads()[0].buttons[11].pressed
+					|| navigator.getGamepads()[0].buttons[12].pressed || navigator.getGamepads()[0].buttons[13].pressed
+					|| navigator.getGamepads()[0].buttons[14].pressed || navigator.getGamepads()[0].buttons[15].pressed
+					|| navigator.getGamepads()[0].buttons[16].pressed) {
+
+					if (i > 50) {
+						i = 0;
+						console.log("KILL");
+						if (x === 0) {
+							x++;
+							console.log("KILL1");
+							dom.addClass(dom.get("intro1"), "display-none");
+							clearTimeout(timer1);
+							timer1 = null;
+						} else if (x === 1) {
+							x++;
+							console.log("KILL2");
+							dom.addClass(dom.get("intro2"), "display-none");
+							clearTimeout(timer2);
+							timer2 = null;
+						} else {
+							console.log("KILL3");
+							clearTimeout(timer3);
+							config.running = true;
+
+							dom.addClass(dom.get("info"), "display-none");
+							window.removeEventListener("keydown", listener, false);
+							clearInterval(interval);
+						}
+					}
+				}
+			}
+		}, 10);
 
 		keyboard.init();
 		game.init();
