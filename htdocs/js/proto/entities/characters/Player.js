@@ -22,6 +22,7 @@ define([
 		this.name = 'jerome';
 		this.light = 0;
 		this.stop = false;
+		this.axesStop = true;
 
 		this.width = 40;
 		this.height = 60;
@@ -255,13 +256,26 @@ define([
 		if (this.pad.buttons[3].pressed || this.pad.buttons[3].pressed) {
 			window.location.reload();
 		}
+		if (Math.abs(this.pad.axes[0]) > 0.2 || Math.abs(this.pad.axes[1]) > 0.2) {
+			this.axesStop = false;
+			this.down('axes', this.pad.axes[0], this.pad.axes[1]);
+		} else if (!this.axesStop){
+			this.up('axes');
+		}
+
+
 	};
 
-	Player.prototype.down = function down(key) {
+	Player.prototype.down = function down(key, axesX, axesY) {
 		if (this.mode === this.MODES.stunned || this.stop) {
 			return;
 		}
-
+		if (key == 'axes' ) {
+			this.movement.x = this.speed * axesX;
+			this.movement.y = this.speed * axesY;
+			this.directionVec.x = this.movement.x;
+			this.directionVec.y = this.movement.y;
+		}
 		if (key == 'space' && this.gameover) {
 			window.location.reload();
 		}
@@ -657,6 +671,11 @@ define([
 
 	Player.prototype.up = function up ( key ) {
 		this.stop = false;
+		if (key == 'axes') {
+			this.movement.x = 0;
+			this.movement.y = 0;
+			this.axesStop = true;
+		}
 		if (key == 'left' && this.movement.x < 0) {
 			this.movement.x = 0;
 		}
