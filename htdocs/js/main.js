@@ -117,12 +117,13 @@ require([
 		window.addEventListener("keyup", function(e) {
 			key = false;
 		}, false);
+		var gamepad = navigator.getGamepads() ? navigator.getGamepads()[0] : true;
 
 		setInterval(function() {
-			if (navigator.getGamepads()[0]){
+			if (gamepad){
 				//console.log(navigator.getGamepads()[0].buttons[0]);
 				i++;
-				if (key || navigator.getGamepads()[0].buttons[0].pressed || navigator.getGamepads()[0].buttons[1].pressed
+				if (key || gamepad  && (navigator.getGamepads()[0].buttons[0].pressed || navigator.getGamepads()[0].buttons[1].pressed
 					|| navigator.getGamepads()[0].buttons[2].pressed || navigator.getGamepads()[0].buttons[3].pressed
 					|| navigator.getGamepads()[0].buttons[4].pressed || navigator.getGamepads()[0].buttons[5].pressed
 					|| navigator.getGamepads()[0].buttons[6].pressed || navigator.getGamepads()[0].buttons[7].pressed
@@ -130,7 +131,7 @@ require([
 					|| navigator.getGamepads()[0].buttons[10].pressed || navigator.getGamepads()[0].buttons[11].pressed
 					|| navigator.getGamepads()[0].buttons[12].pressed || navigator.getGamepads()[0].buttons[13].pressed
 					|| navigator.getGamepads()[0].buttons[14].pressed || navigator.getGamepads()[0].buttons[15].pressed
-					|| navigator.getGamepads()[0].buttons[16].pressed) {
+					|| navigator.getGamepads()[0].buttons[16].pressed)) {
 
 					if (i > 50) {
 						i = 0;
