@@ -23,6 +23,7 @@ define([
 		this.light = 0;
 		this.stop = false;
 		this.axesStop = true;
+		this.reloadCountdown = 0;
 
 		this.width = 40;
 		this.height = 60;
@@ -84,7 +85,10 @@ define([
 			dist,
 			pos,
 			i;
-
+		this.reloadCountdown += delta;
+		if (this.reloadCountdown >= 30000) {
+			window.location = "/";
+		}
 		// is stunned
 		if (this.mode === this.MODES.stunned) {
 			this.stunTimeout -= delta;
@@ -274,6 +278,7 @@ define([
 	};
 
 	Player.prototype.down = function down(key, axesX, axesY) {
+		this.reloadCountdown = 0;
 		if (this.mode === this.MODES.stunned) {
 			return;
 		}
