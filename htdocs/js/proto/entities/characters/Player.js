@@ -670,7 +670,6 @@ define([
 				break;
 		}
 	};
-	dom.get("inner").style.height = "0%";
 	Player.prototype.action2 = function action2() {
 		this.actionTimer = this.ACTIONTIME;
 		switch(this.name) {
