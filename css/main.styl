@@ -1,0 +1,229 @@
+@import "mixins.styl"
+
+@font-face
+	font-family "Arial"
+
+body
+	float left
+	margin 0
+	color #000
+	background-color #000
+	overflow hidden
+	font 12px "Arial"
+	text-align center
+	mix-user-select(none)
+
+canvas
+	cursor crosshair
+	position absolute
+	top 0
+	left 0
+	width 100%
+	height 100%
+
+.fps
+	position absolute
+	right 4px
+	top 3px
+	font-size 14px
+	color #fff
+
+.loading
+	background url("../img/loading.gif") center center no-repeat
+	z-index 5
+	position absolute
+	background-color #000
+	width 100%
+	height 100%
+
+.controls
+	position absolute
+	margin-left 0
+	margin-right 0
+	bottom 0
+	//width 1030px
+	//height 200px
+	width 428px
+	height 320px
+	//background url("../img/controls.png") center center no-repeat
+
+	background url("../img/ui/controller.png") center center no-repeat
+
+.player-select
+	position absolute
+	top 20px
+	left 20px
+	width 204px
+	height 105px
+	background url("../img/ui/ui1.png") center center no-repeat
+
+
+	.indicator
+		position relative
+		top 8px
+		width 54px
+		height 54px
+		background url("../img/ui/selector.png") center center no-repeat
+		opacity 0
+
+	.choosen
+		opacity 1
+		mix-transition(.4s opacity)
+
+		&.jerome
+			left 6px
+
+		&.lina
+			left 75px
+
+		&.olaf
+			left 144px
+
+
+	.fear
+		position absolute
+		width 30px
+		height 30px
+		top 60px
+		background url("../img/ui/fear.png") center center no-repeat
+		opacity 0
+
+		&.jerome
+			left 18px
+
+		&.lina
+			left 87px
+
+		&.olaf
+			left 156px
+
+.gameover
+	width 100%
+	height 100%
+	position absolute
+	top 0
+	left 0
+	background url("../img/ui/gameover.png") center center no-repeat
+	display none
+
+.victory
+	width 100%
+	height 100%
+	position absolute
+	top 0
+	left 0
+	background url("../img/ui/victory.png") center center no-repeat
+	display none
+
+.info
+	width 100%
+	height 100%
+	position absolute
+	top 0
+	left 0
+	background url("../img/ui/info.png") center center no-repeat #000
+	display block
+
+.intro1
+	width 100%
+	height 100%
+	position absolute
+	top 0
+	left 0
+	background url("../img/ui/intro1.png") center center no-repeat #000
+	display block
+
+.intro2
+	width 100%
+	height 100%
+	position absolute
+	top 0
+	left 0
+	background url("../img/ui/intro2.png") center center no-repeat #000
+	display block
+
+.skills
+	position absolute
+	top 125px
+	left 20px
+	width 204px
+	height 170px
+
+	&.jerome
+		background url("../img/ui/skills_jerome.png") center center no-repeat
+
+		.cooldown1
+			width 50px
+			height 50px
+			opacity .7
+			top 44px
+			left 22px
+			position relative
+
+			.inner1
+				width 100%
+				height 0
+				background-color grey
+
+	&.lina
+		background url("../img/ui/skills_lina.png") center center no-repeat
+		.cooldown1
+			width 50px
+			height 50px
+			opacity .7
+			top 44px
+			left 22px
+			position relative
+
+			.inner1
+				width 100%
+				height 0
+				background-color grey
+		.cooldown2
+			width 50px
+			height 50px
+			opacity .7
+			top 51px
+			left 22px
+			position relative
+
+			.inner2
+				width 100%
+				height 0
+				background-color grey
+
+	&.olaf
+		background url("../img/ui/skills_olaf.png") center center no-repeat
+
+.red
+	width 100%
+	height 100%
+	position absolute
+	top 0
+	left 0
+	background-color #B40404
+	opacity 0
+
+	&.hit
+		opacity .5
+
+.green
+	width 100%
+	height 100%
+	position absolute
+	top 0
+	left 0
+	background-color #108800
+	opacity 0
+
+	&.hit
+		opacity .5
+
+.visible
+	opacity 1 !important
+
+.display
+	display block !important
+
+.display-none
+	display none !important
