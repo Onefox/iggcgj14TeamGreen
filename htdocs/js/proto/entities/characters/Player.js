@@ -253,7 +253,7 @@ define([
 			this.up("action2");
 		}
 
-		if (this.pad.buttons[3].pressed || this.pad.buttons[3].pressed) {
+		if (this.pad.buttons[9].pressed) {
 			window.location.reload();
 		}
 		if (Math.abs(this.pad.axes[0]) > 0.2 || Math.abs(this.pad.axes[1]) > 0.2) {
@@ -275,6 +275,15 @@ define([
 			this.movement.y = this.speed * axesY;
 			this.directionVec.x = this.movement.x;
 			this.directionVec.y = this.movement.y;
+			if (this.movement.x > 0 && Math.abs(this.movement.x) > Math.abs(this.movement.y)) {
+				this.direction = 2;
+			} else if (this.movement.x < 0 && Math.abs(this.movement.x) >  Math.abs(this.movement.y)) {
+				this.direction = 1;
+			} else if (this.movement.y < 0) {
+				this.direction = 3;
+			} else {
+				this.direction = 0;
+			}
 		}
 		if (key == 'space' && this.gameover) {
 			window.location.reload();
