@@ -24,7 +24,7 @@ define([
 		this.width = 40;
 		this.height = 60;
 
-		this.widthCol = 30;
+		this.widthCol = 40;
 		this.heightCol = 40;
 
 		this.color = 'black';
@@ -34,7 +34,7 @@ define([
 		};
 		this.actionTimer = 0;
 		this.ACTIONTIME = 3000;
-		this.cooldown;
+		this.cooldown = null;
 
 
 		this.MODES = {
@@ -181,25 +181,25 @@ define([
 			return;
 		}
 
-		if (this.pad.axes[6] == -1) {
+		if (this.pad.axes[5] == -1) {
 			this.down("left");
 		} else {
 			this.up("left");
 		}
 
-		if (this.pad.axes[6] == 1) {
+		if (this.pad.axes[5] == 1) {
 			this.down("right");
 		} else {
 			this.up("right");
 		}
 
-		if (this.pad.axes[7] == -1) {
+		if (this.pad.axes[6] == -1) {
 			this.down("up");
 		} else {
 			this.up("up");
 		}
 
-		if (this.pad.axes[7] == 1) {
+		if (this.pad.axes[6] == 1) {
 			this.down("down");
 		} else {
 			this.up("down");
@@ -248,6 +248,10 @@ define([
 			}, 200);
 		} else {
 			this.up("action2");
+		}
+
+		if (this.pad.buttons[3].pressed || this.pad.buttons[3].pressed) {
+			window.location.reload();
 		}
 	};
 
@@ -800,10 +804,10 @@ define([
 				game.scene.inactivePlayer.direction = 0;
 				game.scene.inactivePlayer2.direction = 0;
 
-				if (carry) {
+				/*if (carry) {
 					game.scene.player.carry = carry;
 					game.scene.add(game.scene.player.carry, true);
-				}
+				}*/
 
 				//game.scene.inactivePlayer.position.y = game.scene.player.position.y - 40;
 				//game.scene.inactivePlayer.position.y = game.scene.player.position.y - 80;

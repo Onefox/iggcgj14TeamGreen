@@ -52,20 +52,44 @@ require([
 
 	// preload images
 	image.add(imgList, function() {
-		var listener;
+		var listener,
+			interval;
 
 		dom.get('loading').style.display = 'none';
 
 		config.running = false;
 
-		listener = window.addEventListener("keydown", function(e) {
-			if (e.keyCode === 32) {
-				config.running = true;
-				dom.addClass(dom.get("info"), "display-none");
+		window.setTimeout(function() {
+			dom.addClass(dom.get("intro1"), "display-none");
 
-				window.removeEventListener("keydown", listener, false);
-			}
-		}, false);
+			window.setTimeout(function() {
+				dom.addClass(dom.get("intro2"), "display-none");
+
+				listener = window.addEventListener("keydown", function(e) {
+					if (e.keyCode === 32) {
+						config.running = true;
+
+						dom.addClass(dom.get("info"), "display-none");
+						window.removeEventListener("keydown", listener, false);
+					}
+				}, false);
+
+				/*if (navigator.getGamepads) {
+					interval = setInterval(function() {
+						if (navigator.getGamepads[0]){
+							console.log(navigator.getGamepads()[0].buttons[0]);
+							if (navigator.getGamepads()[0].buttons[0].pressed) {
+								config.running = true;
+
+								dom.addClass(dom.get("info"), "display-none");
+
+								clearInterval(interval);
+							}
+						}
+					}, 10);
+				}*/
+			}, 3400);
+		}, 1800);
 
 		keyboard.init();
 		game.init();
