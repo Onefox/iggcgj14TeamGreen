@@ -117,13 +117,19 @@ require([
 		window.addEventListener("keyup", function(e) {
 			key = false;
 		}, false);
-		var gamepad = navigator.getGamepads() ? navigator.getGamepads()[0] : true;
+		var gamepad;
+
+		if (navigator.getGamepads) {
+			gamepad = navigator.getGamepads()[0];
+		} else {
+			gamepad = false;
+		}
 
 		setInterval(function() {
-			if (gamepad){
+			if (true){
 				//console.log(navigator.getGamepads()[0].buttons[0]);
 				i++;
-				if (key || gamepad  && (navigator.getGamepads()[0].buttons[0].pressed || navigator.getGamepads()[0].buttons[1].pressed
+				if (key || gamepad && (navigator.getGamepads()[0].buttons[0].pressed || navigator.getGamepads()[0].buttons[1].pressed
 					|| navigator.getGamepads()[0].buttons[2].pressed || navigator.getGamepads()[0].buttons[3].pressed
 					|| navigator.getGamepads()[0].buttons[4].pressed || navigator.getGamepads()[0].buttons[5].pressed
 					|| navigator.getGamepads()[0].buttons[6].pressed || navigator.getGamepads()[0].buttons[7].pressed
