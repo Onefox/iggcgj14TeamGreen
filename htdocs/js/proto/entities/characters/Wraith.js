@@ -85,8 +85,8 @@ define([
 					game.scene.player.setFear();
 
 					// move back to origin
-					this.position.x = this.spawn.x;
-					this.position.y = this.spawn.y;
+					this.scene.remove(this);
+					this.respawn();
 				}
 			}
 		}

@@ -55,6 +55,9 @@ require([
 		var listener,
 			interval;
 
+
+		window.teleTimeout = null;
+
 		dom.get('loading').style.display = 'none';
 
 		config.running = false;

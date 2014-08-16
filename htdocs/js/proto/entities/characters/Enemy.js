@@ -186,8 +186,8 @@ define([
 	};
 
 	Enemy.prototype.respawn = function respawn() {
-		this.position.x = this.spawn.x;
-		this.position.y = this.spawn.y;
+		//this.position.x = this.spawn.x;
+		//this.position.y = this.spawn.y;
 	};
 
 	/*Enemy.prototype.calcPath = function calcPath() {

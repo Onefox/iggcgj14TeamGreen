@@ -767,9 +767,15 @@ define([
 
 	Player.prototype.checkTeleport = function checkTeleport(map, tileX, tileY) {
 		var i,
+			that = this,
 			name,
 			carry,
 			animations;
+
+
+		if (window.teleTimeout !== null) {
+			return;
+		}
 
 		// check whether used teleports
 		for (i = 0; i < map.teleport.length; i++) {
@@ -806,6 +812,11 @@ define([
 				game.scene.player.direction = 0;
 				game.scene.inactivePlayer.direction = 0;
 				game.scene.inactivePlayer2.direction = 0;
+
+				window.teleTimeout = setTimeout(function() {
+					clearTimeout(window.teleTimeout);
+					window.teleTimeout = null;
+				}, 1000);
 
 				/*if (carry) {
 					game.scene.player.carry = carry;
