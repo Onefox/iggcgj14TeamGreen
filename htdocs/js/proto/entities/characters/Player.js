@@ -37,7 +37,8 @@ define([
 		};
 		this.actionTimer = 0;
 		this.ACTIONTIME = 3000;
-		this.cooldown = null;
+		this.cooldown = 0;
+		this.COOLDOWNTIME = 10000;
 
 		this.fear = false;
 
@@ -87,7 +88,6 @@ define([
 		// is stunned
 		if (this.mode === this.MODES.stunned) {
 			this.stunTimeout -= delta;
-
 			// set mode back to normal
 			if (this.stunTimeout <= 0) {
 				this.setMode("normal");
@@ -96,9 +96,15 @@ define([
 
 		if (this.actionTimer > 0) {
 			this.actionTimer -= delta;
+
 			if (this.actionTimer < 0) {
 				this.removeAction1();
 			}
+		}
+
+		if (this.cooldown > 0) {
+			this.cooldown -= delta;
+			dom.get("inner1").style.height = 100-(~~(((this.COOLDOWNTIME - this.cooldown) / this.COOLDOWNTIME) * 100)) + "%";
 		}
 
 		if (this.movement.x || this.movement.y) {
@@ -345,15 +351,18 @@ define([
 
 			window.game.scene.inactivePlayer = new InativePlayer(inactivePlayerBuffer2.position.x, inactivePlayerBuffer2.position.y);
 			window.game.scene.inactivePlayer.setName(inactivePlayerBuffer2.name);
+			window.game.scene.inactivePlayer.cooldown = inactivePlayerBuffer2.cooldown;
 
 			window.game.scene.inactivePlayer2 = new InativePlayer(this.position.x, this.position.y);
 			//console.log(this.name);
 			//console.log("inactivePlayer");
 			window.game.scene.inactivePlayer2.setName(this.name);
+			window.game.scene.inactivePlayer2.cooldown = this.cooldown;
 
 			this.removeAction1();
 
 			this.setName(inactivePlayerBuffer.name);
+			this.cooldown = inactivePlayerBuffer.cooldown;
 			this.position.x = inactivePlayerBuffer.position.x;
 			this.position.y = inactivePlayerBuffer.position.y;
 
@@ -372,6 +381,7 @@ define([
 			game.player = game.scene.player;
 			game.inactivePlayer = game.scene.inactivePlayer;
 			game.inactivePlayer2 = game.scene.inactivePlayer2;
+			dom.get("inner1").style.height = "0%";
 		}
 		if (key == 'e_use') {
 			this.action1();
@@ -608,7 +618,12 @@ define([
 	};
 
 	Player.prototype.action1 = function action1() {
+		if (this.cooldown > 0) {
+			return;
+		}
+		dom.get("inner1").style.height = "100%";
 		this.actionTimer = this.ACTIONTIME;
+
 		switch(this.name) {
 			case 'olaf':
 				this.action1Olaf();
@@ -627,7 +642,9 @@ define([
 		}
 	};
 	Player.prototype.removeAction1 = function removeAction1() {
-		// TODO: Set cooldown!!
+		// start cooldown;
+
+		this.cooldown = this.COOLDOWNTIME;
 		switch(this.name) {
 			case 'olaf':
 				break;
@@ -646,6 +663,7 @@ define([
 				break;
 		}
 	};
+	dom.get("inner").style.height = "0%";
 	Player.prototype.action2 = function action2() {
 		this.actionTimer = this.ACTIONTIME;
 		switch(this.name) {

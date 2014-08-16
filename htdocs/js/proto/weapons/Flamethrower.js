@@ -11,7 +11,7 @@ define([
 		this.cooldown = 0;
 		this.animation =
 
-		this.maxCooldown = 1000;
+		this.maxCooldown = 1;
 
 		this.ammo = this.ammoMax = 1;
 		this.reloadTime = 2000;
@@ -27,8 +27,7 @@ define([
 
 		if (this.cooldown > 0) {
 			this.cooldown -= delta;
-
-			dom.get("inner").style.height = ~~(((this.maxCooldown - this.cooldown) / this.maxCooldown) * 100) + "%";
+			dom.get("inner").style.height = 100-(~~(((this.reloadTime - this.cooldown) / this.reloadTime) * 100)) + "%";
 		}
 
 		if (this.ammo < 1) {
@@ -62,6 +61,7 @@ define([
 
 			if (this.animation) {
 				window.game.scene.add(this.animation = new Acid(center.x, center.y, move));
+				dom.get("inner").style.height = "100%";
 			}
 			//sound.play('sound/fx/laser/laser.ogg');
 			this.cooldown = this.maxCooldown;

@@ -21,6 +21,7 @@ define([
 		// sprite-size
 		this.characterWidth = 60;
 		this.characterHeight = 78;
+		this.cooldown = 0;
 
 		this.speed = 10;
 
@@ -47,6 +48,11 @@ define([
 			this.updateSprite(delta);
 		} else {
 			this.c.frame = 0;
+		}
+
+		//update cooldow
+		if (this.cooldown > 0) {
+			this.cooldown -= delta;
 		}
 		
 		var movement = new V2(this.target.x, this.target.y).sub(this.position),
