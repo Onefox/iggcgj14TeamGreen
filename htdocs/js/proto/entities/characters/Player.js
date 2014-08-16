@@ -26,7 +26,7 @@ define([
 		this.width = 40;
 		this.height = 60;
 
-		this.widthCol = 40;
+		this.widthCol = 30;
 		this.heightCol = 40;
 
 		this.color = 'black';
