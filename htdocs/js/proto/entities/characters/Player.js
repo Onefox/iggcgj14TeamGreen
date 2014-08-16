@@ -274,7 +274,7 @@ define([
 	};
 
 	Player.prototype.down = function down(key, axesX, axesY) {
-		if (this.mode === this.MODES.stunned || this.stop) {
+		if (this.mode === this.MODES.stunned) {
 			return;
 		}
 		if (key == 'axes' ) {
@@ -297,6 +297,7 @@ define([
 		}
 
 		if (key == 'left') {
+			this.key = "left";
 			this.movement.x = -this.speed;
 			//this.movement.y = 0;
 			this.direction = 1;
@@ -305,6 +306,7 @@ define([
 		}
 
 		if (key == 'right') {
+			this.key = "right";
 			this.movement.x = this.speed;
 			//this.movement.y = 0;
 			this.direction = 2;
@@ -313,6 +315,7 @@ define([
 		}
 
 		if (key == 'up') {
+			this.key = "up";
 			this.movement.y = -this.speed;
 			//this.movement.x = 0;
 			this.direction = 3;
@@ -321,6 +324,7 @@ define([
 		}
 
 		if (key == 'down') {
+			this.key = "down";
 			this.movement.y = this.speed;
 			//this.movement.x = 0;
 			this.direction = 0;
@@ -633,6 +637,9 @@ define([
 				break;
 			case 'lina':
 				this.speed = this.SPEEDS.boost;
+
+				this.up(this.key);
+				this.down(this.key);
 				window.game.scene.inactivePlayer.speed = this.speed*33;
 				window.game.scene.inactivePlayer2.speed = this.speed*33;
 				break;
