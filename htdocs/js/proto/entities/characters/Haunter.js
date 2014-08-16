@@ -72,7 +72,7 @@ define([
 					this.kill();
 
 					// ste fear
-					game.scene.player.setFear();
+					//game.scene.player.setFear();
 				}
 			}
 		}

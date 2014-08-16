@@ -220,6 +220,7 @@ define([
 							x = Math.floor(layer[j].x / this.tileWidth);
 							y = Math.floor(layer[j].y / this.tileHeight);
 							game.ball = new V2(x, y);
+							game.ball.scene = 4;
 							break;
 
 						default:

@@ -119,6 +119,12 @@ define([
 	InactivePlayer.prototype.setMasterPosition = function setMasterPosition(pos) {
 		this.target = pos;
 	};
+
+	InactivePlayer.prototype.setPosition = function setPosition(pos) {
+		this.position = pos;
+	};
+
+
 	/**
 	 * Set the name
 	 */

@@ -871,9 +871,10 @@ define([
 
 				game.scene.remove(game.inactivePlayer);
 				game.scene.remove(game.inactivePlayer2);
+
 				// set scene
-				console.log('scene', map.teleport[i].scene);
 				game.scene = game.scenes[map.teleport[i].scene];
+				window.sceneId = map.teleport[i].scene;
 				game.scene.animations = animations;
 
 				this.position.x = map.teleport[i].endX * game.scene.map.tileWidth;
@@ -882,9 +883,23 @@ define([
 				game.scene.player.position.x = this.position.x;
 				game.scene.player.position.y = this.position.y;
 
+
 				game.player = game.scene.player;
-				game.scene.add(game.scene.inactivePlayer = game.inactivePlayer);
-				game.scene.add(game.scene.inactivePlayer2 = game.inactivePlayer2);
+				game.scene.inactivePlayer = game.inactivePlayer;
+				game.scene.inactivePlayer2 = game.inactivePlayer2;
+
+
+				game.scene.inactivePlayer.position.x = this.position.x;
+				game.scene.inactivePlayer.position.y = this.position.y + 20;
+
+				game.scene.inactivePlayer2.position.x = this.position.x;
+				game.scene.inactivePlayer2.position.y = this.position.y + 40;
+
+				game.scene.add(game.scene.inactivePlayer);
+				game.scene.add(game.scene.inactivePlayer2);
+
+				//game.scene.inactivePlayer.setPosition(this.position);
+				//game.scene.inactivePlayer2.setPosition(pos);
 
 				game.scene.player.setName(name);
 
@@ -912,7 +927,7 @@ define([
 		//console.log(game.ball.x, tileX, game.ball.y, tileY);
 
 		// GOAL
-		if (game.ball.x === tileX && game.ball.y === tileY) {
+		if (game.ball.x === tileX && game.ball.y === tileY && window.sceneId == 4) {
 			config.running = false;
 
 			dom.addClass(dom.get("victory"), "display");
@@ -1046,6 +1061,8 @@ define([
 			dom.removeClass(elem2, 'hit');
 		}, 180);
 
+		name = obj.name;
+
 		if (game.player.fear && game.inactivePlayer.fear && game.inactivePlayer2.fear) {
 			config.running = false;
 
@@ -1058,8 +1075,6 @@ define([
 				window.location.reload();
 			}, 4000);
 		}
-
-		name = obj.name;
 
 		elem = dom.get("fear " + name);
 
