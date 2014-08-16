@@ -10,8 +10,9 @@ define([
 	"helper/dom",
 	"proto/entities/animations/Cry",
 	"helper/math",
-	"proto/entities/bullets/Throw"
-], function(config, mouse, Character, Enemy, InativePlayer, Rifle, V2, util, dom, Cry, math, Throw) {
+	"proto/entities/bullets/Throw",
+	"proto/entities/animations/WallBreak"
+], function(config, mouse, Character, Enemy, InativePlayer, Rifle, V2, util, dom, Cry, math, Throw, WallBreak) {
 	var Player = function Player() {
 		this.position = new V2(0, 0);
 		this.movement = new V2(0, 0);
@@ -569,6 +570,8 @@ define([
 
 			index = util.twoToOneDim(firstTileX, firstTileY - 1);
 			game.scene.map.removeObject(index, 3);
+
+			this.scene.add(new WallBreak(this.getCenter().x - 34, this.getCenter().y - 140));
 		}
 	};
 
