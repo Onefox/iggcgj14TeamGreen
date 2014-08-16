@@ -119,13 +119,13 @@ require([
 		}, false);
 		var gamepad;
 
-		if (navigator.getGamepads) {
-			gamepad = navigator.getGamepads()[0];
-		} else {
-			gamepad = false;
-		}
-
 		setInterval(function() {
+			if (navigator.getGamepads) {
+				gamepad = navigator.getGamepads()[0];
+			} else {
+				gamepad = false;
+			}
+
 			if (true){
 				//console.log(navigator.getGamepads()[0].buttons[0]);
 				i++;
