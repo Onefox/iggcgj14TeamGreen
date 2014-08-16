@@ -80,7 +80,23 @@ define([
 			var arr = [859];
 
 			return arr.indexOf(id) !== -1;
-		}
+		},
+
+		tileCanBeUsed: function tileCanBeUsed(id) {
+			var arr = [55, 105];
+
+			return arr.indexOf(id) !== -1;
+		},
+
+		getUseName: function getUseName(id) {
+			var items = {
+				'55': 'candy',
+				'105': 'apple'
+			};
+
+			return items[id];
+		},
+
 
 		/*getLayerIndexbyName: function getLayerIndexbyName(name) {
 

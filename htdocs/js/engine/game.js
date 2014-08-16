@@ -28,7 +28,7 @@ define([
 		levels: [
 			{
 				name: 'testlevel1',
-				scenes: 2
+				scenes: 1
 			}
 		],
 

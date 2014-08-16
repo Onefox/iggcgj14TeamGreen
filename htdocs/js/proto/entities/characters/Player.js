@@ -39,6 +39,7 @@ define([
 		this.ACTIONTIME = 3000;
 		this.cooldown = null;
 
+		this.fear = false;
 
 		this.MODES = {
 			normal: 'normal',
@@ -271,8 +272,8 @@ define([
 			return;
 		}
 		if (key == 'axes' ) {
-			this.movement.x = this.speed * axesX;
-			this.movement.y = this.speed * axesY;
+			this.movement.x = this.speed * axesY;
+			this.movement.y = this.speed * axesX;
 			this.directionVec.x = this.movement.x;
 			this.directionVec.y = this.movement.y;
 			if (this.movement.x > 0 && Math.abs(this.movement.x) > Math.abs(this.movement.y)) {
@@ -890,6 +891,71 @@ define([
 		}
 
 		//console.log(move.x, move.y);
+
+		// over item?
+		this.checkItem(tileX, tileY);
+	};
+
+	Player.prototype.checkItem = function checkItem(x, y) {
+		var layer = game.scene.map.data.layers[1].data,
+			index = util.twoToOneDim(x, y),
+			canBeUsed = util.tileCanBeUsed(layer[index]);
+
+		if (canBeUsed) {
+			// de-fear all
+			if (util.getUseName(layer[index]) === "candy") {
+				console.log('defear all');
+				this.defear(true);
+			}
+			// de-fear one
+			else {
+				console.log('defear one');
+				this.defear();
+			}
+
+			game.scene.map.removeObject(index, 1);
+		}
+	};
+
+	Player.prototype.defear = function defear(twoTimes) {
+		var player = math.rand(0, 2),
+			elem,
+			obj,
+			name;
+
+		switch (player) {
+		case 0:
+			obj = game.player;
+			break;
+		case 1:
+			obj = game.inactivePlayer;
+			break;
+		case 2:
+			obj = game.inactivePlayer2;
+			break;
+		}
+
+
+		// not feared -> try again
+		if (obj.fear === false) {
+			this.defear();
+			return;
+		}
+
+		obj.fear = false;
+
+		name = obj.name;
+
+		elem = dom.get("fear " + name);
+
+		dom.removeClass(elem, "visible");
+
+		window.game.scene.remove(this.cry);
+
+		if (twoTimes) {
+			console.log('again');
+			this.defear();
+		}
 	};
 
 	Player.prototype.mousedown = function mousedown(pos) {
@@ -953,7 +1019,7 @@ define([
 
 		dom.addClass(elem, "visible");
 
-		window.game.scene.add(new Cry(name));
+		window.game.scene.add(this.cry = new Cry(name));
 	};
 
 	return Player;
