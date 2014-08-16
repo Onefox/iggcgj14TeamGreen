@@ -1001,6 +1001,7 @@ define([
 	Player.prototype.setFear = function setFear() {
 		var player = math.rand(0, 2),
 			elem,
+			elem2,
 			obj,
 			name;
 
@@ -1023,6 +1024,15 @@ define([
 		}
 
 		obj.fear = true;
+
+		elem2 = dom.get("red");
+
+		dom.addClass(elem2, 'hit');
+
+
+		window.setTimeout(function() {
+			dom.removeClass(elem2, 'hit');
+		}, 120);
 
 		if (game.player.fear && game.inactivePlayer.fear && game.inactivePlayer2.fear) {
 			config.running = false;
