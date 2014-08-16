@@ -82,7 +82,7 @@ define([
 			ctx.drawImage(image.getImage(tileset.image), (tile % tileset.width) * this.tileWidth, Math.floor(tile / tileset.width) * this.tileHeight, this.tileWidth, this.tileHeight, x * this.tileWidth, y * this.tileHeight, this.tileWidth, this.tileHeight);
 
 			// tile coordinates
-			if (config.debug) {
+			/*if (config.debug) {
 				ctx.font = "8px Arial";
 				ctx.fillStyle = "black";
 
@@ -92,7 +92,7 @@ define([
 
 				ctx.textAlign = "center";
 				ctx.fillText(x + " | " + y, x * this.tileWidth + 16, y * this.tileHeight + 18);
-			}
+			}*/
 		}
 	};
 
@@ -180,10 +180,18 @@ define([
 							break;
 
 						case 'tele':
+							var string = layer[j].type;
+							var startX = string.substring(string.indexOf("_") + 1, string.indexOf("|"));
+							var startY = string.substring(string.indexOf("|") + 1, string.indexOf("+"));
+							var endX = string.substring(string.indexOf("+") +1, string.lastIndexOf("|"));
+							var endY = string.substring(string.lastIndexOf("|") + 1, string.length);
+
 							this.teleport.push({
-								scene: layer[j].type.substring(0, layer[j].type.indexOf("_")),
-								x: layer[j].type.substring(layer[j].type.indexOf("_") + 1, layer[j].type.indexOf("|")),
-								y: layer[j].type.substring(layer[j].type.indexOf("|") + 1, layer[j].type.length)
+								scene: string.substring(0, string.indexOf("_")),
+								startX: parseInt(startX, 10),
+								startY: parseInt(startY, 10),
+								endX: parseInt(endX, 10),
+								endY: parseInt(endY, 10)
 							});
 
 							break;

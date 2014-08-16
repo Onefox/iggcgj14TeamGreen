@@ -858,7 +858,7 @@ define([
 		// check whether used teleports
 		for (i = 0; i < map.teleport.length; i++) {
 			// found teleport
-			if (map.teleport[i].x === tileX && map.teleport[i].y === tileY) {
+			if (map.teleport[i].startX === tileX && map.teleport[i].startY === tileY) {
 				this.stop = true;
 				name = game.player.name;
 				animations = game.scene.animations;
@@ -872,11 +872,12 @@ define([
 				game.scene.remove(game.inactivePlayer);
 				game.scene.remove(game.inactivePlayer2);
 				// set scene
+				console.log('scene', map.teleport[i].scene);
 				game.scene = game.scenes[map.teleport[i].scene];
 				game.scene.animations = animations;
 
-				this.position.x = map.teleport[i].x * game.scene.map.tileWidth;
-				this.position.y = map.teleport[i].y * game.scene.map.tileHeight;
+				this.position.x = map.teleport[i].endX * game.scene.map.tileWidth;
+				this.position.y = map.teleport[i].endY * game.scene.map.tileHeight;
 
 				game.scene.player.position.x = this.position.x;
 				game.scene.player.position.y = this.position.y;

@@ -168,7 +168,7 @@
                     {
 
                     },
-                 "type":"0_25|15",
+                 "type":"0_19|34+25|15",
                  "visible":true,
                  "width":0,
                  "x":1049,
@@ -181,11 +181,24 @@
                     {
 
                     },
-                 "type":"3_40|9",
+                 "type":"3_40|7+40|9",
                  "visible":true,
                  "width":0,
                  "x":2183,
                  "y":312
+                }, 
+                {
+                 "height":0,
+                 "name":"tele",
+                 "properties":
+                    {
+
+                    },
+                 "type":"1_9|7+12|18",
+                 "visible":true,
+                 "width":0,
+                 "x":510,
+                 "y":315
                 }],
          "opacity":1,
          "type":"objectgroup",
