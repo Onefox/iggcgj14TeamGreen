@@ -674,7 +674,6 @@ define([
 		}
 	};
 	Player.prototype.action2 = function action2() {
-		this.actionTimer = this.ACTIONTIME;
 		switch(this.name) {
 			case 'olaf':
 				this.action2Olaf();
