@@ -91,7 +91,14 @@ require([
 						}
 					}, 10);
 				}*/
-			}, 3400);
+
+				window.setTimeout(function() {
+					config.running = true;
+
+					dom.addClass(dom.get("info"), "display-none");
+					window.removeEventListener("keydown", listener, false);
+				}, 3000);
+			}, 2400);
 		}, 1800);
 
 		keyboard.init();

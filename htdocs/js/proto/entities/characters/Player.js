@@ -901,6 +901,10 @@ define([
 			dom.addClass(dom.get("gameover"), "display");
 
 			this.gameover = true;
+
+			window.setTimeout(function() {
+				window.location.reload();
+			}, 2000);
 		}
 
 		name = obj.name;
