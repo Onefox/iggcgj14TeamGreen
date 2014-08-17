@@ -937,6 +937,9 @@ define([
 				game.scene.inactivePlayer.direction = 0;
 				game.scene.inactivePlayer2.direction = 0;
 
+				this.movement.x = 0;
+				this.movement.y = 0;
+
 				window.teleTimeout = setTimeout(function() {
 					clearTimeout(window.teleTimeout);
 					window.teleTimeout = null;
