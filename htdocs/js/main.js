@@ -112,6 +112,9 @@ require([
 							dom.addClass(dom.get("help1"), "display-none");
 							break;
 						case 3:
+							dom.addClass(dom.get("help2"), "display-none");
+							break;
+						case 4:
 							dom.addClass(dom.get("info"), "display-none");
 							window.removeEventListener("keydown", listener, false);
 							clearInterval(interval);
