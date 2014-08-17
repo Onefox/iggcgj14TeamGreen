@@ -289,15 +289,6 @@ define([
 			this.movement.y = this.speed * axesX;
 			this.directionVec.x = this.movement.x;
 			this.directionVec.y = this.movement.y;
-			if (this.movement.x > 0 && Math.abs(this.movement.x) > Math.abs(this.movement.y)) {
-				this.direction = 2;
-			} else if (this.movement.x < 0 && Math.abs(this.movement.x) >  Math.abs(this.movement.y)) {
-				this.direction = 1;
-			} else if (this.movement.y < 0) {
-				this.direction = 3;
-			} else {
-				this.direction = 0;
-			}
 		}
 		if (key == 'space' && this.gameover) {
 			window.location.reload();
@@ -307,7 +298,6 @@ define([
 			this.key = "left";
 			this.movement.x = -this.speed;
 			//this.movement.y = 0;
-			this.direction = 1;
 			this.directionVec.x = this.movement.x;
 			this.directionVec.y = this.movement.y;
 		}
@@ -316,7 +306,6 @@ define([
 			this.key = "right";
 			this.movement.x = this.speed;
 			//this.movement.y = 0;
-			this.direction = 2;
 			this.directionVec.x = this.movement.x;
 			this.directionVec.y = this.movement.y;
 		}
@@ -325,7 +314,6 @@ define([
 			this.key = "up";
 			this.movement.y = -this.speed;
 			//this.movement.x = 0;
-			this.direction = 3;
 			this.directionVec.x = this.movement.x;
 			this.directionVec.y = this.movement.y;
 		}
@@ -334,13 +322,23 @@ define([
 			this.key = "down";
 			this.movement.y = this.speed;
 			//this.movement.x = 0;
-			this.direction = 0;
 			this.directionVec.x = this.movement.x;
 			this.directionVec.y = this.movement.y;
 		}
 
 		if (key > 0 && key <= this.weapons.length) {
 			this.setWeapon(key - 1);
+		}
+		if (key == 'down' || key == 'up' || key == 'axes' || key == 'left' || key == 'right') {
+			if (this.movement.x > 0 && Math.abs(this.movement.x) > Math.abs(this.movement.y)) {
+				this.direction = 2;
+			} else if (this.movement.x < 0 && Math.abs(this.movement.x) > Math.abs(this.movement.y)) {
+				this.direction = 1;
+			} else if (this.movement.y < 0) {
+				this.direction = 3;
+			} else {
+				this.direction = 0;
+			}
 		}
 		if (key == 'switch') {
 			//console.log("changePlayer");
@@ -733,6 +731,17 @@ define([
 
 		if (key == 'down' && this.movement.y > 0) {
 			this.movement.y = 0;
+		}
+		if (key == 'down' || key == 'up' || key == 'axes' || key == 'left' || key == 'right') {
+			if (this.movement.x > 0 && Math.abs(this.movement.x) > Math.abs(this.movement.y)) {
+				this.direction = 2;
+			} else if (this.movement.x < 0 && Math.abs(this.movement.x) > Math.abs(this.movement.y)) {
+				this.direction = 1;
+			} else if (this.movement.y < 0) {
+				this.direction = 3;
+			} else {
+				this.direction = 0;
+			}
 		}
 
 		if (key == 'action2') {
