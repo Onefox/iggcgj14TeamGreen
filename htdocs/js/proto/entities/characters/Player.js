@@ -11,8 +11,9 @@ define([
 	"proto/entities/animations/Cry",
 	"helper/math",
 	"proto/entities/bullets/Throw",
-	"proto/entities/animations/WallBreak"
-], function(config, mouse, Character, Enemy, InativePlayer, Flamethrower, V2, util, dom, Cry, math, Throw, WallBreak) {
+	"proto/entities/animations/WallBreak",
+	"proto/entities/animations/Stunn"
+], function(config, mouse, Character, Enemy, InativePlayer, Flamethrower, V2, util, dom, Cry, math, Throw, WallBreak, Stunn) {
 	var Player = function Player() {
 		this.position = new V2(0, 0);
 		this.movement = new V2(0, 0);
@@ -59,7 +60,7 @@ define([
 			new Flamethrower(this)
 		];
 
-		this.stunTimeout = 999;
+		this.stunTimeout = 5000;
 
 		// item currently in hand of character
 		this.carry = null;
@@ -76,6 +77,10 @@ define([
 		if (this.mode === this.MODES.stunned) {
 			this.stunTimeout = 5000;
 
+			window.game.scene.add(window.stunn1 = new Stunn(this.getCenter().x - 9, this.getCenter().y - 90));
+			window.game.scene.add(window.stunn2 = new Stunn(window.game.scene.inactivePlayer.getCenter().x - 9, window.game.scene.inactivePlayer.getCenter().y - 90));
+			window.game.scene.add(window.stunn3 = new Stunn(window.game.scene.inactivePlayer2.getCenter().x - 9, window.game.scene.inactivePlayer2.getCenter().y - 90));
+
 			this.up(this.key);
 		}
 	};
@@ -91,12 +96,28 @@ define([
 		if (this.reloadCountdown >= 30000) {
 			window.location = "/";
 		}
+
+		// update stunn
+		if (window.stunn1) {
+			stunn1.position.x = this.getCenter().x - 9;
+			stunn1.position.y = this.getCenter().y - 90;
+			stunn2.position.x = window.game.scene.inactivePlayer.getCenter().x - 9;
+			stunn2.position.y = window.game.scene.inactivePlayer.getCenter().y - 90;
+			stunn3.position.x = window.game.scene.inactivePlayer2.getCenter().x - 9;
+			stunn3.position.y = window.game.scene.inactivePlayer2.getCenter().y - 90;
+		}
+
 		// is stunned
 		if (this.mode === this.MODES.stunned) {
 			this.stunTimeout -= delta;
 			// set mode back to normal
 			if (this.stunTimeout <= 0) {
 				this.setMode("normal");
+
+				window.game.scene.remove(window.stunn1);
+				window.game.scene.remove(window.stunn2);
+				window.game.scene.remove(window.stunn3);
+				window.stunn1 = null;
 			}
 		}
 
