@@ -60,7 +60,7 @@ define([
 			new Flamethrower(this)
 		];
 
-		this.stunTimeout = 5000;
+		this.stunTimeout = 4000;
 
 		// item currently in hand of character
 		this.carry = null;
@@ -75,7 +75,7 @@ define([
 		this.mode = this.MODES[mode];
 
 		if (this.mode === this.MODES.stunned) {
-			this.stunTimeout = 5000;
+			this.stunTimeout = 4000;
 
 			window.game.scene.add(window.stunn1 = new Stunn(this.getCenter().x - 9, this.getCenter().y - 90));
 			window.game.scene.add(window.stunn2 = new Stunn(window.game.scene.inactivePlayer.getCenter().x - 9, window.game.scene.inactivePlayer.getCenter().y - 90));
