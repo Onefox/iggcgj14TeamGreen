@@ -71,46 +71,6 @@ require([
 		config.running = false;
 
 
-
-		timer1 = window.setTimeout(function() {
-			 dom.addClass(dom.get("intro1"), "display-none");
-
-			window.setTimeout(function() {
-				dom.addClass(dom.get("intro2"), "display-none");
-
-				/*listener = window.addEventListener("keydown", function(e) {
-					if (e.keyCode === 32) {
-						config.running = true;
-
-						dom.addClass(dom.get("info"), "display-none");
-						window.removeEventListener("keydown", listener, false);
-					}
-				}, false);*/
-
-				/*if (navigator.getGamepads) {
-					interval = setInterval(function() {
-						if (navigator.getGamepads[0]){
-							console.log(navigator.getGamepads()[0].buttons[0]);
-							if (navigator.getGamepads()[0].buttons[0].pressed) {
-								config.running = true;
-
-								dom.addClass(dom.get("info"), "display-none");
-
-								clearInterval(interval);
-							}
-						}
-					}, 10);
-				}*/
-
-				timer3 = window.setTimeout(function() {
-					config.running = true;
-
-					dom.addClass(dom.get("info"), "display-none");
-					//window.removeEventListener("keydown", listener, false);
-				}, 999999999);
-			}, 999999999);
-		}, 999999999);
-
 		listener = window.addEventListener("keydown", function(e) {
 			key = true;
 		}, false);
@@ -141,28 +101,25 @@ require([
 
 					if (i > 50) {
 						i = 0;
-						//console.log("KILL");
-						if (x === 0) {
-							x++;
-							//console.log("KILL1");
+						switch (x) {
+						case 0:
 							dom.addClass(dom.get("intro1"), "display-none");
-							clearTimeout(timer1);
-							timer1 = null;
-						} else if (x === 1) {
-							x++;
-							//console.log("KILL2");
+							break;
+						case 1:
 							dom.addClass(dom.get("intro2"), "display-none");
-							clearTimeout(timer2);
-							timer2 = null;
-						} else {
-							//console.log("KILL3");
-							clearTimeout(timer3);
-							config.running = true;
-
+							break;
+						case 2:
+							dom.addClass(dom.get("help1"), "display-none");
+							break;
+						case 3:
 							dom.addClass(dom.get("info"), "display-none");
 							window.removeEventListener("keydown", listener, false);
 							clearInterval(interval);
+							config.running = true;
+							break;
 						}
+
+						x++;
 					}
 				}
 			}
