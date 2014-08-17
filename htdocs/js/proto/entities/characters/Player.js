@@ -640,6 +640,9 @@ define([
 			index = util.twoToOneDim(firstTileX, firstTileY - 1);
 			game.scene.map.removeObject(index, 3);
 
+			index = util.twoToOneDim(firstTileX, firstTileY + 1);
+			game.scene.map.removeObject(index, 3);
+
 			this.scene.add(new WallBreak(this.getCenter().x - 34, this.getCenter().y - 140));
 		}
 	};
