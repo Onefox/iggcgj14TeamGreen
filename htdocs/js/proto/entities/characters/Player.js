@@ -29,7 +29,7 @@ define([
 		this.height = 60;
 
 		this.widthCol = 30;
-		this.heightCol = 40;
+		this.heightCol = 30;
 
 		this.color = 'black';
 		this.SPEEDS = {
