@@ -984,8 +984,6 @@ define([
 			canBeUsed = util.tileCanBeUsed(layer[index]);
 
 		if (canBeUsed) {
-			game.scene.map.removeObject(index, 1);
-
 			// de-fear all
 			if (util.getUseName(layer[index]) === "candy") {
 				console.log('defear all');
@@ -993,27 +991,27 @@ define([
 				this.defear("jerome");
 				this.defear("lina");
 
-				window.fear = 0;
+				console.log('defear all');
 			}
 			// de-fear one
 			else {
-				if (game.scene.getChar("olaf").fear) {
+				if (window['fearolaf']) {
 					this.defear("olaf");
 					return;
 				}
 
-				if (game.scene.getChar("jerome").fear) {
+				if (window['fearjerome']) {
 					this.defear("jerome");
 					return;
 				}
 
-				if (game.scene.getChar("lina").fear) {
+				if (window['fearlina']) {
 					this.defear("lina");
 					return;
 				}
-
-				window.fear--;
 			}
+
+			game.scene.map.removeObject(index, 1);
 		}
 	};
 
@@ -1024,26 +1022,25 @@ define([
 			elem2,
 			name;
 
-		obj = game.scene.getChar(charName);
-
 		elem2 = dom.get("green");
 
 		dom.addClass(elem2, 'hit');
-
 
 		window.setTimeout(function() {
 			dom.removeClass(elem2, 'hit');
 		}, 180);
 
-		obj.fear = false;
+		window.fear--;
+		window['fear' + charName] = false;
 
-		name = obj.name;
+		elem = dom.get("fear " + charName);
 
-		elem = dom.get("fear " + name);
+
+		console.log(charName, elem);
 
 		dom.removeClass(elem, "visible");
 
-		window.game.scene.remove(obj.cry);
+		window.game.scene.remove(window["cry" + charName]);
 	};
 
 	Player.prototype.mousedown = function mousedown(pos) {
@@ -1071,23 +1068,21 @@ define([
 
 		switch (player) {
 		case 0:
-			obj = game.player;
+			name = "olaf";
 			break;
 		case 1:
-			obj = game.scene.inactivePlayer;
+			name = "lina";
 			break;
 		case 2:
-			obj = game.scene.inactivePlayer2;
+			name = "jerome";
 			break;
 		}
 
 		// already stunned -> try again
-		if (obj.fear) {
+		if (window['fear' + name]) {
 			this.setFear();
 			return;
 		}
-
-		obj.fear = true;
 
 		window.fear++;
 
@@ -1099,8 +1094,6 @@ define([
 		window.setTimeout(function() {
 			dom.removeClass(elem2, 'hit');
 		}, 180);
-
-		name = obj.name;
 
 		if (window.fear == 3/*game.player.fear && game.inactivePlayer.fear && game.inactivePlayer2.fear*/) {
 			config.running = false;
@@ -1115,11 +1108,12 @@ define([
 			}, 4000);
 		}
 
+		window['fear' + name] = true;
 		elem = dom.get("fear " + name);
 
 		dom.addClass(elem, "visible");
 
-		window.game.scene.add(this.cry = new Cry(name));
+		window.game.scene.add(window["cry" + name] = new Cry(name));
 	};
 
 	return Player;
