@@ -659,9 +659,14 @@ define([
 				this.light = 400;
 				break;
 			case 'lina':
+				var oldVec =  this.directionVec.div(this.speed);
+
 				this.speed = this.SPEEDS.boost;
-				this.up(this.key);
-				this.down(this.key);
+				// set new speed if the char is moving
+				if (this.movement.x != 0 || this.movement.y != 0) {
+					this.movement.x = oldVec.x * this.speed;
+					this.movement.y = oldVec.y * this.speed;
+				}
 				window.game.scene.inactivePlayer.speed = this.speed*33;
 				window.game.scene.inactivePlayer2.speed = this.speed*33;
 				break;
