@@ -971,7 +971,7 @@ define([
 			setTimeout(function() {
 				dom.removeClass(dom.get("ball"), "display");
 				config.running = true;
-			}, 3000);
+			}, 4000);
 
 			game.scene.map.removeObject(util.twoToOneDim(tileX, tileY), 1);
 
