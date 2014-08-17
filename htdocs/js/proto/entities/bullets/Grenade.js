@@ -48,7 +48,7 @@ define([
 					//console.log('getroffen');
 					dist = this.getCenter().dif(this.scene.entities[i].getCenter()).length();
 
-					if (dist < 140) {
+					if (dist < 50) {
 						game.scene.player.setFear();
 
 						// move ghost back to origin
