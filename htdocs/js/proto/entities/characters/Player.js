@@ -737,9 +737,9 @@ define([
 				this.direction = 2;
 			} else if (this.movement.x < 0 && Math.abs(this.movement.x) > Math.abs(this.movement.y)) {
 				this.direction = 1;
-			} else if (this.movement.y < 0) {
+			} else if (this.movement.y < 0 && Math.abs(this.movement.y) > Math.abs(this.movement.x)) {
 				this.direction = 3;
-			} else {
+			} else if (this.movement.y > 0 && Math.abs(this.movement.y) > Math.abs(this.movement.x)) {
 				this.direction = 0;
 			}
 		}
