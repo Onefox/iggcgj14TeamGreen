@@ -78,7 +78,7 @@ define([
 
 		tileCanBeDestroyed: function tileCanBeDestroyed(id) {
 			console.log(id);
-			var arr = [855];
+			var arr = [855, 857, 858];
 
 			return arr.indexOf(id) !== -1;
 		},

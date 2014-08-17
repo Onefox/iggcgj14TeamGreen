@@ -27,6 +27,8 @@ define([
 
 		this.turn = 0;
 
+		this.fear = null;
+
 		// target of the Master
 		this.target = new V2(0,0);
 
@@ -117,6 +119,12 @@ define([
 	InactivePlayer.prototype.setMasterPosition = function setMasterPosition(pos) {
 		this.target = pos;
 	};
+
+	InactivePlayer.prototype.setPosition = function setPosition(pos) {
+		this.position = pos;
+	};
+
+
 	/**
 	 * Set the name
 	 */

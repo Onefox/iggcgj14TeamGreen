@@ -23,12 +23,13 @@ define([
 		this.light = 0;
 		this.stop = false;
 		this.axesStop = true;
+		this.reloadCountdown = 0;
 
 		this.width = 40;
 		this.height = 60;
 
 		this.widthCol = 30;
-		this.heightCol = 40;
+		this.heightCol = 30;
 
 		this.color = 'black';
 		this.SPEEDS = {
@@ -73,7 +74,9 @@ define([
 		this.mode = this.MODES[mode];
 
 		if (this.mode === this.MODES.stunned) {
-			this.stunTimeout = 1500;
+			this.stunTimeout = 5000;
+
+			this.up(this.key);
 		}
 	};
 
@@ -84,7 +87,10 @@ define([
 			dist,
 			pos,
 			i;
-
+		this.reloadCountdown += delta;
+		if (this.reloadCountdown >= 30000) {
+			window.location = "/";
+		}
 		// is stunned
 		if (this.mode === this.MODES.stunned) {
 			this.stunTimeout -= delta;
@@ -274,6 +280,7 @@ define([
 	};
 
 	Player.prototype.down = function down(key, axesX, axesY) {
+		this.reloadCountdown = 0;
 		if (this.mode === this.MODES.stunned) {
 			return;
 		}
@@ -282,15 +289,6 @@ define([
 			this.movement.y = this.speed * axesX;
 			this.directionVec.x = this.movement.x;
 			this.directionVec.y = this.movement.y;
-			if (this.movement.x > 0 && Math.abs(this.movement.x) > Math.abs(this.movement.y)) {
-				this.direction = 2;
-			} else if (this.movement.x < 0 && Math.abs(this.movement.x) >  Math.abs(this.movement.y)) {
-				this.direction = 1;
-			} else if (this.movement.y < 0) {
-				this.direction = 3;
-			} else {
-				this.direction = 0;
-			}
 		}
 		if (key == 'space' && this.gameover) {
 			window.location.reload();
@@ -300,7 +298,6 @@ define([
 			this.key = "left";
 			this.movement.x = -this.speed;
 			//this.movement.y = 0;
-			this.direction = 1;
 			this.directionVec.x = this.movement.x;
 			this.directionVec.y = this.movement.y;
 		}
@@ -309,7 +306,6 @@ define([
 			this.key = "right";
 			this.movement.x = this.speed;
 			//this.movement.y = 0;
-			this.direction = 2;
 			this.directionVec.x = this.movement.x;
 			this.directionVec.y = this.movement.y;
 		}
@@ -318,7 +314,6 @@ define([
 			this.key = "up";
 			this.movement.y = -this.speed;
 			//this.movement.x = 0;
-			this.direction = 3;
 			this.directionVec.x = this.movement.x;
 			this.directionVec.y = this.movement.y;
 		}
@@ -327,13 +322,23 @@ define([
 			this.key = "down";
 			this.movement.y = this.speed;
 			//this.movement.x = 0;
-			this.direction = 0;
 			this.directionVec.x = this.movement.x;
 			this.directionVec.y = this.movement.y;
 		}
 
 		if (key > 0 && key <= this.weapons.length) {
 			this.setWeapon(key - 1);
+		}
+		if (key == 'down' || key == 'up' || key == 'axes' || key == 'left' || key == 'right') {
+			if (this.movement.x > 0 && Math.abs(this.movement.x) > Math.abs(this.movement.y)) {
+				this.direction = 2;
+			} else if (this.movement.x < 0 && Math.abs(this.movement.x) > Math.abs(this.movement.y)) {
+				this.direction = 1;
+			} else if (this.movement.y < 0) {
+				this.direction = 3;
+			} else {
+				this.direction = 0;
+			}
 		}
 		if (key == 'switch') {
 			//console.log("changePlayer");
@@ -342,6 +347,7 @@ define([
 			// remove old shadows
 			window.game.scene.remove(window.game.scene.inactivePlayer);
 			window.game.scene.remove(window.game.scene.inactivePlayer2);
+			//window.game.scene.remove(this);
 
 			var inactivePlayerBuffer = window.game.scene.inactivePlayer;
 			var inactivePlayerBuffer2 = window.game.scene.inactivePlayer2;
@@ -381,7 +387,7 @@ define([
 			// add new shadows
 			window.game.scene.add(window.game.scene.inactivePlayer);
 			window.game.scene.add(window.game.scene.inactivePlayer2);
-
+			//window.game.scene.add(this);
 			game.player = game.scene.player;
 			game.inactivePlayer = game.scene.inactivePlayer;
 			game.inactivePlayer2 = game.scene.inactivePlayer2;
@@ -561,6 +567,7 @@ define([
 
 		index = util.twoToOneDim(firstTileX, firstTileY);
 
+		console.log(this.carry);
 		// already sth in the hand -> throw
 		if (this.carry) {
 			this.carry.throwItem();
@@ -651,15 +658,16 @@ define([
 	Player.prototype.removeAction1 = function removeAction1() {
 		// start cooldown;
 
-		this.cooldown = this.COOLDOWNTIME;
 		switch(this.name) {
 			case 'olaf':
 				break;
 			case 'jerome':
+				this.cooldown = this.COOLDOWNTIME;
 				this.light = 0;
 				this.actionTimer = 0;
 				break;
 			case 'lina':
+				this.cooldown = this.COOLDOWNTIME;
 				this.speed = this.SPEEDS.normal;
 				this.actionTimer = 0;
 				window.game.scene.inactivePlayer.speed = this.speed*33;
@@ -671,7 +679,6 @@ define([
 		}
 	};
 	Player.prototype.action2 = function action2() {
-		this.actionTimer = this.ACTIONTIME;
 		switch(this.name) {
 			case 'olaf':
 				this.action2Olaf();
@@ -724,6 +731,17 @@ define([
 
 		if (key == 'down' && this.movement.y > 0) {
 			this.movement.y = 0;
+		}
+		if (key == 'down' || key == 'up' || key == 'axes' || key == 'left' || key == 'right') {
+			if (this.movement.x > 0 && Math.abs(this.movement.x) > Math.abs(this.movement.y)) {
+				this.direction = 2;
+			} else if (this.movement.x < 0 && Math.abs(this.movement.x) > Math.abs(this.movement.y)) {
+				this.direction = 1;
+			} else if (this.movement.y < 0 && Math.abs(this.movement.y) > Math.abs(this.movement.x)) {
+				this.direction = 3;
+			} else if (this.movement.y > 0 && Math.abs(this.movement.y) > Math.abs(this.movement.x)) {
+				this.direction = 0;
+			}
 		}
 
 		if (key == 'action2') {
@@ -849,7 +867,7 @@ define([
 		// check whether used teleports
 		for (i = 0; i < map.teleport.length; i++) {
 			// found teleport
-			if (map.teleport[i].x === tileX && map.teleport[i].y === tileY) {
+			if (map.teleport[i].startX === tileX && map.teleport[i].startY === tileY) {
 				this.stop = true;
 				name = game.player.name;
 				animations = game.scene.animations;
@@ -862,19 +880,35 @@ define([
 
 				game.scene.remove(game.inactivePlayer);
 				game.scene.remove(game.inactivePlayer2);
+
 				// set scene
 				game.scene = game.scenes[map.teleport[i].scene];
+				window.sceneId = map.teleport[i].scene;
 				game.scene.animations = animations;
 
-				this.position.x = map.teleport[i].x * game.scene.map.tileWidth;
-				this.position.y = (map.teleport[i].y + 2) * game.scene.map.tileHeight;
+				this.position.x = map.teleport[i].endX * game.scene.map.tileWidth;
+				this.position.y = map.teleport[i].endY * game.scene.map.tileHeight;
 
 				game.scene.player.position.x = this.position.x;
 				game.scene.player.position.y = this.position.y;
 
+
 				game.player = game.scene.player;
-				game.scene.add(game.scene.inactivePlayer = game.inactivePlayer);
-				game.scene.add(game.scene.inactivePlayer2 = game.inactivePlayer2);
+				game.scene.inactivePlayer = game.inactivePlayer;
+				game.scene.inactivePlayer2 = game.inactivePlayer2;
+
+
+				game.scene.inactivePlayer.position.x = this.position.x;
+				game.scene.inactivePlayer.position.y = this.position.y + 20;
+
+				game.scene.inactivePlayer2.position.x = this.position.x;
+				game.scene.inactivePlayer2.position.y = this.position.y + 40;
+
+				game.scene.add(game.scene.inactivePlayer);
+				game.scene.add(game.scene.inactivePlayer2);
+
+				//game.scene.inactivePlayer.setPosition(this.position);
+				//game.scene.inactivePlayer2.setPosition(pos);
 
 				game.scene.player.setName(name);
 
@@ -902,7 +936,7 @@ define([
 		//console.log(game.ball.x, tileX, game.ball.y, tileY);
 
 		// GOAL
-		if (game.ball.x === tileX && game.ball.y === tileY) {
+		if (game.ball.x === tileX && game.ball.y === tileY && window.sceneId == 4) {
 			config.running = false;
 
 			dom.addClass(dom.get("victory"), "display");
@@ -926,46 +960,47 @@ define([
 			canBeUsed = util.tileCanBeUsed(layer[index]);
 
 		if (canBeUsed) {
+			game.scene.map.removeObject(index, 1);
+
 			// de-fear all
 			if (util.getUseName(layer[index]) === "candy") {
 				console.log('defear all');
-				this.defear(true);
+				this.defear("olaf");
+				this.defear("jerome");
+				this.defear("lina");
+
+				window.fear = 0;
 			}
 			// de-fear one
 			else {
-				console.log('defear one');
-				this.defear();
-			}
+				if (game.scene.getChar("olaf").fear) {
+					this.defear("olaf");
+					return;
+				}
 
-			game.scene.map.removeObject(index, 1);
+				if (game.scene.getChar("jerome").fear) {
+					this.defear("jerome");
+					return;
+				}
+
+				if (game.scene.getChar("lina").fear) {
+					this.defear("lina");
+					return;
+				}
+
+				window.fear--;
+			}
 		}
 	};
 
-	Player.prototype.defear = function defear(twoTimes) {
+	Player.prototype.defear = function defear(charName) {
 		var player = math.rand(0, 2),
+			obj,
 			elem,
 			elem2,
-			obj,
 			name;
 
-		switch (player) {
-		case 0:
-			obj = game.player;
-			break;
-		case 1:
-			obj = game.inactivePlayer;
-			break;
-		case 2:
-			obj = game.inactivePlayer2;
-			break;
-		}
-
-
-		// not feared -> try again
-		if (obj.fear === false) {
-			this.defear();
-			return;
-		}
+		obj = game.scene.getChar(charName);
 
 		elem2 = dom.get("green");
 
@@ -984,12 +1019,7 @@ define([
 
 		dom.removeClass(elem, "visible");
 
-		window.game.scene.remove(this.cry);
-
-		if (twoTimes) {
-			console.log('again');
-			this.defear();
-		}
+		window.game.scene.remove(obj.cry);
 	};
 
 	Player.prototype.mousedown = function mousedown(pos) {
@@ -1020,10 +1050,10 @@ define([
 			obj = game.player;
 			break;
 		case 1:
-			obj = game.inactivePlayer;
+			obj = game.scene.inactivePlayer;
 			break;
 		case 2:
-			obj = game.inactivePlayer2;
+			obj = game.scene.inactivePlayer2;
 			break;
 		}
 
@@ -1035,6 +1065,8 @@ define([
 
 		obj.fear = true;
 
+		window.fear++;
+
 		elem2 = dom.get("red");
 
 		dom.addClass(elem2, 'hit');
@@ -1044,7 +1076,9 @@ define([
 			dom.removeClass(elem2, 'hit');
 		}, 180);
 
-		if (game.player.fear && game.inactivePlayer.fear && game.inactivePlayer2.fear) {
+		name = obj.name;
+
+		if (window.fear == 3/*game.player.fear && game.inactivePlayer.fear && game.inactivePlayer2.fear*/) {
 			config.running = false;
 
 			// GAMEOVER
@@ -1054,10 +1088,8 @@ define([
 
 			window.setTimeout(function() {
 				window.location.reload();
-			}, 2000);
+			}, 4000);
 		}
-
-		name = obj.name;
 
 		elem = dom.get("fear " + name);
 
