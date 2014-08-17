@@ -94,7 +94,7 @@ define([
 			i;
 		this.reloadCountdown += delta;
 		if (this.reloadCountdown >= 30000) {
-			window.location = "/";
+			window.location.reload();
 		}
 
 		// update stunn
