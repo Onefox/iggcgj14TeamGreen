@@ -1061,6 +1061,8 @@ define([
 
 		obj.fear = true;
 
+		window.fear++;
+
 		elem2 = dom.get("red");
 
 		dom.addClass(elem2, 'hit');
@@ -1072,7 +1074,7 @@ define([
 
 		name = obj.name;
 
-		if (game.player.fear && game.inactivePlayer.fear && game.inactivePlayer2.fear) {
+		if (window.fear == 3/*game.player.fear && game.inactivePlayer.fear && game.inactivePlayer2.fear*/) {
 			config.running = false;
 
 			// GAMEOVER

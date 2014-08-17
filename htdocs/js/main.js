@@ -168,6 +168,9 @@ require([
 			}
 		}, 10);
 
+
+		window.fear = 0;
+
 		keyboard.init();
 		game.init();
 	});
