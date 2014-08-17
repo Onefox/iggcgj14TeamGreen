@@ -965,6 +965,21 @@ define([
 		// GOAL
 		if (game.ball.x === tileX && game.ball.y === tileY && window.sceneId == 4) {
 			config.running = false;
+			dom.addClass(dom.get("ball"), "display");
+
+
+			setTimeout(function() {
+				dom.removeClass(dom.get("ball"), "display");
+				config.running = true;
+			}, 3000);
+
+			game.scene.map.removeObject(util.twoToOneDim(tileX, tileY), 1);
+
+			window.foundBall = true;
+		}
+
+		if (window.sceneId == 0 && window.foundBall && tileY > 43) {
+			config.running = false;
 
 			dom.addClass(dom.get("victory"), "display");
 
