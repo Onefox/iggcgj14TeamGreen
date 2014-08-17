@@ -1050,10 +1050,10 @@ define([
 			obj = game.player;
 			break;
 		case 1:
-			obj = game.inactivePlayer;
+			obj = game.scene.inactivePlayer;
 			break;
 		case 2:
-			obj = game.inactivePlayer2;
+			obj = game.scene.inactivePlayer2;
 			break;
 		}
 
