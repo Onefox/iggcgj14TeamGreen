@@ -963,7 +963,7 @@ define([
 		//console.log(game.ball.x, tileX, game.ball.y, tileY);
 
 		// GOAL
-		if (game.ball.x === tileX && game.ball.y === tileY && window.sceneId == 4) {
+		if (game.ball.x === tileX && game.ball.y === tileY && window.sceneId == 4 && window.foundBall == false) {
 			config.running = false;
 			dom.addClass(dom.get("ball"), "display");
 
