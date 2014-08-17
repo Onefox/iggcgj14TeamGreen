@@ -49,7 +49,7 @@ define([
 					var vicangle = center.angle( entities[i].getCenter());
 					var diff = Math.abs( vicangle - shotangle );
 
-					if( dist < 200 && diff < .3 ) {
+					if( dist < 200 && diff < .5 ) {
 						entities[i].kill();
 					}
 				}

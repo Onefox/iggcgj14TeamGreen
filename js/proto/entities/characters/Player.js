@@ -198,6 +198,13 @@ define([
 					}
 				}
 			}
+
+
+			//update direction
+			if (this.movement.x != 0 || this.movement.y != 0) {
+				this.directionVec.x = this.movement.x;
+				this.directionVec.y = this.movement.y;
+			}
 		}
 
 		this.updateGamepad();
@@ -258,31 +265,31 @@ define([
 		}
 
 		if (this.pad.buttons[0].pressed || this.pad.buttons[0].pressed) {
-			if (this.timeout) {
+			/*if (this.timeout) {
 				return;
-			}
+			}*/
 
 			this.down("e_use");
 
-			this.timeout = setTimeout(function() {
+			/*this.timeout = setTimeout(function() {
 				clearTimeout(that.timeout);
 				that.timeout = null;
-			}, 200);
+			}, 200);*/
 		} else {
 			this.up("e_use");
 		}
 
 		if (this.pad.buttons[1].pressed || this.pad.buttons[1].pressed) {
-			if (this.timeout) {
+			/*if (this.timeout) {
 				return;
-			}
+			}*/
 
 			this.down("action2");
 
-			this.timeout = setTimeout(function() {
+			/*this.timeout = setTimeout(function() {
 				clearTimeout(that.timeout);
 				that.timeout = null;
-			}, 200);
+			}, 200);*/
 		} else {
 			this.up("action2");
 		}
@@ -308,8 +315,6 @@ define([
 		if (key == 'axes' ) {
 			this.movement.x = this.speed * axesY;
 			this.movement.y = this.speed * axesX;
-			this.directionVec.x = this.movement.x;
-			this.directionVec.y = this.movement.y;
 		}
 		if (key == 'space' && this.gameover) {
 			window.location.reload();
@@ -318,39 +323,29 @@ define([
 		if (key == 'left') {
 			this.key = "left";
 			this.movement.x = -this.speed;
-			//this.movement.y = 0;
-			this.directionVec.x = this.movement.x;
-			this.directionVec.y = this.movement.y;
 		}
 
 		if (key == 'right') {
 			this.key = "right";
 			this.movement.x = this.speed;
-			//this.movement.y = 0;
-			this.directionVec.x = this.movement.x;
-			this.directionVec.y = this.movement.y;
 		}
 
 		if (key == 'up') {
 			this.key = "up";
 			this.movement.y = -this.speed;
-			//this.movement.x = 0;
-			this.directionVec.x = this.movement.x;
-			this.directionVec.y = this.movement.y;
 		}
 
 		if (key == 'down') {
 			this.key = "down";
 			this.movement.y = this.speed;
-			//this.movement.x = 0;
-			this.directionVec.x = this.movement.x;
-			this.directionVec.y = this.movement.y;
 		}
 
 		if (key > 0 && key <= this.weapons.length) {
 			this.setWeapon(key - 1);
 		}
 		if (key == 'down' || key == 'up' || key == 'axes' || key == 'left' || key == 'right') {
+			this.directionVec.x = this.movement.x;
+			this.directionVec.y = this.movement.y;
 			if (this.movement.x > 0 && Math.abs(this.movement.x) > Math.abs(this.movement.y)) {
 				this.direction = 2;
 			} else if (this.movement.x < 0 && Math.abs(this.movement.x) > Math.abs(this.movement.y)) {
@@ -645,6 +640,9 @@ define([
 			index = util.twoToOneDim(firstTileX, firstTileY - 1);
 			game.scene.map.removeObject(index, 3);
 
+			index = util.twoToOneDim(firstTileX, firstTileY + 1);
+			game.scene.map.removeObject(index, 3);
+
 			this.scene.add(new WallBreak(this.getCenter().x - 34, this.getCenter().y - 140));
 		}
 	};
@@ -658,16 +656,21 @@ define([
 
 		switch(this.name) {
 			case 'olaf':
+				this.cooldown = 200;
 				this.action1Olaf();
 				break;
 			case 'jerome':
 				this.light = 400;
 				break;
 			case 'lina':
-				this.speed = this.SPEEDS.boost;
+				var oldVec =  this.directionVec.div(this.speed);
 
-				this.up(this.key);
-				this.down(this.key);
+				this.speed = this.SPEEDS.boost;
+				// set new speed if the char is moving
+				if (this.movement.x != 0 || this.movement.y != 0) {
+					this.movement.x = oldVec.x * this.speed;
+					this.movement.y = oldVec.y * this.speed;
+				}
 				window.game.scene.inactivePlayer.speed = this.speed*33;
 				window.game.scene.inactivePlayer2.speed = this.speed*33;
 				break;
@@ -984,8 +987,6 @@ define([
 			canBeUsed = util.tileCanBeUsed(layer[index]);
 
 		if (canBeUsed) {
-			game.scene.map.removeObject(index, 1);
-
 			// de-fear all
 			if (util.getUseName(layer[index]) === "candy") {
 				console.log('defear all');
@@ -993,27 +994,27 @@ define([
 				this.defear("jerome");
 				this.defear("lina");
 
-				window.fear = 0;
+				console.log('defear all');
 			}
 			// de-fear one
 			else {
-				if (game.scene.getChar("olaf").fear) {
+				if (window['fearolaf']) {
 					this.defear("olaf");
 					return;
 				}
 
-				if (game.scene.getChar("jerome").fear) {
+				if (window['fearjerome']) {
 					this.defear("jerome");
 					return;
 				}
 
-				if (game.scene.getChar("lina").fear) {
+				if (window['fearlina']) {
 					this.defear("lina");
 					return;
 				}
-
-				window.fear--;
 			}
+
+			game.scene.map.removeObject(index, 1);
 		}
 	};
 
@@ -1024,26 +1025,25 @@ define([
 			elem2,
 			name;
 
-		obj = game.scene.getChar(charName);
-
 		elem2 = dom.get("green");
 
 		dom.addClass(elem2, 'hit');
-
 
 		window.setTimeout(function() {
 			dom.removeClass(elem2, 'hit');
 		}, 180);
 
-		obj.fear = false;
+		window.fear--;
+		window['fear' + charName] = false;
 
-		name = obj.name;
+		elem = dom.get("fear " + charName);
 
-		elem = dom.get("fear " + name);
+
+		console.log(charName, elem);
 
 		dom.removeClass(elem, "visible");
 
-		window.game.scene.remove(obj.cry);
+		window.game.scene.remove(window["cry" + charName]);
 	};
 
 	Player.prototype.mousedown = function mousedown(pos) {
@@ -1071,23 +1071,21 @@ define([
 
 		switch (player) {
 		case 0:
-			obj = game.player;
+			name = "olaf";
 			break;
 		case 1:
-			obj = game.scene.inactivePlayer;
+			name = "lina";
 			break;
 		case 2:
-			obj = game.scene.inactivePlayer2;
+			name = "jerome";
 			break;
 		}
 
 		// already stunned -> try again
-		if (obj.fear) {
+		if (window['fear' + name]) {
 			this.setFear();
 			return;
 		}
-
-		obj.fear = true;
 
 		window.fear++;
 
@@ -1100,10 +1098,18 @@ define([
 			dom.removeClass(elem2, 'hit');
 		}, 180);
 
-		name = obj.name;
 
-		if (window.fear == 3/*game.player.fear && game.inactivePlayer.fear && game.inactivePlayer2.fear*/) {
+
+		window['fear' + name] = true;
+		elem = dom.get("fear " + name);
+
+		dom.addClass(elem, "visible");
+
+
+		console.log('drin');
+		if (window.fearolaf && window.fearjerome && window.fearlina/*game.player.fear && game.inactivePlayer.fear && game.inactivePlayer2.fear*/) {
 			config.running = false;
+			console.log('dead');
 
 			// GAMEOVER
 			dom.addClass(dom.get("gameover"), "display");
@@ -1112,14 +1118,10 @@ define([
 
 			window.setTimeout(function() {
 				window.location.reload();
-			}, 4000);
+			}, 7000);
 		}
 
-		elem = dom.get("fear " + name);
-
-		dom.addClass(elem, "visible");
-
-		window.game.scene.add(this.cry = new Cry(name));
+		window.game.scene.add(window["cry" + name] = new Cry(name));
 	};
 
 	return Player;
