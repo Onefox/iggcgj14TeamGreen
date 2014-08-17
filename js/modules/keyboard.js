@@ -6,6 +6,10 @@ define([
 
 			document.onkeydown = function onkeydown(e) {
 				that.down(e);
+
+				if (e.keyCode === 32) {
+					e.preventDefault();
+				}
 			};
 
 			document.onkeyup = function onkeyup(e) {
