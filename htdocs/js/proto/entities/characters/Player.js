@@ -1094,8 +1094,18 @@ define([
 			dom.removeClass(elem2, 'hit');
 		}, 180);
 
-		if (window.fear == 3/*game.player.fear && game.inactivePlayer.fear && game.inactivePlayer2.fear*/) {
+
+
+		window['fear' + name] = true;
+		elem = dom.get("fear " + name);
+
+		dom.addClass(elem, "visible");
+
+
+		console.log('drin');
+		if (window.fearolaf && window.fearjerome && window.fearlina/*game.player.fear && game.inactivePlayer.fear && game.inactivePlayer2.fear*/) {
 			config.running = false;
+			console.log('dead');
 
 			// GAMEOVER
 			dom.addClass(dom.get("gameover"), "display");
@@ -1104,13 +1114,8 @@ define([
 
 			window.setTimeout(function() {
 				window.location.reload();
-			}, 4000);
+			}, 7000);
 		}
-
-		window['fear' + name] = true;
-		elem = dom.get("fear " + name);
-
-		dom.addClass(elem, "visible");
 
 		window.game.scene.add(window["cry" + name] = new Cry(name));
 	};
