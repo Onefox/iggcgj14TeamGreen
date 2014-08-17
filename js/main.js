@@ -130,6 +130,7 @@ require([
 
 
 		window.fear = 0;
+		window.foundBall = false;
 
 		keyboard.init();
 		game.init();
