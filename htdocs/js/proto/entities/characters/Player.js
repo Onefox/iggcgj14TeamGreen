@@ -968,6 +968,8 @@ define([
 				this.defear("olaf");
 				this.defear("jerome");
 				this.defear("lina");
+
+				window.fear = 0;
 			}
 			// de-fear one
 			else {
@@ -985,6 +987,8 @@ define([
 					this.defear("lina");
 					return;
 				}
+
+				window.fear--;
 			}
 		}
 	};
