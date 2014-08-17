@@ -93,34 +93,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1669,
-                 "y":559
-                }, 
-                {
-                 "height":0,
-                 "name":"wraith",
-                 "properties":
-                    {
-
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
                  "x":1589,
                  "y":559
-                }, 
-                {
-                 "height":0,
-                 "name":"ghost",
-                 "properties":
-                    {
-
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":1522,
-                 "y":790
                 }, 
                 {
                  "height":0,
@@ -147,19 +121,6 @@
                  "width":0,
                  "x":1927,
                  "y":563
-                }, 
-                {
-                 "height":0,
-                 "name":"dog",
-                 "properties":
-                    {
-
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":1235,
-                 "y":552
                 }, 
                 {
                  "height":0,
