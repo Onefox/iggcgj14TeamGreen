@@ -103,19 +103,19 @@ require([
 						i = 0;
 						switch (x) {
 						case 0:
-							dom.addClass(dom.get("intro1"), "display-none");
+							dom.addClass(dom.get("info"), "display-none");
 							break;
 						case 1:
-							dom.addClass(dom.get("intro2"), "display-none");
+							dom.addClass(dom.get("intro1"), "display-none");
 							break;
 						case 2:
-							dom.addClass(dom.get("help1"), "display-none");
+							dom.addClass(dom.get("intro2"), "display-none");
 							break;
 						case 3:
-							dom.addClass(dom.get("help2"), "display-none");
+							dom.addClass(dom.get("help1"), "display-none");
 							break;
 						case 4:
-							dom.addClass(dom.get("info"), "display-none");
+							dom.addClass(dom.get("help2"), "display-none");
 							window.removeEventListener("keydown", listener, false);
 							clearInterval(interval);
 							config.running = true;
