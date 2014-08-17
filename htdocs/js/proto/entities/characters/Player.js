@@ -198,6 +198,13 @@ define([
 					}
 				}
 			}
+
+
+			//update direction
+			if (this.movement.x != 0 || this.movement.y != 0) {
+				this.directionVec.x = this.movement.x;
+				this.directionVec.y = this.movement.y;
+			}
 		}
 
 		this.updateGamepad();
@@ -308,8 +315,6 @@ define([
 		if (key == 'axes' ) {
 			this.movement.x = this.speed * axesY;
 			this.movement.y = this.speed * axesX;
-			this.directionVec.x = this.movement.x;
-			this.directionVec.y = this.movement.y;
 		}
 		if (key == 'space' && this.gameover) {
 			window.location.reload();
@@ -318,39 +323,29 @@ define([
 		if (key == 'left') {
 			this.key = "left";
 			this.movement.x = -this.speed;
-			//this.movement.y = 0;
-			this.directionVec.x = this.movement.x;
-			this.directionVec.y = this.movement.y;
 		}
 
 		if (key == 'right') {
 			this.key = "right";
 			this.movement.x = this.speed;
-			//this.movement.y = 0;
-			this.directionVec.x = this.movement.x;
-			this.directionVec.y = this.movement.y;
 		}
 
 		if (key == 'up') {
 			this.key = "up";
 			this.movement.y = -this.speed;
-			//this.movement.x = 0;
-			this.directionVec.x = this.movement.x;
-			this.directionVec.y = this.movement.y;
 		}
 
 		if (key == 'down') {
 			this.key = "down";
 			this.movement.y = this.speed;
-			//this.movement.x = 0;
-			this.directionVec.x = this.movement.x;
-			this.directionVec.y = this.movement.y;
 		}
 
 		if (key > 0 && key <= this.weapons.length) {
 			this.setWeapon(key - 1);
 		}
 		if (key == 'down' || key == 'up' || key == 'axes' || key == 'left' || key == 'right') {
+			this.directionVec.x = this.movement.x;
+			this.directionVec.y = this.movement.y;
 			if (this.movement.x > 0 && Math.abs(this.movement.x) > Math.abs(this.movement.y)) {
 				this.direction = 2;
 			} else if (this.movement.x < 0 && Math.abs(this.movement.x) > Math.abs(this.movement.y)) {
@@ -665,7 +660,6 @@ define([
 				break;
 			case 'lina':
 				this.speed = this.SPEEDS.boost;
-
 				this.up(this.key);
 				this.down(this.key);
 				window.game.scene.inactivePlayer.speed = this.speed*33;
