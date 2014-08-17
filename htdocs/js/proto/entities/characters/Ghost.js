@@ -6,8 +6,9 @@ define([
 	"proto/Framecounter",
 	"proto/V2",
 	"proto/entities/characters/Enemy",
+	"proto/entities/characters/Player",
 	"proto/entities/bullets/Grenade",
-], function(path, math, AnimationSprite, Character, Framecounter, V2, Enemy, Grenade) {
+], function(path, math, AnimationSprite, Character, Framecounter, V2, Enemy, Player, Grenade) {
 	var Ghost = function Ghost(x, y, id) {
 		this.position = new V2(x, y);
 		this.spawn = new V2(x, y);
@@ -80,6 +81,19 @@ define([
 
 		// ghost only knows one direction -> overwrite here
 		this.direction = 0;
+
+		// set fear if player hit
+		for (i = 0; i < this.scene.entities.length; i++ ) {
+			if (this.scene.entities[i] instanceof Player) {
+				dist = this.getCenter().dif(this.scene.entities[i].getCenter()).length();
+
+				if (dist <= 30) {
+					game.scene.player.setFear();
+
+					this.kill();
+				}
+			}
+		}
 	};
 
 	return Ghost;
