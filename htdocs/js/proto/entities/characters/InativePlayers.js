@@ -78,7 +78,7 @@ define([
 		}
 
 		// dont walk into character-sprite
-		if (hyp > 50) {
+		if (hyp > 60) {
 			this.position.add(this.movement);
 		} else {
 			// stop animation
